@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Demon_Bluff_Mods</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\net6\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cpp">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Dependencies\SupportModules\Il2Cpp.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Common">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Il2CppAssemblies\Il2CppSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="MelonLoader">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\net6\MelonLoader.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Dependencies\Il2CppAssemblyGenerator\UnityDependencies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

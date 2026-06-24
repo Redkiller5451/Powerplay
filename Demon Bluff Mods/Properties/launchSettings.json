@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Demon Bluff Mods": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
