@@ -47,6 +47,9 @@ Pick a card. I say if they are the Demon or not
 ### Veteran (Good, Outcast)
 If a Good card picks me, I execute them and undisguise. I lie and disguise.
 
+### Flutist (Good, Outcast)
+I swap with an Evil. They say if they have been swapped. I disguise. 
+
 ## MINIONS
 
 ### Slinger (Evil, Minion)
