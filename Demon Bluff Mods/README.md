@@ -40,7 +40,7 @@ I point to a Card, they are a Villager.
 I pick three cards. Two are good, one is evil. They are all Silenced.
 
 ### Pacifist (Good, Villager) _POWER ROLE_
-Villagers cannot die to the Demon.
+Pick a card. I say if they are the Demon or not
 
 ## OUTCASTS
 
@@ -53,7 +53,7 @@ If a Good card picks me, I execute them and undisguise. I lie and disguise.
 Upon starting, I kill a Good card. I prioritize killing the Executive.
 
 ### Grenadier (Evil, Minion)
-When executed, I deal 3 damage and kill 2 good cards. I prioritize killing the Executive.
+When executed, I deal 3 damage and kill 2 good cards. I prioritize killing the Executive. I dont deal damage if I am the last evil killed.
 
 ## DEMONS
 
