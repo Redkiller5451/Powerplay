@@ -243,6 +243,28 @@ public class Main : MelonMod
         jailor.additionalFlavorTexts = new Il2CppStringArray(1);
         jailor.additionalFlavorTexts[0] = jailor.flavorText;
 
+        Il2Cpp.CharacterData snakeCharmer = new Il2Cpp.CharacterData();
+        snakeCharmer.role = new SnakeCharmer();
+        snakeCharmer.name = "Flutist";
+        snakeCharmer.characterName = "Flutist";
+        snakeCharmer.description = "I swap with an Evil. They register as Evil and myself as Town. \n I disguise but dont lie.";
+        snakeCharmer.flavorText = "\"Tries to charm the Evils into revealing themselves. \n Become one instead.\"";
+        snakeCharmer.hints = "";
+        snakeCharmer.ifLies = "";
+        snakeCharmer.notes = "";
+        snakeCharmer.picking = false;
+        snakeCharmer.startingAlignment = EAlignment.Good;
+        snakeCharmer.type = ECharacterType.Outcast;
+        snakeCharmer.abilityUsage = EAbilityUsage.Once;
+        snakeCharmer.bluffable = false;
+        snakeCharmer.characterId = "Flutist_POW";
+        snakeCharmer.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        snakeCharmer.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        snakeCharmer.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        snakeCharmer.color = new Color(0.9659f, 1f, 0.4472f);
+        snakeCharmer.additionalFlavorTexts = new Il2CppStringArray(1);
+        snakeCharmer.additionalFlavorTexts[0] = snakeCharmer.flavorText;
+
         Il2Cpp.CharacterData veteran = new Il2Cpp.CharacterData();
         veteran.role = new Veteran();
         veteran.name = "Veteran";
@@ -618,17 +640,19 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, official);
             addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, coroner);
-           // addRole(script.startingOutsiders, veteran);
-          // addRole(script.startingOutsiders, pirate);
+            addRole(script.startingOutsiders, veteran);
+            addRole(script.startingOutsiders, snakeCharmer);
+            addRole(script.startingOutsiders, pirate);
             addRole(script.startingOutsiders, godfather);
-           //addRole(script.startingOutsiders, hangman);
-            //addRole(script.startingOutsiders, psycho);
+            addRole(script.startingOutsiders, hangman);
+            addRole(script.startingOutsiders, psycho);
             addRole(script.startingMinions, conjurer);
             addRole(script.startingMinions, boomdandy);
 
         }
         //Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", snakeCharmer);
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", official);
