@@ -23,20 +23,22 @@ public class Godfather : Neutrals
                 changeAlignement(charRef);
                 if (charRef.alignment == EAlignment.Evil)
                 {
+                MelonLogger.Msg("The Godfather is Evil");
                     Gameplay gameplay = Gameplay.Instance;
                     Characters instance = Characters.Instance;
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+                    list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Outcast);
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     Character random = list1[randomIndex];
                     random.ChangeAlignment(EAlignment.Evil);
                 }
                 else
                 {
-                    Gameplay gameplay = Gameplay.Instance;
+                MelonLogger.Msg("The Godfather is Good");
+                Gameplay gameplay = Gameplay.Instance;
                     Characters instance = Characters.Instance;
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+                    list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     Character random = list1[randomIndex];
                     random.ChangeAlignment(EAlignment.Good);
