@@ -58,10 +58,20 @@ namespace Demon_Bluff_Mods
                 victim = list1[randomIndex2];
                 victim.statuses.statuses.Add(ECharacterStatus.KilledByEvil);
                 victim.KillByDemon(charRef);
-
-                health.Damage(3);
-
+                if (!isRoundOver())
+                {
+                    health.Damage(3);
+                }
             }
+        }
+        private bool isRoundOver()
+        {
+            Gameplay gameplay = Gameplay.Instance;
+            Characters instance = Characters.Instance;
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+            list1 = Characters.Instance.FilterAliveCharacters(list1);
+            return list1.Count <= 0;
         }
     }
 }

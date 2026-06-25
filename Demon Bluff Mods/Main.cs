@@ -206,7 +206,7 @@ public class Main : MelonMod
         pacifist.hints = "I cannot be Evil";
         pacifist.ifLies = "Says 'I am corrupted' ";
         pacifist.notes = "";
-        pacifist.picking = false;
+        pacifist.picking = true;
         pacifist.startingAlignment = EAlignment.Good;
         pacifist.type = ECharacterType.Villager;
         pacifist.abilityUsage = EAbilityUsage.Once;
@@ -347,10 +347,10 @@ public class Main : MelonMod
         hangman.abilityUsage = EAbilityUsage.Once;
         hangman.bluffable = false;
         hangman.characterId = "Hangman_POW";
-        psycho.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        psycho.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        psycho.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        psycho.color = new Color(0.8510f, 0.4549f, 0.0f);
+        hangman.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        hangman.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        hangman.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        hangman.color = new Color(0.8510f, 0.4549f, 0.0f);
         hangman.additionalFlavorTexts = new Il2CppStringArray(1);
         hangman.additionalFlavorTexts[0] = hangman.flavorText;
 
@@ -618,11 +618,11 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, official);
             addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, coroner);
-            addRole(script.startingOutsiders, veteran);
-            addRole(script.startingOutsiders, pirate);
+           // addRole(script.startingOutsiders, veteran);
+          // addRole(script.startingOutsiders, pirate);
             addRole(script.startingOutsiders, godfather);
-            addRole(script.startingOutsiders, hangman);
-            addRole(script.startingOutsiders, psycho);
+           //addRole(script.startingOutsiders, hangman);
+            //addRole(script.startingOutsiders, psycho);
             addRole(script.startingMinions, conjurer);
             addRole(script.startingMinions, boomdandy);
 
@@ -632,6 +632,7 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", official);
+        Characters.Instance.startGameActOrder = insertAfterAct("Shaman", godfather);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", pestilence);
         List<CharacterData> characters = new List<CharacterData>();
         characters.Add(official);

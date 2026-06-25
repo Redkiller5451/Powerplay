@@ -52,16 +52,16 @@ public class Jailor : Role
             if (list2.Count + list3.Count > 2)
             {
                 int randomIndex = UnityEngine.Random.Range(0, list2.Count);
-                Il2CppSystem.Collections.Generic.List<Character> list5 = list2;
-                list5.RemoveAt(randomIndex);
-                int randomIndex2 = UnityEngine.Random.Range(0, list5.Count);
-                int randomIndex3 = UnityEngine.Random.Range(0, list3.Count);
                 Character random = list2[randomIndex];
-                Character random2 = list5[randomIndex2];
+                list2.Remove(random);
+                int randomIndex2 = UnityEngine.Random.Range(0, list2.Count);
+                Character random2 = list2[randomIndex2];
+                int randomIndex3 = UnityEngine.Random.Range(0, list3.Count);
                 Character demon = list3[randomIndex3];
                 randomizedList.Add(random);
                 randomizedList.Add(random2);
                 randomizedList.Add(demon);
+                MelonLogger.Msg($"[LOG] Jailed characters: Villager 1: {random.id}, Villager 2: {random2.id}, Evil: {demon.id}");
                 random.statuses.statuses.Add(ECharacterStatus.Silenced);
                 random2.statuses.statuses.Add(ECharacterStatus.Silenced);
                 demon.statuses.statuses.Add(ECharacterStatus.Silenced);

@@ -39,6 +39,8 @@ public class Psychopath : Neutrals
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 random.KillByDemon(charRef);
+                Health health = PlayerController.PlayerInfo.health;
+                health.Damage(4);
             }
             else
             {
@@ -49,6 +51,8 @@ public class Psychopath : Neutrals
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 random.KillByDemon(charRef);
+                Health health = PlayerController.PlayerInfo.health;
+                health.Damage(4);
             }
         }
     }
