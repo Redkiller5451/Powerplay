@@ -20,7 +20,6 @@ namespace Demon_Bluff_Mods
         }
         public Coroner(System.IntPtr ptr) : base(ptr)
         {
-            ClassInjector.DerivedConstructorBody(this);
         }
         public override string Description
         {

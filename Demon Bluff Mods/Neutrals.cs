@@ -73,7 +73,9 @@ namespace Demon_Bluff_Mods
                 info.text = "I am a <color=#64AAFA>Neutral</color>\nI can be good or bad";
             }
         }
+       
     }
+
     //Neutral Coloring
     //boomdandy.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
     // boomdandy.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);

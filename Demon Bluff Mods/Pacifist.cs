@@ -16,7 +16,7 @@ namespace Demon_Bluff_Mods
 
     public class Pacifist : Role
     {
-    
+        Character chRef;
         public Pacifist() : base(ClassInjector.DerivedConstructorPointer<Pacifist>())
         {
             ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
@@ -38,7 +38,7 @@ namespace Demon_Bluff_Mods
         }
         public override ActedInfo GetInfo(Character charRef)
         {
-            ActedInfo actedInfo = new ActedInfo("I Killed a Minion", null);
+            ActedInfo actedInfo = new ActedInfo("One of the protestors sabotaged the unity!", null);
             return actedInfo;
         }
         public override ActedInfo GetBluffInfo(Character charRef)
@@ -52,7 +52,8 @@ namespace Demon_Bluff_Mods
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
             if (trigger != ETriggerPhase.Day) return;
-            CharacterPicker.Instance.StartPickCharacters(1, charRef);
+            chRef = charRef;
+            CharacterPicker.Instance.StartPickCharacters(4, charRef);
             CharacterPicker.OnCharactersPicked = action1;
             CharacterPicker.OnStopPick += action2;
             }
@@ -60,31 +61,43 @@ namespace Demon_Bluff_Mods
         {
             CharacterPicker.OnCharactersPicked -= action1;
             CharacterPicker.OnStopPick -= action2;
-
-            Character demon = Characters.Instance.FilterCharacterType((Gameplay.CurrentCharacters), ECharacterType.Demon)[0];
-            string info = "";
-            Il2CppSystem.Collections.Generic.List<Character> chars = new Il2CppSystem.Collections.Generic.List<Character>();
-            if (charRef.statuses.Contains(ECharacterStatus.Corrupted))
+            if (chRef.statuses.Contains(ECharacterStatus.Corrupted))
             {
-                this.onActed.Invoke(this.GetBluffInfo(charRef));
+                this.onActed.Invoke(this.GetBluffInfo(chRef));
                 return;
             }
             else
             {
                 //We love stealing code from Wingidon... Again, MASSIVE credits to them.
-                
+                 Il2CppSystem.Collections.Generic.List<Character> chars = new Il2CppSystem.Collections.Generic.List<Character>();
                 chars.Add(CharacterPicker.PickedCharacters[0]);
-                if (chars[0] == demon)
+                chars.Add(CharacterPicker.PickedCharacters[1]);
+                chars.Add(CharacterPicker.PickedCharacters[2]);
+                chars.Add(CharacterPicker.PickedCharacters[3]);
+                MelonLogger.Msg($"Paci picked characters: {chars[0].id} is the first");
+                bool protestOccured = true;
+                foreach (Character c in chars)
                 {
-                    info = $"#{chars[0].id} is a Demon!";
+                    MelonLogger.Msg($"Protest Loop");
+                    if (c.alignment == EAlignment.Evil)
+                    {
+                        onActed?.Invoke(GetInfo(charRef));
+                        protestOccured = false;
+                    }
                 }
-                else
-                {
-                    info = $"#{chars[0].id} is not a Demon!";
+                MelonLogger.Msg($"Checked Protest");
+                if (protestOccured) {
+                    Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+                    list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+                    Health health = PlayerController.PlayerInfo.health;
+                    health.Heal(10);
+                    foreach (Character character in list1)
+                    { 
+                        character.Kill();
+                    }
                 }
+
             }
-            onActed?.Invoke(new ActedInfo(info, chars));
-            Debug.Log($"{info}");
         }
         private void StopPick()
         { 

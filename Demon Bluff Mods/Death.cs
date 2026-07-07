@@ -49,6 +49,16 @@ public class Death : Demon
   
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.AfterRoundStart)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            foreach (Character character in list1)
+            {
+                if (character.statuses.Contains(ECharacterStatus.Corrupted)){
+                    character.statuses.RemoveStatusIfAble(ECharacterStatus.Corrupted);
+                }
+            }
+            }
             if (trigger == ETriggerPhase.Night)
         {
             if (charRef.state == ECharacterState.Dead) return;
@@ -65,5 +75,12 @@ public class Death : Demon
             }
 
         }
+    }
+    //Taken from Wingidons Undying 
+    public override CharacterData GetBluffIfAble(Character charRef)
+    {
+        charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
+        charRef.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
+        return null;
     }
 }

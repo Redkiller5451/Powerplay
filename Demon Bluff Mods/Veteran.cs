@@ -30,9 +30,10 @@ public class Veteran : Role
                 {
                     if (charRef.statuses.statuses.Contains(ECharacterStatus.Corrupted) || charRef.GetRegisterAlignment() == EAlignment.Evil)
                         return;
-                    lastPicker.Kill();
+                    lastPicker.KillByDemon(charRef);
+                    PlayerController.PlayerInfo.health.Damage(2);
                     charRef.RevealReal();
-                    onActed?.Invoke(new ActedInfo($"I killed the {lastPicker.name}", null));
+                    onActed?.Invoke(new ActedInfo($"I killed #{lastPicker.id}", null));
                 }
             }
         }
@@ -44,12 +45,14 @@ public class Veteran : Role
         if (diceRoll < 5)
         {
             // 100% Double Claim
+            charRef.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
             return Characters.Instance.GetRandomDuplicateBluff();
         }
         else
         {
             // Become a new character
             CharacterData bluff = Characters.Instance.GetRandomUniqueBluff();
+            charRef.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
             Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
 
             return bluff;

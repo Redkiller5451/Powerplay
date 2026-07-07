@@ -58,8 +58,9 @@ public class War : Demon
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+            list1 = Characters.Instance.FilterAliveCharacters(list1);
             Health health = PlayerController.PlayerInfo.health;
-            health.Damage(4);
+            health.Damage(2);
             Character myTarget = list1[UnityEngine.Random.Range(0, list1.Count)];
             list1.Remove(myTarget);
             Character myTarget2 = list1[UnityEngine.Random.Range(0, list1.Count)];
