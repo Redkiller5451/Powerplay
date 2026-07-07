@@ -34,18 +34,18 @@ I undisguise cards 2 cards away from me.
 I kill a Minion when revealed.
 
 ### Emperor (Good, Villager) _POWER ROLE_
-I point to a Card, they are a Villager.
+I point to 3 Cards, they are Villagers.
 
 ### Jailor (Good, Outcast) _POWER ROLE_
 I pick three cards. Two are good, one is evil. They are all Silenced.
 
 ### Pacifist (Good, Villager) _POWER ROLE_
-Pick a card. I say if they are the Demon or not
+Pick 4 cards. If all are good, you win.
 
 ## OUTCASTS
 
 ### Veteran (Good, Outcast)
-If a Good card picks me, I execute them and undisguise. I lie and disguise.
+If a Good card picks me, I kill them, deal 2 damage and undisguise. I disguise.
 
 ### Flutist (Good, Outcast)
 I swap with an Evil. They say if they have been swapped. I disguise. 
@@ -53,21 +53,21 @@ I swap with an Evil. They say if they have been swapped. I disguise.
 ## MINIONS
 
 ### Slinger (Evil, Minion)
-Upon starting, I kill a Good card. I prioritize killing the Executive.
+Upon starting, I kill a Good card.
 
 ### Grenadier (Evil, Minion)
-When executed, I deal 3 damage and kill 2 good cards. I prioritize killing the Executive. I dont deal damage if I am the last evil killed.
+When executed, I deal 3 damage and kill 2 good cards. I dont deal damage if I am the last evil killed.
 
 ## DEMONS
 
 ### Famine (Evil, Demon)
-I dont disguise. When revealed, I kill all previously revealed cards and deal 2 damage per good card.
+5 cards become Starved. If I am executed, all revealed Starved cards are killed, dealing 2 damage each.
 
 ### Pestilence (Evil, Demon)
-Every Villager has an 80% chance of being corrupted. At night, I kill every revealed Corrupted card, dealing 2 damage per killed card. I lie and disguise.
+Every Villager has an 80% chance of being corrupted. At night, I kill every revealed Corrupted card, dealing 2 damage per killed card. I lie and disguise. One card cannot be corrupted
 
 ### War (Evil, Demon)
-Every night, I kill 2 cards, dealing 4 damage. I lie and disguise.
+Every night, I kill 2 cards, dealing 2 damage. I lie and disguise. More Outcasts and Minions are in-play.
 
 ### Death (Evil, Demon)
 You have one day. Good luck.
