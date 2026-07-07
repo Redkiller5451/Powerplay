@@ -55,7 +55,7 @@ public class Main : MelonMod
         marksman.role = new Marksman();
         marksman.name = "Marksman";
         marksman.characterName = "Marksman";
-        marksman.description = "I say how many Minions are revealed. \nIf there are none, I say so.";
+        marksman.description = "Learn how many Minions are revealed. \nIf there are none, learn it.";
         marksman.flavorText = "\"He has a sharp eye.\n Sees less than the Slayer though...\"";
         marksman.hints = "";
         marksman.ifLies = "I say a false amount of revealed Minions";
@@ -77,7 +77,7 @@ public class Main : MelonMod
         coroner.role = new Coroner();
         coroner.name = "Coroner";
         coroner.characterName = "Coroner";
-        coroner.description = "If there is a card killed by an Evil, I point to an Evil character.";
+        coroner.description = "If there is a card killed by an Evil, learn an Evil character.";
         coroner.flavorText = "\"Has valuable information!\nOnly in niche circumstances.\"";
         coroner.hints = "If no one is dead, even a lying Coroner won't state a killer.";
         coroner.ifLies = "Points to a Good player instead.";
@@ -94,13 +94,56 @@ public class Main : MelonMod
         coroner.color = new Color(1f, 0.935f, 0.7302f);
         coroner.additionalFlavorTexts = new Il2CppStringArray(1);
         coroner.additionalFlavorTexts[0] = coroner.flavorText;
-        
+
+        Il2Cpp.CharacterData knowItAll = new Il2Cpp.CharacterData();
+        knowItAll.role = new KnowItAll();
+        knowItAll.name = "Know-it-All";
+        knowItAll.characterName = "Know-it-All";
+        knowItAll.description = "Learn a factually true or false statement, and learn if it is true or false";
+        knowItAll.flavorText = "\"Has too much knowledge to share!\nThe Rambler is his best friend!\"";
+        knowItAll.hints = "";
+        knowItAll.ifLies = "Learn the opposite truthness of the statement";
+        knowItAll.notes = "";
+        knowItAll.picking = false;
+        knowItAll.startingAlignment = EAlignment.Good;
+        knowItAll.type = ECharacterType.Villager;
+        knowItAll.abilityUsage = EAbilityUsage.Once;
+        knowItAll.bluffable = true;
+        knowItAll.characterId = "Know-it-All_POW";
+        knowItAll.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        knowItAll.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        knowItAll.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        knowItAll.color = new Color(1f, 0.935f, 0.7302f);
+        knowItAll.additionalFlavorTexts = new Il2CppStringArray(1);
+        knowItAll.additionalFlavorTexts[0] = knowItAll.flavorText;
+
+        Il2Cpp.CharacterData fisherman = new Il2Cpp.CharacterData();
+        fisherman.role = new Fisherman();
+        fisherman.name = "Fisherman";
+        fisherman.characterName = "Fisherman";
+        fisherman.description = "Learn how far is a specific Villager to another Villager";
+        fisherman.flavorText = "\"Likes to show off is awesome catches.\nOnly the Baker seems to care.\"";
+        fisherman.hints = "";
+        fisherman.ifLies = "Still points to a Villager, but the number is wrong";
+        fisherman.notes = "";
+        fisherman.picking = false;
+        fisherman.startingAlignment = EAlignment.Good;
+        fisherman.type = ECharacterType.Villager;
+        fisherman.abilityUsage = EAbilityUsage.Once;
+        fisherman.bluffable = true;
+        fisherman.characterId = "Fisherman_POW";
+        fisherman.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        fisherman.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        fisherman.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        fisherman.color = new Color(1f, 0.935f, 0.7302f);
+        fisherman.additionalFlavorTexts = new Il2CppStringArray(1);
+        fisherman.additionalFlavorTexts[0] = fisherman.flavorText;
 
         Il2Cpp.CharacterData prosecutor = new Il2Cpp.CharacterData();
         prosecutor.role = new Prosecutor();
         prosecutor.name = "Prosecutor";
         prosecutor.characterName = "Prosecutor";
-        prosecutor.description = "Upon revealing, kills a Minion!";
+        prosecutor.description = "Upon revealing, I kill a Minion!";
         prosecutor.flavorText = "\"He is a bit strict, but means well.\"";
         prosecutor.hints = "I cannot be Evil";
         prosecutor.ifLies = "Says 'I am corrupted' ";
@@ -122,7 +165,7 @@ public class Main : MelonMod
         mayor.role = new Mayor();
         mayor.name = "Mayor";
         mayor.characterName = "Mayor";
-        mayor.description = "Reveals disguised characters 2 cards away from him!";
+        mayor.description = "I reveal disguised characters 2 cards away from me!";
         mayor.flavorText = "\"Everyone knows the Mayor! And the Mayor knows everything\"";
         mayor.hints = "I cannot be Evil";
         mayor.ifLies = "Says 'I am corrupted' ";
@@ -166,7 +209,7 @@ public class Main : MelonMod
         monarch.role = new Monarch();
         monarch.name = "Emperor";
         monarch.characterName = "Emperor";
-        monarch.description = "I cannot die. I point at 3 Villagers.";
+        monarch.description = "I cannot die. Learn 3 Villagers.";
         monarch.flavorText = "\"The Emperor of the land,\nthe Empress is mostly in charge.\"";
         monarch.hints = "I cannot be Evil";
         monarch.ifLies = "Says 'I am corrupted' ";
@@ -234,21 +277,21 @@ public class Main : MelonMod
         jailor.role = new Jailor();
         jailor.name = "Jailor";
         jailor.characterName = "Jailor";
-        jailor.description = "2 Villagers and 1 Evil is silenced. I say who I silence";
-        jailor.flavorText = "\"Takes people in for questioning.\nUsually ends up partying with them instead.\"";
+        jailor.description = "Outcasts 2 cards away from me don't hurt the village.";
+        jailor.flavorText = "\"Takes away suspicious people. They are usually social outcasts.\"";
         jailor.hints = "I cannot be Evil";
         jailor.ifLies = "Says 'I am corrupted' ";
         jailor.notes = "";
         jailor.picking = false;
         jailor.startingAlignment = EAlignment.Good;
-        jailor.type = ECharacterType.Outcast;
+        jailor.type = ECharacterType.Villager;
         jailor.abilityUsage = EAbilityUsage.Once;
         jailor.bluffable = false;
         jailor.characterId = "Jailor_POW";
-        jailor.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        jailor.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
-        jailor.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        jailor.color = new Color(0.9659f, 1f, 0.4472f);
+        jailor.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        jailor.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        jailor.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        jailor.color = new Color(1f, 0.935f, 0.7302f);
         jailor.additionalFlavorTexts = new Il2CppStringArray(1);
         jailor.additionalFlavorTexts[0] = jailor.flavorText;
 
@@ -256,7 +299,7 @@ public class Main : MelonMod
         snakeCharmer.role = new SnakeCharmer();
         snakeCharmer.name = "Flutist";
         snakeCharmer.characterName = "Flutist";
-        snakeCharmer.description = "I swap with an Evil. They register as Evil and myself as Town. \n I disguise but dont lie.";
+        snakeCharmer.description = "I swap with an Evil.";
         snakeCharmer.flavorText = "\"Tries to charm the Evils into revealing themselves. \n Become one instead.\"";
         snakeCharmer.hints = "";
         snakeCharmer.ifLies = "";
@@ -278,7 +321,7 @@ public class Main : MelonMod
         veteran.role = new Veteran();
         veteran.name = "Veteran";
         veteran.characterName = "Veteran";
-        veteran.description = "I kill any Good players that pick me\n I deal 5 damage to you. \nI disguise.";
+        veteran.description = "I kill any Good players that pick me\n I deal 2 damage to you. \nI disguise.";
         veteran.flavorText = "\"Tries to bait the Demon\nOnly Villagers fall for the bait.\"";
         veteran.hints = "";
         veteran.ifLies = "I dont kill anyone that picks me";
@@ -302,7 +345,7 @@ public class Main : MelonMod
         pirate.characterName = "Pirate";
         pirate.description = "I duel someone, preventing them from getting information\nI Lie and Disguise.";
         pirate.flavorText = "\"You've got a fine coin there!\n Mind if I take it?\"";
-        pirate.hints = "";
+        pirate.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
         pirate.ifLies = "";
         pirate.notes = "";
         pirate.picking = false;
@@ -322,9 +365,9 @@ public class Main : MelonMod
         godfather.role = new Godfather();
         godfather.name = "Godfather";
         godfather.characterName = "Godfather";
-        godfather.description = "I change someones alignement";
+        godfather.description = "I change someones alignement to my own.";
         godfather.flavorText = "\"Do you wish to join the hidden family?\nIt will always be worth your time.\"";
-        godfather.hints = "If I am Evil:\n One Good card becomes Evil.\n\nIf I am Good: \n One Evil card becomes Good.";
+        godfather.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
         godfather.ifLies = "";
         godfather.notes = "";
         godfather.picking = false;
@@ -344,9 +387,9 @@ public class Main : MelonMod
         psycho.role = new Psychopath();
         psycho.name = "Psychopath";
         psycho.characterName = "Psychopath";
-        psycho.description = "I kill at night, dealing 4 damage. I kill depending on my alignement.\n I disguise and lie";
+        psycho.description = "I kill at night, dealing 4 damage. I kill cards opposite of my alignement.\n I disguise and lie";
         psycho.flavorText = "\"Has a select few targets in mind\nFriendly or Adversary\"";
-        psycho.hints = "";
+        psycho.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
         psycho.ifLies = "I lie and Disguise. I am Evil.";
         psycho.notes = "If I am Good:\n I kill Evil at night. I disguise and still lie.";
         psycho.picking = false;
@@ -367,9 +410,9 @@ public class Main : MelonMod
         hangman.role = new Hangman();
         hangman.name = "Hangman";
         hangman.characterName = "Hangman";
-        hangman.description = "I point to a player, and call them Evil\n If I am Good, I am correct. \n If I am Evil, I lie.";
+        hangman.description = "I point to a player, and call them Evil\n If I am Good, I am saying Truth. \n If I am Evil, I lie.";
         hangman.flavorText = "\"Is always convinced someone is Evil. \n Is sometimes correct \"";
-        hangman.hints = "";
+        hangman.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
         hangman.ifLies = "";
         hangman.notes = "";
         hangman.picking = false;
@@ -389,7 +432,7 @@ public class Main : MelonMod
         conjurer.role = new Conjurer();
         conjurer.name = "Slinger";
         conjurer.characterName = "Slinger";
-        conjurer.description = "I kill someone before the game starts.";
+        conjurer.description = "I kill someone before the round starts.";
         conjurer.flavorText = "\"Takes too much joy in throwing rocks\"";
         conjurer.hints = "";
         conjurer.ifLies = "";
@@ -411,7 +454,7 @@ public class Main : MelonMod
         boomdandy.role = new Boomdandy();
         boomdandy.name = "Grenadier";
         boomdandy.characterName = "Grenadier";
-        boomdandy.description = "When Executed, I kill 2 Townsfolk. I deal 3 Damage upon being executed.";
+        boomdandy.description = "When Executed, I kill 2 Villagers. I deal 3 Damage upon being executed.";
         boomdandy.flavorText = "\"Plays too much with bombs\nIs the Bombardier's brother\"";
         boomdandy.hints = "If I am the last evil executed, I don't deal 3 damage.";
         boomdandy.ifLies = "";
@@ -523,7 +566,7 @@ public class Main : MelonMod
         war.role = new War();
         war.name = "War";
         war.characterName = "War";
-        war.description = "Kills 2 people per night, dealing 2 damage. \n Outcasts and Minions are far more abundant.";
+        war.description = "I kill 2 people per night, dealing 2 damage. \n Outcasts and Minions are far more abundant.";
         war.flavorText = "\"I came.\nI saw.\nI conquered. \n - Julius Ceasar\"";
         war.hints = "";
         war.ifLies = "";
@@ -687,7 +730,9 @@ public class Main : MelonMod
         {
             ScriptInfo script = scriptData.scriptInfo;
             addRole(script.startingTownsfolks, official);
+            addRole(script.startingTownsfolks, knowItAll);
             addRole(script.startingTownsfolks, marksman);
+            addRole(script.startingTownsfolks, fisherman);
             addRole(script.startingTownsfolks, coroner);
             addRole(script.startingOutsiders, veteran);
             addRole(script.startingOutsiders, snakeCharmer);
@@ -702,10 +747,11 @@ public class Main : MelonMod
         }
         //Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", snakeCharmer);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", official);
+        Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
+        Characters.Instance.startGameActOrder = insertAfterAct("Jailor", snakeCharmer);
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
-        Characters.Instance.startGameActOrder = insertAfterAct("Shaman", official);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", godfather);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", pestilence);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", eTwin);

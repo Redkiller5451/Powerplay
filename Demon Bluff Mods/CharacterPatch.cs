@@ -24,4 +24,13 @@ public static class TargetClassExtensions
             charRef.KillByDemon(charRef);
         }
     }
+   /** public static void AddWeather(this ScriptInfo instance)
+    {
+        // You can now access public members of the instance
+        if (charRef.statuses.statuses.Contains(Starved.starved) && charRef.revealed)
+        {
+            charRef.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
+            charRef.KillByDemon(charRef);
+        }
+    }*/
 }
