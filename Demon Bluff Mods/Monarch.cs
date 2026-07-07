@@ -39,15 +39,30 @@ public class Monarch : Role
         ActedInfo actedInfo = new ActedInfo("I am corrupted", null);
         return actedInfo;
     }
+    public override void OnSpawn(Character charRef)
+    {
+        charRef.statuses.AddResistance(ECharacterStatus.Corrupted, charRef);
+    }
+    public void CurePoisons(Character charRef, Il2CppSystem.Collections.Generic.List<Character> list2)
+    {
+        foreach (Character c in list2)
+        {
+            if (c.statuses.statuses.Contains(ECharacterStatus.Corrupted)){
+                c.statuses.RemoveStatusIfAble(ECharacterStatus.Corrupted);
+            }
+        }
+    }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
       
         int randomIndex = 0;
+
         if (trigger == ETriggerPhase.Day)
         {
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            Il2CppSystem.Collections.Generic.List<Character> list2 = new Il2CppSystem.Collections.Generic.List<Character>();
             list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
             string line;
 
@@ -56,11 +71,37 @@ public class Monarch : Role
                 randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 line = $"#{random.id} is a Villager!";
+                list2.Add(random);
+                list1.Remove(random);
+                if (list1.Count > 0)
+                {
+                randomIndex = UnityEngine.Random.Range(0, list1.Count);
+                random = list1[randomIndex];
+                line += $"\n#{random.id} is a Villager!";
+                    list2.Add(random);
+                    list1.Remove(random);
+                    if (list1.Count > 0)
+                    {
+                        randomIndex = UnityEngine.Random.Range(0, list1.Count);
+                        random = list1[randomIndex];
+                        list2.Add(random);
+                        line += $"\n#{random.id} is a Villager!";
+                    }
+                    else
+                    {
+                        line = $"\nthere are no more Villagers alive";
+                    }
+                }
+                 else
+                 {
+                line = $"\nthere are no more Villagers alive";
+                }
             }
             else
             {
                 line = $"there are no Villagers alive";
             }
+            
             onActed?.Invoke(new ActedInfo(line,null));
         }
        

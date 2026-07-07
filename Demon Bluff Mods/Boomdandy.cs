@@ -35,29 +35,18 @@ namespace Demon_Bluff_Mods
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                 Character victim = null;
                 Health health = PlayerController.PlayerInfo.health;
-                foreach (Character character in list1)
-                {
-                    if (character.dataRef.role is Prosecutor || character.dataRef.role is Monarch ||
-                        character.dataRef.role is Jailor || character.dataRef.role is Mayor ||
-                        character.dataRef.role is Marshal || character.dataRef.role is Official)
-                    {
-                        victim = character;
-                    }
-                }
-                if (victim == null)
-                {
-                    int randomIndex1 = UnityEngine.Random.Range(0, list1.Count);
-                    victim = list1[randomIndex1];
-
-                }
+                int randomIndex1 = UnityEngine.Random.Range(0, list1.Count);
+                victim = list1[randomIndex1];
 
                 victim.KillByDemon(charRef);
                 victim.statuses.statuses.Add(ECharacterStatus.KilledByEvil);
+                victim.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, victim);
                 list1.Remove(victim);
                 int randomIndex2 = UnityEngine.Random.Range(0, list1.Count);
                 victim = list1[randomIndex2];
                 victim.statuses.statuses.Add(ECharacterStatus.KilledByEvil);
                 victim.KillByDemon(charRef);
+                victim.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, victim);
                 if (!isRoundOver())
                 {
                     health.Damage(3);

@@ -34,22 +34,12 @@ namespace Demon_Bluff_Mods
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                 Character victim =null;
-                foreach (Character character in list1)
-                {
-                    if(character.dataRef.role is Prosecutor || character.dataRef.role is Monarch ||
-                        character.dataRef.role is Jailor || character.dataRef.role is Mayor ||
-                        character.dataRef.role is Marshal || character.dataRef.role is Official)
-                    {
-                        victim = character;
-                    }
-                }
-                if (victim == null)
-                {
-                    int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-                    victim = list1[randomIndex];
-                }
+               
+               int randomIndex = UnityEngine.Random.Range(0, list1.Count);
+               victim = list1[randomIndex];
                 victim.statuses.statuses.Add(ECharacterStatus.KilledByEvil);
                 victim.KillByDemon(charRef);
+                victim.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, victim);
 
                 
             }

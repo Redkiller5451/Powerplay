@@ -5,6 +5,7 @@ using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MelonLoader;
 using UnityEngine;
+using Patty_CustomScenario_MOD;
 [assembly: MelonInfo(typeof(Demon_Bluff_Mods.Main), "Demon Bluff Mods", "1.0", "Redkiller")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
@@ -14,6 +15,10 @@ public class Main : MelonMod
 {
     public override void OnInitializeMelon()
     {
+        
+        UniversalUtility.AddEnum<EAlignment>("Neutral", (EAlignment)(30));
+        UniversalUtility.AddEnum<ECharacterType>("Neutral", (EAlignment)(40));
+
         ClassInjector.RegisterTypeInIl2Cpp<Coroner>();
         ClassInjector.RegisterTypeInIl2Cpp<Marksman>();
         ClassInjector.RegisterTypeInIl2Cpp<Prosecutor>();
@@ -25,8 +30,12 @@ public class Main : MelonMod
 
         ClassInjector.RegisterTypeInIl2Cpp<Jailor>();
         ClassInjector.RegisterTypeInIl2Cpp<Veteran>();
+        ClassInjector.RegisterTypeInIl2Cpp<SnakeCharmer>();
+        
         ClassInjector.RegisterTypeInIl2Cpp<Psychopath>();
         ClassInjector.RegisterTypeInIl2Cpp<Pirate>();
+        ClassInjector.RegisterTypeInIl2Cpp<Godfather>();
+        ClassInjector.RegisterTypeInIl2Cpp<Hangman>();
 
         ClassInjector.RegisterTypeInIl2Cpp<Conjurer>();
         ClassInjector.RegisterTypeInIl2Cpp<Boomdandy>();
@@ -68,7 +77,7 @@ public class Main : MelonMod
         coroner.role = new Coroner();
         coroner.name = "Coroner";
         coroner.characterName = "Coroner";
-        coroner.description = "If there is a dead card, I point to an Evil character.";
+        coroner.description = "If there is a card killed by an Evil, I point to an Evil character.";
         coroner.flavorText = "\"Has valuable information!\nOnly in niche circumstances.\"";
         coroner.hints = "If no one is dead, even a lying Coroner won't state a killer.";
         coroner.ifLies = "Points to a Good player instead.";
@@ -157,7 +166,7 @@ public class Main : MelonMod
         monarch.role = new Monarch();
         monarch.name = "Emperor";
         monarch.characterName = "Emperor";
-        monarch.description = "Myself and one townsfolk cannot die. I say who";
+        monarch.description = "I cannot die. I point at 3 Villagers.";
         monarch.flavorText = "\"The Emperor of the land,\nthe Empress is mostly in charge.\"";
         monarch.hints = "I cannot be Evil";
         monarch.ifLies = "Says 'I am corrupted' ";
@@ -201,7 +210,7 @@ public class Main : MelonMod
         pacifist.role = new Pacifist();
         pacifist.name = "Pacifist";
         pacifist.characterName = "Pacifist";
-        pacifist.description = "Villagers are unkillable by the Demon.\n I have a 50% chance of being Corrupted.";
+        pacifist.description = "On pick: Choose 4 cards. \n If they are all Good, you win!";
         pacifist.flavorText = "\"Organizes peaceful protests against the Demons\nThey don't end well.\"";
         pacifist.hints = "I cannot be Evil";
         pacifist.ifLies = "Says 'I am corrupted' ";
@@ -269,7 +278,7 @@ public class Main : MelonMod
         veteran.role = new Veteran();
         veteran.name = "Veteran";
         veteran.characterName = "Veteran";
-        veteran.description = "I kill any Good players that pick me\n I deal 5 damage to you. \nI Lie and Disguise.";
+        veteran.description = "I kill any Good players that pick me\n I deal 5 damage to you. \nI disguise.";
         veteran.flavorText = "\"Tries to bait the Demon\nOnly Villagers fall for the bait.\"";
         veteran.hints = "";
         veteran.ifLies = "I dont kill anyone that picks me";
@@ -335,11 +344,11 @@ public class Main : MelonMod
         psycho.role = new Psychopath();
         psycho.name = "Psychopath";
         psycho.characterName = "Psychopath";
-        psycho.description = "I kill at night. I kill depending on my alignement.\n I disguise and might lie";
+        psycho.description = "I kill at night, dealing 4 damage. I kill depending on my alignement.\n I disguise and lie";
         psycho.flavorText = "\"Has a select few targets in mind\nFriendly or Adversary\"";
-        psycho.hints = "I am not Bluffable";
+        psycho.hints = "";
         psycho.ifLies = "I lie and Disguise. I am Evil.";
-        psycho.notes = "If I am Good:\n I kill Evil at night. I disguise but do not lie.";
+        psycho.notes = "If I am Good:\n I kill Evil at night. I disguise and still lie.";
         psycho.picking = false;
         psycho.startingAlignment = NeutralAlignement.Neutral;
         psycho.type = NeutralType.Neutral;
@@ -382,7 +391,7 @@ public class Main : MelonMod
         conjurer.characterName = "Slinger";
         conjurer.description = "I kill someone before the game starts.";
         conjurer.flavorText = "\"Takes too much joy in throwing rocks\"";
-        conjurer.hints = "I prioritize killing the Executive";
+        conjurer.hints = "";
         conjurer.ifLies = "";
         conjurer.notes = "";
         conjurer.picking = false;
@@ -404,7 +413,7 @@ public class Main : MelonMod
         boomdandy.characterName = "Grenadier";
         boomdandy.description = "When Executed, I kill 2 Townsfolk. I deal 3 Damage upon being executed.";
         boomdandy.flavorText = "\"Plays too much with bombs\nIs the Bombardier's brother\"";
-        boomdandy.hints = "I prioritize killing the Executive";
+        boomdandy.hints = "If I am the last evil executed, I don't deal 3 damage.";
         boomdandy.ifLies = "";
         boomdandy.notes = "";
         boomdandy.picking = false;
@@ -420,13 +429,58 @@ public class Main : MelonMod
         boomdandy.additionalFlavorTexts = new Il2CppStringArray(1);
         boomdandy.additionalFlavorTexts[0] = boomdandy.flavorText;
 
+        Il2Cpp.CharacterData gTwin = new Il2Cpp.CharacterData();
+        gTwin.role = new GoodTwin();
+        gTwin.name = "Good Twin";
+        gTwin.characterName = "Good Twin";
+        gTwin.description = "I point at the Evil Twin";
+        gTwin.flavorText = "\"It's the other one I swear!\"";
+        gTwin.hints = "";
+        gTwin.ifLies = "";
+        gTwin.notes = "";
+        gTwin.picking = false;
+        gTwin.startingAlignment = EAlignment.Good;
+        gTwin.type = ECharacterType.Minion;
+        gTwin.abilityUsage = EAbilityUsage.Once;
+        gTwin.bluffable = false;
+        gTwin.characterId = "GoodTwin_POW";
+        gTwin.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        gTwin.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        gTwin.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        gTwin.color = new Color(0.8510f, 0.4549f, 0.0f);
+        gTwin.additionalFlavorTexts = new Il2CppStringArray(1);
+        gTwin.additionalFlavorTexts[0] = gTwin.flavorText;
+        gTwin.doNotCountAsEvilForUi = true;
+
+        Il2Cpp.CharacterData eTwin = new Il2Cpp.CharacterData();
+        eTwin.role = new EvilTwin();
+        eTwin.name = "Evil Twin";
+        eTwin.characterName = "Evil Twin";
+        eTwin.description = "I disguise as the Good Twin and point at her";
+        eTwin.flavorText = "\"It's the other one I swear!\"";
+        eTwin.hints = "";
+        eTwin.ifLies = "";
+        eTwin.notes = "";
+        eTwin.picking = false;
+        eTwin.startingAlignment = EAlignment.Evil;
+        eTwin.type = ECharacterType.Minion;
+        eTwin.abilityUsage = EAbilityUsage.Once;
+        eTwin.bluffable = false;
+        eTwin.characterId = "EvilTwin_POW";
+        eTwin.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        eTwin.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        eTwin.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        eTwin.color = new Color(0.8510f, 0.4549f, 0.0f);
+        eTwin.additionalFlavorTexts = new Il2CppStringArray(1);
+        eTwin.additionalFlavorTexts[0] = eTwin.flavorText;
+      
         Il2Cpp.CharacterData pestilence = new Il2Cpp.CharacterData();
         pestilence.role = new Pestilence();
         pestilence.name = "Pestilence";
         pestilence.characterName = "Pestilence";
         pestilence.description = "Every Villager has a 80% chance of being Corrupted\n At night, I kill all revealed Corrupted cards.";
-        pestilence.flavorText = "\"The Air is thick tonight...\"";
-        pestilence.hints = "";
+        pestilence.flavorText = "\"I came to look upon it with unutterable loathing,\n and to flee silently from its odious presence, as from the breath of a pestilence. \n - Edgar Allen Poe\"";
+        pestilence.hints = "One card is Immune, meaning they cannot be corrupted";
         pestilence.ifLies = "";
         pestilence.notes = "";
         pestilence.picking = false;
@@ -447,8 +501,8 @@ public class Main : MelonMod
         famine.role = new Famine();
         famine.name = "Famine";
         famine.characterName = "Famine";
-        famine.description = "Every revealed character dies when I am revealed";
-        famine.flavorText = "\"They eat, whilst we starve...\"";
+        famine.description = "5 cards become starved. \nWhen Executed: I kill all revealed starved cards.";
+        famine.flavorText = "\"They that die by famine die by inches.\n -Matthew Henry\"";
         famine.hints = "";
         famine.ifLies = "";
         famine.notes = "";
@@ -469,8 +523,8 @@ public class Main : MelonMod
         war.role = new War();
         war.name = "War";
         war.characterName = "War";
-        war.description = "Kills 2 people per night. \nNight comes in 2 turns instead of 4";
-        war.flavorText = "\"There are no winners\nIn the games without frontiers\"";
+        war.description = "Kills 2 people per night, dealing 2 damage. \n Outcasts and Minions are far more abundant.";
+        war.flavorText = "\"I came.\nI saw.\nI conquered. \n - Julius Ceasar\"";
         war.hints = "";
         war.ifLies = "";
         war.notes = "";
@@ -492,9 +546,9 @@ public class Main : MelonMod
         death.role = new Death();
         death.name = "Death";
         death.characterName = "Death";
-        death.description = "You have one day.\nGood luck.";
-        death.flavorText = "\"I have become Death, Destroyer of Worlds\"";
-        death.hints = "There is nothing I can give you. Good luck";
+        death.description = "You have one day.\nBest of luck.";
+        death.flavorText = "\"I have become Death, Destroyer of Worlds\n - J. Robert Oppenheimer\"";
+        death.hints = "One thing: Death cannot hide.";
         death.ifLies = "";
         death.notes = "";
         death.picking = false;
@@ -522,9 +576,8 @@ public class Main : MelonMod
         deathScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
         deathScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         deathScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
-        CharactersCount deathCounter1 = setCharacterCount(8, 2, 0, 1);
-        CharactersCount deathCounter2 = setCharacterCount(8, 1, 0, 1);
-        CharactersCount deathCounter3 = setCharacterCount(7, 2, 0, 1);
+        CharactersCount deathCounter1 = setCharacterCount(8, 0, 0, 1);
+        CharactersCount deathCounter2 = setCharacterCount(7, 0, 0, 1);
         Il2CppSystem.Collections.Generic.List<CharactersCount> deathCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
         deathCounterList.Add(deathCounter1);
         deathCounterList.Add(deathCounter1);
@@ -535,11 +588,9 @@ public class Main : MelonMod
         deathCounterList.Add(deathCounter2);
         deathCounterList.Add(deathCounter2);
         deathCounterList.Add(deathCounter2);
-        deathCounterList.Add(deathCounter3);
-        deathCounterList.Add(deathCounter3);
         deathScript.characterCounts = deathCounterList;
         deathScriptData.scriptInfo = deathScript;
-
+        
 
         CustomScriptData warScriptData = new CustomScriptData();
         warScriptData.name = "War_1";
@@ -551,9 +602,9 @@ public class Main : MelonMod
         warScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
         warScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         warScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
-        CharactersCount warCounter1 = setCharacterCount(4, 3, 2, 1);
-        CharactersCount warCounter2 = setCharacterCount(4, 2, 2, 1);
-        CharactersCount warCounter3 = setCharacterCount(3, 2, 2, 1);
+        CharactersCount warCounter1 = setCharacterCount(2, 4, 3, 1);
+        CharactersCount warCounter2 = setCharacterCount(2, 3, 3, 1);
+        CharactersCount warCounter3 = setCharacterCount(1, 4, 2, 1);
         Il2CppSystem.Collections.Generic.List<CharactersCount> warCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
         warCounterList.Add(warCounter1);
         warCounterList.Add(warCounter1);
@@ -583,8 +634,6 @@ public class Main : MelonMod
         CharactersCount famineCounter2 = setCharacterCount(7, 2, 1, 1);
         CharactersCount famineCounter3 = setCharacterCount(7, 1, 2, 1);
         Il2CppSystem.Collections.Generic.List<CharactersCount> famineCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
-        famineCounterList.Add(famineCounter1);
-        famineCounterList.Add(famineCounter1);
         famineCounterList.Add(famineCounter1);
         famineCounterList.Add(famineCounter1);
         famineCounterList.Add(famineCounter1);
@@ -638,6 +687,37 @@ public class Main : MelonMod
         {
             ScriptInfo script = scriptData.scriptInfo;
             addRole(script.startingTownsfolks, official);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
+            addRole(script.startingTownsfolks, pacifist);
             addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, coroner);
             addRole(script.startingOutsiders, veteran);
@@ -648,6 +728,7 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, psycho);
             addRole(script.startingMinions, conjurer);
             addRole(script.startingMinions, boomdandy);
+            addRole(script.startingMinions, eTwin);
 
         }
         //Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
@@ -658,6 +739,7 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", official);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", godfather);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", pestilence);
+        Characters.Instance.startGameActOrder = insertAfterAct("Godfather", eTwin);
         List<CharacterData> characters = new List<CharacterData>();
         characters.Add(official);
         characters.Add(conjurer);

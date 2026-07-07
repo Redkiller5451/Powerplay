@@ -42,27 +42,83 @@ public class Famine : Demon
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-   
+
         //CODE STEALING: credit to TheCaldo
-        if (trigger == ETriggerPhase.Day)
+        if (trigger == ETriggerPhase.AfterRoundStart)
         {
-            if (charRef.state == ECharacterState.Dead) return;
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+            Il2CppSystem.Collections.Generic.List<Character> list2 = new Il2CppSystem.Collections.Generic.List<Character>();
+            if (list1.Count > 0)
+            {
+                Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                list2.Add(random);
+                list1.Remove(random);
+                if (list1.Count > 0)
+                {
+                    random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                    list2.Add(random);
+                    list1.Remove(random);
+                    if (list1.Count > 0)
+                    {
+                        random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                        list2.Add(random);
+                        list1.Remove(random);
+                        if (list1.Count > 0)
+                        {
+                            random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                            list2.Add(random);
+                            list1.Remove(random);
+                            if (list1.Count > 0)
+                            {
+                                random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                                list2.Add(random);
+                                list1.Remove(random);
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (Character character in list2)
+            {
+                character.statuses.AddStatus(Starved.starved, character);
+            }
+        }
+        if (trigger == ETriggerPhase.OnExecuted)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+            list1 = Characters.Instance.FilterCharacterContainsStatus(list1, Starved.starved);
             list1 = Characters.Instance.FilterRevealedCharacters(list1);
             foreach (Character character in list1)
             {
-                character.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
+                character.statuses.AddStatus(ECharacterStatus.KilledByEvil, character);
                 character.KillByDemon(charRef);
-                if (character.dataRef.picking)
-                {
-                    character.pickable.SetActive(false);
-                }
-                PlayerController.PlayerInfo.health.Damage(2);
+                Health health = PlayerController.PlayerInfo.health;
+                health.Damage(2);
             }
-            charRef.RevealReal();
+        }
+       
+    }
+}
+public static class Starved
+{
+    public static ECharacterStatus starved = (ECharacterStatus)200;
+    [HarmonyPatch(typeof(Character), nameof(Character.ShowDescription))]
+    public static class becomeStarved
+    {
+        public static void Postfix(Character __instance)
+        {
+            if (__instance.statuses.Contains(starved))
+            {
+                HintInfo info = new HintInfo();
+                info.text = "I am starved.\nRevealing me would kill me when Famine is killed, dealing 2 damage";
+                UIEvents.OnShowHint.Invoke(info, __instance.hintPivot);
+            }
+
         }
     }
 }
+ 

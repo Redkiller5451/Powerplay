@@ -31,6 +31,7 @@ namespace Demon_Bluff_Mods
         }
         public override ActedInfo GetInfo(Character charRef)
         {
+            
              Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
