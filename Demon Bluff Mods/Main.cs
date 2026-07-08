@@ -27,6 +27,9 @@ public class Main : MelonMod
         ClassInjector.RegisterTypeInIl2Cpp<Monarch>();
         ClassInjector.RegisterTypeInIl2Cpp<Pacifist>();
         ClassInjector.RegisterTypeInIl2Cpp<Official>();
+        ClassInjector.RegisterTypeInIl2Cpp<Fisherman>();
+        ClassInjector.RegisterTypeInIl2Cpp<KnowItAll>();
+        ClassInjector.RegisterTypeInIl2Cpp<TeaLady>();
 
         ClassInjector.RegisterTypeInIl2Cpp<Jailor>();
         ClassInjector.RegisterTypeInIl2Cpp<Veteran>();
@@ -138,6 +141,28 @@ public class Main : MelonMod
         fisherman.color = new Color(1f, 0.935f, 0.7302f);
         fisherman.additionalFlavorTexts = new Il2CppStringArray(1);
         fisherman.additionalFlavorTexts[0] = fisherman.flavorText;
+
+        Il2Cpp.CharacterData teaLady = new Il2Cpp.CharacterData();
+        teaLady.role = new TeaLady();
+        teaLady.name = "Soldier";
+        teaLady.characterName = "Soldier";
+        teaLady.description = "Good characters next to me cannot die.\n If I sit next to Evil I am Corrupted.";
+        teaLady.flavorText = "\"Defends all Good people\nIs the only friend of the Wretch.\"";
+        teaLady.hints = "I see the Wretch as Good.";
+        teaLady.ifLies = "Good Character next to me can die";
+        teaLady.notes = "";
+        teaLady.picking = false;
+        teaLady.startingAlignment = EAlignment.Good;
+        teaLady.type = ECharacterType.Villager;
+        teaLady.abilityUsage = EAbilityUsage.Once;
+        teaLady.bluffable = true;
+        teaLady.characterId = "Soldier_POW";
+        teaLady.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        teaLady.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        teaLady.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        teaLady.color = new Color(1f, 0.935f, 0.7302f);
+        teaLady.additionalFlavorTexts = new Il2CppStringArray(1);
+        teaLady.additionalFlavorTexts[0] = teaLady.flavorText;
 
         Il2Cpp.CharacterData prosecutor = new Il2Cpp.CharacterData();
         prosecutor.role = new Prosecutor();
@@ -427,6 +452,28 @@ public class Main : MelonMod
         hangman.color = new Color(0.8510f, 0.4549f, 0.0f);
         hangman.additionalFlavorTexts = new Il2CppStringArray(1);
         hangman.additionalFlavorTexts[0] = hangman.flavorText;
+
+        Il2Cpp.CharacterData devilsAdvocate = new Il2Cpp.CharacterData();
+        devilsAdvocate.role = new DevilsAdvocate();
+        devilsAdvocate.name = "Supporter";
+        devilsAdvocate.characterName = "Supporter";
+        devilsAdvocate.description = "The Demon can't be executed as long as I am alive. \n The Demon doesn't disguise. \n I lie and disguise.";
+        devilsAdvocate.flavorText = "\"Has an excellent reason on why the Demon should stay alive. \n Never actually says.\"";
+        devilsAdvocate.hints = "";
+        devilsAdvocate.ifLies = "";
+        devilsAdvocate.notes = "";
+        devilsAdvocate.picking = false;
+        devilsAdvocate.startingAlignment = EAlignment.Evil;
+        devilsAdvocate.type = ECharacterType.Minion;
+        devilsAdvocate.abilityUsage = EAbilityUsage.Once;
+        devilsAdvocate.bluffable = false;
+        devilsAdvocate.characterId = "Supporter_POW";
+        devilsAdvocate.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        devilsAdvocate.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        devilsAdvocate.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        devilsAdvocate.color = new Color(0.8510f, 0.4549f, 0.0f);
+        devilsAdvocate.additionalFlavorTexts = new Il2CppStringArray(1);
+        devilsAdvocate.additionalFlavorTexts[0] = devilsAdvocate.flavorText;
 
         Il2Cpp.CharacterData conjurer = new Il2Cpp.CharacterData();
         conjurer.role = new Conjurer();
@@ -730,6 +777,7 @@ public class Main : MelonMod
         {
             ScriptInfo script = scriptData.scriptInfo;
             addRole(script.startingTownsfolks, official);
+            addRole(script.startingTownsfolks, teaLady);
             addRole(script.startingTownsfolks, knowItAll);
             addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, fisherman);
@@ -741,6 +789,7 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, hangman);
             addRole(script.startingOutsiders, psycho);
             addRole(script.startingMinions, conjurer);
+            addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
             addRole(script.startingMinions, eTwin);
 
@@ -755,6 +804,8 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", godfather);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", pestilence);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", eTwin);
+        Characters.Instance.startGameActOrder = insertAfterAct("Godfather", devilsAdvocate);
+        Characters.Instance.startGameActOrder = insertAfterAct("Godfather", teaLady);
         List<CharacterData> characters = new List<CharacterData>();
         characters.Add(official);
         characters.Add(conjurer);
