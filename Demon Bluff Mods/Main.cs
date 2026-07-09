@@ -42,7 +42,8 @@ public class Main : MelonMod
 
         ClassInjector.RegisterTypeInIl2Cpp<Conjurer>();
         ClassInjector.RegisterTypeInIl2Cpp<Boomdandy>();
-       
+        ClassInjector.RegisterTypeInIl2Cpp<Stormy>();
+
         ClassInjector.RegisterTypeInIl2Cpp<Death>();
         ClassInjector.RegisterTypeInIl2Cpp<Famine>();
         ClassInjector.RegisterTypeInIl2Cpp<Pestilence>();
@@ -75,6 +76,7 @@ public class Main : MelonMod
         marksman.color = new Color(1f, 0.935f, 0.7302f);
         marksman.additionalFlavorTexts = new Il2CppStringArray(1);
         marksman.additionalFlavorTexts[0] = marksman.flavorText;
+        marksman.gender = EGender.Male;
 
         Il2Cpp.CharacterData coroner = new Il2Cpp.CharacterData();
         coroner.role = new Coroner();
@@ -97,6 +99,7 @@ public class Main : MelonMod
         coroner.color = new Color(1f, 0.935f, 0.7302f);
         coroner.additionalFlavorTexts = new Il2CppStringArray(1);
         coroner.additionalFlavorTexts[0] = coroner.flavorText;
+        coroner.gender = EGender.Male;
 
         Il2Cpp.CharacterData knowItAll = new Il2Cpp.CharacterData();
         knowItAll.role = new KnowItAll();
@@ -119,6 +122,7 @@ public class Main : MelonMod
         knowItAll.color = new Color(1f, 0.935f, 0.7302f);
         knowItAll.additionalFlavorTexts = new Il2CppStringArray(1);
         knowItAll.additionalFlavorTexts[0] = knowItAll.flavorText;
+        knowItAll.gender = EGender.Male;
 
         Il2Cpp.CharacterData fisherman = new Il2Cpp.CharacterData();
         fisherman.role = new Fisherman();
@@ -141,6 +145,7 @@ public class Main : MelonMod
         fisherman.color = new Color(1f, 0.935f, 0.7302f);
         fisherman.additionalFlavorTexts = new Il2CppStringArray(1);
         fisherman.additionalFlavorTexts[0] = fisherman.flavorText;
+        fisherman.gender = EGender.Male;
 
         Il2Cpp.CharacterData teaLady = new Il2Cpp.CharacterData();
         teaLady.role = new TeaLady();
@@ -163,6 +168,7 @@ public class Main : MelonMod
         teaLady.color = new Color(1f, 0.935f, 0.7302f);
         teaLady.additionalFlavorTexts = new Il2CppStringArray(1);
         teaLady.additionalFlavorTexts[0] = teaLady.flavorText;
+        teaLady.gender = EGender.Female;
 
         Il2Cpp.CharacterData prosecutor = new Il2Cpp.CharacterData();
         prosecutor.role = new Prosecutor();
@@ -185,6 +191,7 @@ public class Main : MelonMod
         prosecutor.color = new Color(1f, 0.935f, 0.7302f);
         prosecutor.additionalFlavorTexts = new Il2CppStringArray(1);
         prosecutor.additionalFlavorTexts[0] = prosecutor.flavorText;
+        prosecutor.gender = EGender.Male;
 
         Il2Cpp.CharacterData mayor = new Il2Cpp.CharacterData();
         mayor.role = new Mayor();
@@ -207,6 +214,7 @@ public class Main : MelonMod
         mayor.color = new Color(1f, 0.935f, 0.7302f);
         mayor.additionalFlavorTexts = new Il2CppStringArray(1);
         mayor.additionalFlavorTexts[0] = mayor.flavorText;
+        mayor.gender = EGender.Male;
 
         Il2Cpp.CharacterData marshal = new Il2Cpp.CharacterData();
         marshal.role = new Marshal();
@@ -229,6 +237,7 @@ public class Main : MelonMod
         marshal.color = new Color(1f, 0.935f, 0.7302f);
         marshal.additionalFlavorTexts = new Il2CppStringArray(1);
         marshal.additionalFlavorTexts[0] = marshal.flavorText;
+        marshal.gender = EGender.Male;
 
         Il2Cpp.CharacterData monarch = new Il2Cpp.CharacterData();
         monarch.role = new Monarch();
@@ -251,6 +260,7 @@ public class Main : MelonMod
         monarch.color = new Color(1f, 0.935f, 0.7302f);
         monarch.additionalFlavorTexts = new Il2CppStringArray(1);
         monarch.additionalFlavorTexts[0] = monarch.flavorText;
+        monarch.gender = EGender.Male;
 
         Il2Cpp.CharacterData official = new Il2Cpp.CharacterData();
         official.role = new Official();
@@ -295,6 +305,7 @@ public class Main : MelonMod
         pacifist.color = new Color(1f, 0.935f, 0.7302f);
         pacifist.additionalFlavorTexts = new Il2CppStringArray(1);
         pacifist.additionalFlavorTexts[0] = pacifist.flavorText;
+        pacifist.gender = EGender.Female;
         // This is taken from Wingidon's DBExpansion mod
 
 
@@ -319,6 +330,7 @@ public class Main : MelonMod
         jailor.color = new Color(1f, 0.935f, 0.7302f);
         jailor.additionalFlavorTexts = new Il2CppStringArray(1);
         jailor.additionalFlavorTexts[0] = jailor.flavorText;
+        jailor.gender = EGender.Female;
 
         Il2Cpp.CharacterData snakeCharmer = new Il2Cpp.CharacterData();
         snakeCharmer.role = new SnakeCharmer();
@@ -341,6 +353,7 @@ public class Main : MelonMod
         snakeCharmer.color = new Color(0.9659f, 1f, 0.4472f);
         snakeCharmer.additionalFlavorTexts = new Il2CppStringArray(1);
         snakeCharmer.additionalFlavorTexts[0] = snakeCharmer.flavorText;
+        snakeCharmer.gender = EGender.Male;
 
         Il2Cpp.CharacterData veteran = new Il2Cpp.CharacterData();
         veteran.role = new Veteran();
@@ -363,6 +376,7 @@ public class Main : MelonMod
         veteran.color = new Color(0.9659f, 1f, 0.4472f);
         veteran.additionalFlavorTexts = new Il2CppStringArray(1);
         veteran.additionalFlavorTexts[0] = veteran.flavorText;
+        veteran.gender = EGender.Male;
 
         Il2Cpp.CharacterData pirate = new Il2Cpp.CharacterData();
         pirate.role = new Pirate();
@@ -385,6 +399,7 @@ public class Main : MelonMod
         pirate.color = new Color(0.8510f, 0.4549f, 0.0f);
         pirate.additionalFlavorTexts = new Il2CppStringArray(1);
         pirate.additionalFlavorTexts[0] = pirate.flavorText;
+        pirate.gender = EGender.Male;
 
         Il2Cpp.CharacterData godfather = new Il2Cpp.CharacterData();
         godfather.role = new Godfather();
@@ -407,6 +422,7 @@ public class Main : MelonMod
         godfather.color = new Color(0.8510f, 0.4549f, 0.0f);
         godfather.additionalFlavorTexts = new Il2CppStringArray(1);
         godfather.additionalFlavorTexts[0] = godfather.flavorText;
+        godfather.gender = EGender.Male;
 
         Il2Cpp.CharacterData psycho = new Il2Cpp.CharacterData();
         psycho.role = new Psychopath();
@@ -430,6 +446,7 @@ public class Main : MelonMod
         nightPhase.nightCharactersOrder.Add(psycho);
         psycho.additionalFlavorTexts = new Il2CppStringArray(1);
         psycho.additionalFlavorTexts[0] = psycho.flavorText;
+        psycho.gender = EGender.Male;
 
         Il2Cpp.CharacterData hangman = new Il2Cpp.CharacterData();
         hangman.role = new Hangman();
@@ -452,6 +469,7 @@ public class Main : MelonMod
         hangman.color = new Color(0.8510f, 0.4549f, 0.0f);
         hangman.additionalFlavorTexts = new Il2CppStringArray(1);
         hangman.additionalFlavorTexts[0] = hangman.flavorText;
+        hangman.gender = EGender.Male;
 
         Il2Cpp.CharacterData devilsAdvocate = new Il2Cpp.CharacterData();
         devilsAdvocate.role = new DevilsAdvocate();
@@ -474,6 +492,7 @@ public class Main : MelonMod
         devilsAdvocate.color = new Color(0.8510f, 0.4549f, 0.0f);
         devilsAdvocate.additionalFlavorTexts = new Il2CppStringArray(1);
         devilsAdvocate.additionalFlavorTexts[0] = devilsAdvocate.flavorText;
+        devilsAdvocate.gender = EGender.Male;
 
         Il2Cpp.CharacterData conjurer = new Il2Cpp.CharacterData();
         conjurer.role = new Conjurer();
@@ -496,6 +515,7 @@ public class Main : MelonMod
         conjurer.color = new Color(0.8510f, 0.4549f, 0.0f);
         conjurer.additionalFlavorTexts = new Il2CppStringArray(1);
         conjurer.additionalFlavorTexts[0] = conjurer.flavorText;
+        conjurer.gender = EGender.Female;
 
         Il2Cpp.CharacterData boomdandy = new Il2Cpp.CharacterData();
         boomdandy.role = new Boomdandy();
@@ -518,6 +538,7 @@ public class Main : MelonMod
         boomdandy.color = new Color(0.8510f, 0.4549f, 0.0f);
         boomdandy.additionalFlavorTexts = new Il2CppStringArray(1);
         boomdandy.additionalFlavorTexts[0] = boomdandy.flavorText;
+        boomdandy.gender = EGender.Male;
 
         Il2Cpp.CharacterData gTwin = new Il2Cpp.CharacterData();
         gTwin.role = new GoodTwin();
@@ -541,6 +562,7 @@ public class Main : MelonMod
         gTwin.additionalFlavorTexts = new Il2CppStringArray(1);
         gTwin.additionalFlavorTexts[0] = gTwin.flavorText;
         gTwin.doNotCountAsEvilForUi = true;
+        gTwin.gender = EGender.Female;
 
         Il2Cpp.CharacterData eTwin = new Il2Cpp.CharacterData();
         eTwin.role = new EvilTwin();
@@ -563,7 +585,8 @@ public class Main : MelonMod
         eTwin.color = new Color(0.8510f, 0.4549f, 0.0f);
         eTwin.additionalFlavorTexts = new Il2CppStringArray(1);
         eTwin.additionalFlavorTexts[0] = eTwin.flavorText;
-      
+        eTwin.gender = EGender.Female;
+
         Il2Cpp.CharacterData pestilence = new Il2Cpp.CharacterData();
         pestilence.role = new Pestilence();
         pestilence.name = "Pestilence";
@@ -586,6 +609,7 @@ public class Main : MelonMod
         nightPhase.nightCharactersOrder.Add(pestilence);
         pestilence.additionalFlavorTexts = new Il2CppStringArray(1);
         pestilence.additionalFlavorTexts[0] = pestilence.flavorText;
+        pestilence.gender = EGender.Male;
 
         Il2Cpp.CharacterData famine = new Il2Cpp.CharacterData();
         famine.role = new Famine();
@@ -608,6 +632,7 @@ public class Main : MelonMod
         famine.color = new Color(1f, 0.3804f, 0.3804f);
         famine.additionalFlavorTexts = new Il2CppStringArray(1);
         famine.additionalFlavorTexts[0] = famine.flavorText;
+       famine.gender = EGender.Male;
 
         Il2Cpp.CharacterData war = new Il2Cpp.CharacterData();
         war.role = new War();
@@ -631,6 +656,7 @@ public class Main : MelonMod
         nightPhase.nightCharactersOrder.Add(war);
         war.additionalFlavorTexts = new Il2CppStringArray(1);
         war.additionalFlavorTexts[0] = war.flavorText;
+        war.gender = EGender.Male;
 
         Il2Cpp.CharacterData death = new Il2Cpp.CharacterData();
         death.role = new Death();
@@ -654,6 +680,74 @@ public class Main : MelonMod
         nightPhase.nightCharactersOrder.Add(death);
         death.additionalFlavorTexts = new Il2CppStringArray(1);
         death.additionalFlavorTexts[0] = death.flavorText;
+        death.gender = EGender.Male;
+
+        Il2Cpp.CharacterData stormyW = new Il2Cpp.CharacterData();
+        stormyW.role = new Stormy();
+        stormyW.name = "Stormy";
+        stormyW.characterName = "Stormy";
+        stormyW.description = "A lot more Outcasts are in-play";
+        stormyW.flavorText = "\"Small waves crashes inot the windows of the villagers, the streets flooded with water.\nThe Social Outcasts's numbers are greater, hoping to help " +
+            "in this hour.\"";
+        stormyW.hints = "";
+        stormyW.ifLies = "";
+        stormyW.notes = "";
+        stormyW.picking = false;
+        stormyW.startingAlignment = WeatherAlignement.Weather;
+        stormyW.type = WeatherType.Weather;
+        stormyW.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        stormyW.bluffable = false;
+        stormyW.characterId = "Stormy_POW";
+        stormyW.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        stormyW.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        stormyW.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        stormyW.color = new Color(1f, 0.3804f, 0.3804f);
+        stormyW.additionalFlavorTexts = new Il2CppStringArray(1);
+        stormyW.additionalFlavorTexts[0] = stormyW.flavorText;
+
+        Il2Cpp.CharacterData foggyW = new Il2Cpp.CharacterData();
+        foggyW.role = new Foggy();
+        foggyW.name = "Foggy";
+        foggyW.characterName = "Foggy";
+        foggyW.description = "You cannot see your deckview";
+        foggyW.flavorText = "\"The foggy weather hides good, and bad, from sight.\n The later takes advantage, capitalizing on the plight.\"";
+        foggyW.hints = "";
+        foggyW.ifLies = "";
+        foggyW.notes = "";
+        foggyW.picking = false;
+        foggyW.startingAlignment = WeatherAlignement.Weather;
+        foggyW.type = WeatherType.Weather;
+        foggyW.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        foggyW.bluffable = false;
+        foggyW.characterId = "Foggy_POW";
+        foggyW.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        foggyW.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        foggyW.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        foggyW.color = new Color(1f, 0.3804f, 0.3804f);
+        foggyW.additionalFlavorTexts = new Il2CppStringArray(1);
+        foggyW.additionalFlavorTexts[0] = foggyW.flavorText;
+
+        Il2Cpp.CharacterData sunnyW = new Il2Cpp.CharacterData();
+        sunnyW.role = new Sunny();
+        sunnyW.name = "Sunny";
+        sunnyW.characterName = "Sunny";
+        sunnyW.description = "Each villager has an increasing chance of becoming Corrupted.";
+        sunnyW.flavorText = "\"In the harsh sun, those who usually tell truths\n become blinded by the golden hue.\"";
+        sunnyW.hints = "";
+        sunnyW.ifLies = "";
+        sunnyW.notes = "";
+        sunnyW.picking = false;
+        sunnyW.startingAlignment = WeatherAlignement.Weather;
+        sunnyW.type = WeatherType.Weather;
+        sunnyW.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        sunnyW.bluffable = false;
+        sunnyW.characterId = "Sunny_POW";
+        sunnyW.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        sunnyW.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        sunnyW.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        sunnyW.color = new Color(1f, 0.3804f, 0.3804f);
+        sunnyW.additionalFlavorTexts = new Il2CppStringArray(1);
+        sunnyW.additionalFlavorTexts[0] = sunnyW.flavorText;
 
         //Code taken from theCaldoMod, the Dependency
         CustomScriptData deathScriptData = new CustomScriptData();
@@ -792,10 +886,15 @@ public class Main : MelonMod
             addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
             addRole(script.startingMinions, eTwin);
+            addRole(script.startingMinions, stormyW);
+            addRole(script.startingMinions, foggyW);
+            addRole(script.startingMinions, sunnyW);
 
         }
         //Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", stormyW);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", foggyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Baa", official);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
         Characters.Instance.startGameActOrder = insertAfterAct("Jailor", snakeCharmer);
