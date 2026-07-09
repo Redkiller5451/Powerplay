@@ -20,6 +20,9 @@ If a card dies by an evil, I learn an Evil card. If no card died by Evil, I do n
 ### Marksman (Good, Villager)
 I learn how many Minions have been revealed.
 
+### Soldier (Good, Villager)
+If both cards next to me are good, they cannot die. Or else I am corrupted.
+
 ### Know-It-All (Good, Villager)
 Learn a factually true or false statement, and learn if it is true or false.
 
@@ -61,6 +64,9 @@ I swap with an Evil. They say if they have been swapped. I disguise.
 ### Slinger (Evil, Minion)
 Upon starting, I kill a Good card.
 
+### Supporter (Evil, Minion)
+You cannot kill the Demon whilst I am alive.
+
 ### Grenadier (Evil, Minion)
 When executed, I deal 3 damage and kill 2 good cards. I dont deal damage if I am the last evil killed.
 
@@ -93,3 +99,16 @@ When revealed, I call a card Evil. I am truthful if Good and lying if Evil.
 
 ### Godfather
 On Roundstart, I change an opposing card's alignement to my own. 
+
+# WEATHER 
+
+Weather are effects applied to villages as a whole.
+
+## Stormy
+More Outcasts are in-play
+
+## Foggy
+You cannot see your deckview
+
+## Sunny
+Villagers have an increasing chance of becoming corrupted
