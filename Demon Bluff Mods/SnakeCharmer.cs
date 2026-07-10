@@ -29,9 +29,6 @@ public class SnakeCharmer : Role
             random.Init(charRef.dataRef);
             charRef.Init(pickedEvil);
             random.DisableStartAbility();
-            charRef.statuses.AddStatus(ECharacterStatus.WorkingAbility,charRef);
-            charRef.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
-            charRef.statuses.AddStatus(ECharacterStatus.AppearHonest, charRef);
             MelonLogger.Msg($"{random.id} is the Evil");
             MelonLogger.Msg($"The Snake Charmer has swapped #{charRef.id} and #{random.id}");
         }

@@ -36,7 +36,7 @@ public static class Patch
     {
         static bool Prefix(Character __instance)
         {
-            MelonLogger.Msg("Blocked protected kill");
+          
             if (__instance == null)
                 return true;
 
@@ -55,7 +55,7 @@ public static class Patch
     {
         static bool Prefix(Character __instance)
         {
-            MelonLogger.Msg("Blocked protected kill");
+            
             if (__instance == null)
                 return true;
 
@@ -74,7 +74,7 @@ public static class Patch
     {
         static bool Prefix(Character __instance)
         {
-            MelonLogger.Msg("Blocked protected kill");
+           
             if (__instance == null)
                 return true;
 
@@ -93,7 +93,7 @@ public static class Patch
     {
         static bool Prefix(Character __instance)
         {
-            MelonLogger.Msg("Blocked protected kill");
+          
             if (__instance == null)
                 return true;
 

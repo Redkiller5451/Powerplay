@@ -33,6 +33,7 @@ namespace Demon_Bluff_Mods
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                list1 = Characters.Instance.FilterAliveCharacters(list1);
                 Character victim = null;
                 Health health = PlayerController.PlayerInfo.health;
                 int randomIndex1 = UnityEngine.Random.Range(0, list1.Count);

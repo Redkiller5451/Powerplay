@@ -290,7 +290,7 @@ namespace Demon_Bluff_Mods
             }
             public override void Act(ETriggerPhase trigger, Character charRef)
             {
-                if (trigger == ETriggerPhase.Start)
+                if (trigger == ETriggerPhase.AfterRoundStart)
                 {
                 Il2CppSystem.Collections.Generic.List<CharacterData> deckview = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 deckview = Gameplay.Instance.GetScriptCharacters();

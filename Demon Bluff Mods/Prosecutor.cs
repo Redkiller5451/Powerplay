@@ -57,7 +57,7 @@ namespace Demon_Bluff_Mods
                     Character random = list1[randomIndex];
                     random.Kill();
                    
-                    line = $"I killed #{random.id}, the {random.name}";
+                    line = $"I killed #{random.id}";
                 }
             else
             {

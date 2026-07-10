@@ -31,8 +31,6 @@ namespace Demon_Bluff_Mods
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Demon);
-                list1[0].statuses.AddStatus(ECharacterStatus.AppearTruthfull, list1[0]);
-                list1[0].statuses.AddStatus(ECharacterStatus.HealthyBluff, list1[0]);
                 list1[0].statuses.AddStatus(Protected.protect, list1[0]);
             }
             if(trigger == ETriggerPhase.OnExecuted)

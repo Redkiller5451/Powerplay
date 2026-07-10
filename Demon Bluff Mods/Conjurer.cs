@@ -25,24 +25,26 @@ namespace Demon_Bluff_Mods
         {
             return new ActedInfo("");
         }
+        //Code taken from Circus, as Slinger is very similar to Vizier
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
             if (trigger == ETriggerPhase.AfterRoundStart)
             {
-                Gameplay gameplay = Gameplay.Instance;
-                Characters instance = Characters.Instance;
-                Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
-                Character victim =null;
-               
-               int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-               victim = list1[randomIndex];
-                victim.statuses.statuses.Add(ECharacterStatus.KilledByEvil);
-                victim.KillByDemon(charRef);
-                victim.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, victim);
-
-                
+                object delay = MelonCoroutines.Start(KillCharacter(charRef));
             }
         }
+        public System.Collections.IEnumerator KillCharacter(Character charRef)
+        {
+            yield return new WaitForSeconds(1f);
+            Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
+            unrevealedCharacters = Characters.Instance.FilterAlignmentCharacters(unrevealedCharacters, EAlignment.Good);
+            if (unrevealedCharacters.Count > 0)
+            {
+                Character targetChar = unrevealedCharacters[UnityEngine.Random.RandomRangeInt(0, unrevealedCharacters.Count)];
+                targetChar.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
+                targetChar.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
+                targetChar.KillByDemon(charRef);
+            }
         }
+    }
 }

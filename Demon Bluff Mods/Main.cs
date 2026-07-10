@@ -895,6 +895,7 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
         Characters.Instance.startGameActOrder = insertAfterAct("Baa", stormyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Baa", foggyW);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", sunnyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Baa", official);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
         Characters.Instance.startGameActOrder = insertAfterAct("Jailor", snakeCharmer);
