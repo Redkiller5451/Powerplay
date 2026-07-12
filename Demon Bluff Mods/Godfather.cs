@@ -30,7 +30,8 @@ public class Godfather : Neutrals
                     list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
                     Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                     random.ChangeAlignment(EAlignment.Evil);
-                }
+                random.statuses.AddStatus(Swapped.swapped, charRef);
+            }
                 else
                 {
                 MelonLogger.Msg("The Godfather is Good");
@@ -40,6 +41,7 @@ public class Godfather : Neutrals
                     list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
                     Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                     random.ChangeAlignment(EAlignment.Good);
+                random.statuses.AddStatus(Swapped.swapped,charRef);
                 }
             }
         }
@@ -49,5 +51,29 @@ public class Godfather : Neutrals
     }
     public Godfather(System.IntPtr ptr) : base(ptr)
     {
+    }
+}
+public static class Swapped
+{
+    public static ECharacterStatus swapped = (ECharacterStatus)235;
+    
+    //Taken from Snake Charmer, Wingidon
+    [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+    public static class swapStat
+    {
+        public static void Postfix(Character __instance)
+        {
+            if (__instance.statuses.Contains(Swapped.swapped))
+            {
+                if (__instance.alignment == EAlignment.Good)
+                {
+                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#41BF69><size=18>\n<Swapped(Good)></color></size>";
+                }
+                else
+                {
+                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#D62222><size=18>\n<Swapped(Evil)></color></size>";
+                }
+            }
+        }
     }
 }

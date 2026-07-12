@@ -15,7 +15,7 @@ public class Main : MelonMod
 {
     public override void OnInitializeMelon()
     {
-        
+
         UniversalUtility.AddEnum<EAlignment>("Neutral", (EAlignment)(30));
         UniversalUtility.AddEnum<ECharacterType>("Neutral", (EAlignment)(40));
 
@@ -34,7 +34,7 @@ public class Main : MelonMod
         ClassInjector.RegisterTypeInIl2Cpp<Jailor>();
         ClassInjector.RegisterTypeInIl2Cpp<Veteran>();
         ClassInjector.RegisterTypeInIl2Cpp<SnakeCharmer>();
-        
+
         ClassInjector.RegisterTypeInIl2Cpp<Psychopath>();
         ClassInjector.RegisterTypeInIl2Cpp<Pirate>();
         ClassInjector.RegisterTypeInIl2Cpp<Godfather>();
@@ -42,13 +42,14 @@ public class Main : MelonMod
 
         ClassInjector.RegisterTypeInIl2Cpp<Conjurer>();
         ClassInjector.RegisterTypeInIl2Cpp<Boomdandy>();
+        ClassInjector.RegisterTypeInIl2Cpp<Jinx>();
         ClassInjector.RegisterTypeInIl2Cpp<Stormy>();
 
         ClassInjector.RegisterTypeInIl2Cpp<Death>();
         ClassInjector.RegisterTypeInIl2Cpp<Famine>();
         ClassInjector.RegisterTypeInIl2Cpp<Pestilence>();
         ClassInjector.RegisterTypeInIl2Cpp<War>();
-        
+
     }
     public override void OnLateInitializeMelon()
     {
@@ -100,6 +101,52 @@ public class Main : MelonMod
         coroner.additionalFlavorTexts = new Il2CppStringArray(1);
         coroner.additionalFlavorTexts[0] = coroner.flavorText;
         coroner.gender = EGender.Male;
+
+        Il2Cpp.CharacterData guard = new Il2Cpp.CharacterData();
+        guard.role = new Guard();
+        guard.name = "Guard";
+        guard.characterName = "Guard";
+        guard.description = "I protect a villager. \nLearn a protected card.";
+        guard.flavorText = "\"A Knight who serves others\nMade his own armor weaker\"";
+        guard.hints = "";
+        guard.ifLies = "I dont protect at all";
+        guard.notes = "";
+        guard.picking = false;
+        guard.startingAlignment = EAlignment.Good;
+        guard.type = ECharacterType.Villager;
+        guard.abilityUsage = EAbilityUsage.Once;
+        guard.bluffable = true;
+        guard.characterId = "Guard_POW";
+        guard.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        guard.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        guard.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        guard.color = new Color(1f, 0.935f, 0.7302f);
+        guard.additionalFlavorTexts = new Il2CppStringArray(1);
+        guard.additionalFlavorTexts[0] = guard.flavorText;
+        guard.gender = EGender.Male;
+
+        Il2Cpp.CharacterData washerwoman = new Il2Cpp.CharacterData();
+        washerwoman.role = new Washerwoman();
+        washerwoman.name = "Demographer";
+        washerwoman.characterName = "Demographer";
+        washerwoman.description = "Pick 3 cards. I say an in-play Villager";
+        washerwoman.flavorText = "\"Views the villager population. \n Has a bad memory.\"";
+        washerwoman.hints = "If no one is dead, even a lying Coroner won't state a killer.";
+        washerwoman.ifLies = "Points to a Good player instead.";
+        washerwoman.notes = "";
+        washerwoman.picking = true;
+        washerwoman.startingAlignment = EAlignment.Good;
+        washerwoman.type = ECharacterType.Villager;
+        washerwoman.abilityUsage = EAbilityUsage.Once;
+        washerwoman.bluffable = true;
+        washerwoman.characterId = "Demographer_POW";
+        washerwoman.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        washerwoman.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        washerwoman.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        washerwoman.color = new Color(1f, 0.935f, 0.7302f);
+        washerwoman.additionalFlavorTexts = new Il2CppStringArray(1);
+        washerwoman.additionalFlavorTexts[0] = washerwoman.flavorText;
+        washerwoman.gender = EGender.Male;
 
         Il2Cpp.CharacterData knowItAll = new Il2Cpp.CharacterData();
         knowItAll.role = new KnowItAll();
@@ -494,6 +541,29 @@ public class Main : MelonMod
         devilsAdvocate.additionalFlavorTexts[0] = devilsAdvocate.flavorText;
         devilsAdvocate.gender = EGender.Male;
 
+        Il2Cpp.CharacterData jinx = new Il2Cpp.CharacterData();
+        jinx.role = new Jinx();
+        jinx.name = "Ambusher";
+        jinx.characterName = "Ambusher";
+        jinx.description = "One character is jinxed. If they are revealed, they die.";
+        jinx.flavorText = "\"Spends a long time preparing an ambush.\nKills one person per year.\"";
+        jinx.hints = "";
+        jinx.ifLies = "";
+        jinx.notes = "";
+        jinx.picking = false;
+        jinx.startingAlignment = EAlignment.Evil;
+        jinx.type = ECharacterType.Minion;
+        jinx.abilityUsage = EAbilityUsage.Once;
+        jinx.bluffable = false;
+        jinx.characterId = "Jinx_POW";
+        jinx.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        jinx.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        jinx.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        jinx.color = new Color(0.8510f, 0.4549f, 0.0f);
+        jinx.additionalFlavorTexts = new Il2CppStringArray(1);
+        jinx.additionalFlavorTexts[0] = jinx.flavorText;
+        jinx.gender = EGender.Male;
+
         Il2Cpp.CharacterData conjurer = new Il2Cpp.CharacterData();
         conjurer.role = new Conjurer();
         conjurer.name = "Slinger";
@@ -539,6 +609,29 @@ public class Main : MelonMod
         boomdandy.additionalFlavorTexts = new Il2CppStringArray(1);
         boomdandy.additionalFlavorTexts[0] = boomdandy.flavorText;
         boomdandy.gender = EGender.Male;
+
+        Il2Cpp.CharacterData butcher = new Il2Cpp.CharacterData();
+        butcher.role = new Butcher();
+        butcher.name = "Balancer";
+        butcher.characterName = "Balancer";
+        butcher.description = "If I am alive:\n Each time you execute, I kill a good character, dealing 2 damage.";
+        butcher.flavorText = "\"Eye for an eye is his motto. \nHasn't gone blind yet\"";
+        butcher.hints = "";
+        butcher.ifLies = "";
+        butcher.notes = "";
+        butcher.picking = false;
+        butcher.startingAlignment = EAlignment.Evil;
+        butcher.type = ECharacterType.Minion;
+        butcher.abilityUsage = EAbilityUsage.Once;
+        butcher.bluffable = false;
+        butcher.characterId = "Balancer_POW";
+        butcher.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        butcher.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        butcher.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        butcher.color = new Color(0.8510f, 0.4549f, 0.0f);
+        butcher.additionalFlavorTexts = new Il2CppStringArray(1);
+        butcher.additionalFlavorTexts[0] = boomdandy.flavorText;
+        butcher.gender = EGender.Male;
 
         Il2Cpp.CharacterData gTwin = new Il2Cpp.CharacterData();
         gTwin.role = new GoodTwin();
@@ -587,6 +680,29 @@ public class Main : MelonMod
         eTwin.additionalFlavorTexts[0] = eTwin.flavorText;
         eTwin.gender = EGender.Female;
 
+        Il2Cpp.CharacterData vortox = new Il2Cpp.CharacterData();
+        vortox.role = new Vortox();
+        vortox.name = "Vortox";
+        vortox.characterName = "Vortox";
+        vortox.description = "I cast a random weather effect.\nI lie and disguise.";
+        vortox.flavorText = "\"WOOSH WOOSH WOOSH WOOSH\"";
+        vortox.hints = "";
+        vortox.ifLies = "";
+        vortox.notes = "";
+        vortox.picking = false;
+        vortox.startingAlignment = EAlignment.Evil;
+        vortox.type = ECharacterType.Demon;
+        vortox.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        vortox.bluffable = false;
+        vortox.characterId = "Vortox_POW";
+        vortox.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        vortox.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        vortox.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        vortox.color = new Color(1f, 0.3804f, 0.3804f);
+        vortox.additionalFlavorTexts = new Il2CppStringArray(1);
+        vortox.additionalFlavorTexts[0] = vortox.flavorText;
+        vortox.gender = EGender.Male;
+
         Il2Cpp.CharacterData pestilence = new Il2Cpp.CharacterData();
         pestilence.role = new Pestilence();
         pestilence.name = "Pestilence";
@@ -632,7 +748,7 @@ public class Main : MelonMod
         famine.color = new Color(1f, 0.3804f, 0.3804f);
         famine.additionalFlavorTexts = new Il2CppStringArray(1);
         famine.additionalFlavorTexts[0] = famine.flavorText;
-       famine.gender = EGender.Male;
+        famine.gender = EGender.Male;
 
         Il2Cpp.CharacterData war = new Il2Cpp.CharacterData();
         war.role = new War();
@@ -681,6 +797,30 @@ public class Main : MelonMod
         death.additionalFlavorTexts = new Il2CppStringArray(1);
         death.additionalFlavorTexts[0] = death.flavorText;
         death.gender = EGender.Male;
+
+        /**Il2Cpp.CharacterData god = new Il2Cpp.CharacterData();
+        god.role = new God();
+        god.name = "God";
+        god.characterName = "God";
+        god.description = "Luck cannot save you. Judgement is here.";
+        god.flavorText = "\"Reality of truth, reality...\nAs the universe turned black... \nDid the sun ever defy fate?\"";
+        god.hints = "Even Death can't save you now";
+        god.ifLies = "";
+        god.notes = "";
+        god.picking = false;
+        god.startingAlignment = EAlignment.Evil;
+        god.type = ECharacterType.Demon;
+        god.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        god.bluffable = false;
+        god.characterId = "God_POW";
+        god.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        god.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        god.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        god.color = new Color(1f, 0.3804f, 0.3804f);
+        nightPhase.nightCharactersOrder.Add(god);
+        god.additionalFlavorTexts = new Il2CppStringArray(1);
+        god.additionalFlavorTexts[0] = god.flavorText;
+        god.gender = EGender.Male;*/
 
         Il2Cpp.CharacterData stormyW = new Il2Cpp.CharacterData();
         stormyW.role = new Stormy();
@@ -749,6 +889,94 @@ public class Main : MelonMod
         sunnyW.additionalFlavorTexts = new Il2CppStringArray(1);
         sunnyW.additionalFlavorTexts[0] = sunnyW.flavorText;
 
+        Il2Cpp.CharacterData snowyW = new Il2Cpp.CharacterData();
+        snowyW.role = new Sunny();
+        snowyW.name = "Snowy";
+        snowyW.characterName = "Snowy";
+        snowyW.description = "Some cards become Snowed In, making them unflippable";
+        snowyW.flavorText = "\"The air is chilly\"";
+        snowyW.hints = "";
+        snowyW.ifLies = "";
+        snowyW.notes = "";
+        snowyW.picking = false;
+        snowyW.startingAlignment = WeatherAlignement.Weather;
+        snowyW.type = WeatherType.Weather;
+        snowyW.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        snowyW.bluffable = false;
+        snowyW.characterId = "Snowy_POW";
+        snowyW.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        snowyW.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        snowyW.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        snowyW.color = new Color(1f, 0.3804f, 0.3804f);
+        snowyW.additionalFlavorTexts = new Il2CppStringArray(1);
+        snowyW.additionalFlavorTexts[0] = snowyW.flavorText;
+
+        CustomScriptData vortoxScriptData = new CustomScriptData();
+        vortoxScriptData.name = "Vortox_1";
+        ScriptInfo vortoxScript = new ScriptInfo();
+        Il2CppSystem.Collections.Generic.List<CharacterData> vortoxList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        vortoxList.Add(vortox);
+        vortoxScript.mustInclude = vortoxList;
+        vortoxScript.startingDemons = vortoxList;
+        vortoxScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
+        vortoxScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
+        vortoxScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
+        CharactersCount vortoxCounter1 = setCharacterCount(6, 2, 2, 1);
+        CharactersCount vortoxCounter2 = setCharacterCount(5, 2, 2, 1);
+        CharactersCount vortoxCounter3 = setCharacterCount(5, 1, 2, 1);
+        Il2CppSystem.Collections.Generic.List<CharactersCount> vortoxCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter1);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter2);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxCounterList.Add(vortoxCounter3);
+        vortoxScript.characterCounts = vortoxCounterList;
+        vortoxScriptData.scriptInfo = vortoxScript;
+
+
         //Code taken from theCaldoMod, the Dependency
         CustomScriptData deathScriptData = new CustomScriptData();
         deathScriptData.name = "Death_1";
@@ -774,7 +1002,8 @@ public class Main : MelonMod
         deathCounterList.Add(deathCounter2);
         deathScript.characterCounts = deathCounterList;
         deathScriptData.scriptInfo = deathScript;
-        
+
+
 
         CustomScriptData warScriptData = new CustomScriptData();
         warScriptData.name = "War_1";
@@ -866,12 +1095,16 @@ public class Main : MelonMod
         addDemon(advancedAscension, war, "Baa_Difficult", "War_1", warScriptData);
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData);
         addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData);
+        addDemon(advancedAscension, vortox, "Baa_Difficult", "Vortox_1", vortoxScriptData);
+        //addDemon(advancedAscension, god, "Baa_Difficult", "God_1", godScriptData);
 
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
         {
             ScriptInfo script = scriptData.scriptInfo;
             addRole(script.startingTownsfolks, official);
+            addRole(script.startingTownsfolks, guard);
             addRole(script.startingTownsfolks, teaLady);
+            addRole(script.startingTownsfolks, washerwoman);
             addRole(script.startingTownsfolks, knowItAll);
             addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, fisherman);
@@ -883,21 +1116,29 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, hangman);
             addRole(script.startingOutsiders, psycho);
             addRole(script.startingMinions, conjurer);
+            addRole(script.startingMinions, jinx);
             addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
+            addRole(script.startingMinions, butcher);
             addRole(script.startingMinions, eTwin);
             addRole(script.startingMinions, stormyW);
             addRole(script.startingMinions, foggyW);
             addRole(script.startingMinions, sunnyW);
+            addRole(script.startingMinions, snowyW);
 
         }
-        //Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", vortox);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", jinx);
+        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", stormyW);
+        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", foggyW);
+        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", sunnyW);
+        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", snowyW);
+        Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", stormyW);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", foggyW);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", sunnyW);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", official);
+        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", official);
+        
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
+        Characters.Instance.startGameActOrder = insertAfterAct("Executive", guard);
         Characters.Instance.startGameActOrder = insertAfterAct("Jailor", snakeCharmer);
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
@@ -906,6 +1147,8 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", eTwin);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", devilsAdvocate);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", teaLady);
+        
+        
         List<CharacterData> characters = new List<CharacterData>();
         characters.Add(official);
         characters.Add(conjurer);
@@ -956,7 +1199,7 @@ public class Main : MelonMod
                 for (int i = 0; i < loadedCharList.Length; i++)
                 {
                     allDatas[i] = loadedCharList[i]!.Cast<Il2Cpp.CharacterData>();
-                   
+
                 }
             }
         }
@@ -998,7 +1241,7 @@ public class Main : MelonMod
         {
             LoggerInstance.Msg("");
         }
-       
+
         return newActList;
     }
     public void addDemon(AscensionsData advancedAscension, CharacterData? data, string oldScriptName, string newScriptName, CustomScriptData NewScript, int weight = 1)
@@ -1034,23 +1277,23 @@ public class Main : MelonMod
     public static Il2CppSystem.Collections.Generic.List<string> GetRoleArt(CharacterData cd)
     {
         Il2CppSystem.Collections.Generic.List<string> returnList = new Il2CppSystem.Collections.Generic.List<string>();
-            
-            switch (cd.characterId)
-            {
+
+        switch (cd.characterId)
+        {
             case "Official_ID":
                 returnList.Add("Bishop_58855542");
                 returnList.Add("Bishop_58855542"); // Evil Outcast: Bombardier
                 break;
             case "Boomdandy_ID":
-                    returnList.Add("Minion_71804875");
-                    returnList.Add("Boomdandy_ID"); // Evil Outcast: Bombardier
-                    break;
+                returnList.Add("Minion_71804875");
+                returnList.Add("Boomdandy_ID"); // Evil Outcast: Bombardier
+                break;
             default:
                 returnList = GetRolePlaceholderArt(cd.type, cd.startingAlignment);
                 break;
-            }
-        return returnList;
         }
+        return returnList;
+    }
     //Shamelessly stolen code goes here: 
 
     // This method is by Wingidon, used in their DBExpansionpack mod. Pls check them out
@@ -1111,6 +1354,15 @@ public class Main : MelonMod
             }
         }
         return returnList;
+    }
+    string formattedKeyText(string target)
+    {
+        switch (target)
+        {
+            // Keywords
+            case "Dueled": return "<color=#F7ED88>Honest</color>";
+        }
+        return "Formatted key text invalid, please report this to Wingidon and not Redkiller fr fr";
     }
 }
 

@@ -42,8 +42,11 @@ public static class Patch
 
             if (__instance.statuses.Contains(Protected.protect))
             {
-                MelonLogger.Msg("Blocked protected kill");
-                __instance.KillProtected();
+                MelonLogger.Msg("Blocked protected kill 1");
+                __instance.revealed = false;
+               // __instance.KillProtected();
+                __instance.revealed = false;
+                __instance.chName.text = __instance.dataRef.name.ToUpper();
                 return false;
             }
 
@@ -61,8 +64,11 @@ public static class Patch
 
             if (__instance.statuses.Contains(Protected.protect))
             {
-                MelonLogger.Msg("Blocked protected kill");
+                MelonLogger.Msg("Blocked protected kill 2");
+                __instance.revealed = false;
                 __instance.KillProtected();
+                __instance.revealed = false;
+                __instance.chName.text = __instance.dataRef.name.ToUpper();
                 return false;
             }
 
@@ -80,8 +86,11 @@ public static class Patch
 
             if (__instance.statuses.Contains(Protected.protect))
             {
-                MelonLogger.Msg("Blocked protected kill");
+                MelonLogger.Msg("Blocked protected kill 3");
+                
                 __instance.KillProtected();
+                __instance.revealed = false;
+                __instance.chName.text = __instance.dataRef.name.ToUpper();
                 return false;
             }
 
@@ -105,6 +114,17 @@ public static class Patch
             }
 
             return true;
+        }
+    }
+    [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+    public static class guardStat
+    {
+        public static void Postfix(Character __instance)
+        {
+            if (__instance.statuses.Contains(Protected.protect))
+            {
+                __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#20E890><size=18>\n<Protected></color></size>";
+            }
         }
     }
 }

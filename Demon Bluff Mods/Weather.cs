@@ -169,7 +169,7 @@ namespace Demon_Bluff_Mods
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 Il2CppSystem.Collections.Generic.List<Character> list2 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                 int chanceOfCorruption = 0;
-                foreach (Character character in list1)
+                foreach (Character character in list2)
                 {
                     if(UnityEngine.Random.Range(0, 4)<= chanceOfCorruption)
                     {
@@ -311,4 +311,92 @@ namespace Demon_Bluff_Mods
                 }
             }
         }
+    [RegisterTypeInIl2Cpp]
+    public class Windy : Weather
+    {
+        public Windy(IntPtr pointer)
+        : base(pointer)
+        {
+        }
+        public Windy() : base(ClassInjector.DerivedConstructorPointer<Windy>())
+        {
+            ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
+        }
+        public override string Description
+    => "";
+
+        public override ActedInfo GetInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override ActedInfo GetBluffInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override void Act(ETriggerPhase trigger, Character charRef)
+        {
+            if (trigger == ETriggerPhase.Start)
+            {
+                
+            }
+        }
     }
+    public class Snowy : Weather
+    {
+        public Snowy(IntPtr pointer)
+        : base(pointer)
+        {
+        }
+        public Snowy() : base(ClassInjector.DerivedConstructorPointer<Snowy>())
+        {
+            ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
+        }
+        public override string Description
+    => "";
+
+        public override ActedInfo GetInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override ActedInfo GetBluffInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override void Act(ETriggerPhase trigger, Character charRef)
+        {
+            if (trigger == ETriggerPhase.Start)
+            {
+                Gameplay gameplay = Gameplay.Instance;
+                Characters instance = Characters.Instance;
+                Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+                int nOfSnowedIn = 0;
+                foreach (Character character in list1)
+                {
+                    if(nOfSnowedIn < 4 && UnityEngine.Random.Range(0, 5) == 0)
+                    {
+                        character.statuses.statuses.Add(SnowedIn.snowedIn);
+                        nOfSnowedIn++;
+                    }
+                }
+            }
+        }
+    }
+    public static class SnowedIn
+    {
+        public static ECharacterStatus snowedIn = (ECharacterStatus)250;
+        [HarmonyPatch(typeof(Character), nameof(Character.OnReveal))]
+        public static class isSnowedIn
+        {
+            public static bool Prefix(Character __instance)
+            {
+                if (__instance.statuses.Contains(snowedIn))
+                {
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+    }
+}

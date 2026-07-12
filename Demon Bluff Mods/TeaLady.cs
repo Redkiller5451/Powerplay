@@ -18,7 +18,14 @@ namespace Demon_Bluff_Mods
     [RegisterTypeInIl2Cpp]
     public class TeaLady : Role
     {
-
+        public override ActedInfo GetInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override ActedInfo GetBluffInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
             if (trigger == ETriggerPhase.Start)

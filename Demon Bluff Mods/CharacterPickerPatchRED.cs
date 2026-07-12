@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static MelonLoader.MelonLogger;
 
 [HarmonyLib.HarmonyPatch(typeof(CharacterPicker), nameof(CharacterPicker.StartPickCharacters))]
 public class CharacterPickerPatch
@@ -18,6 +19,12 @@ public class CharacterPickerPatch
         if (picker != null)
         {
             Veteran.SetLastPicker(picker);
+            if (picker.statuses.statuses.Contains(Jinxed.jinxed))
+            {
+                picker.KillByDemon(picker);
+                picker.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, picker);
+            }
         }
+        
     }
 }

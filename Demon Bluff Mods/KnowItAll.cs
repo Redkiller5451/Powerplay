@@ -68,12 +68,12 @@ namespace Demon_Bluff_Mods
             if (WhatType())
             {
                 messages = TrueMessages();
-                info = $"To say \" {messages[UnityEngine.Random.Range(0, messages.Count)]} \" would be saying falsehoods";
+                info = $"To say: \"{messages[UnityEngine.Random.Range(0, messages.Count)]}\",would be saying falsehoods";
             }
             else
             {
                 messages = FalseMessages();
-                info = $"To say \" {messages[UnityEngine.Random.Range(0, messages.Count)]} \" would be saying truths";
+                info = $"To say: \"{messages[UnityEngine.Random.Range(0, messages.Count)]}\",would be saying truths";
             }
             return new ActedInfo(info);
 
@@ -118,6 +118,10 @@ namespace Demon_Bluff_Mods
             if (isNextToMinion())
             {
                 messages.Add("I am next to a Minion.");
+            }
+            if (isInPlay("Jailor_POW") || isInPlay("Mayor_POW") || isInPlay("Monarch_POW") || isInPlay("Marshal_POW") || isInPlay("Prosecutor_POW") || isInPlay("Pacifist_POW") || isInPlay("Executive_POW"))
+            {
+                messages.Add("The Executive is here.");
             }
             if (isEvilVillager())
             {
@@ -170,6 +174,10 @@ namespace Demon_Bluff_Mods
             {
                 messages.Add("I am next to a Minion.");
             }
+            if (!(isInPlay("Jailor_POW") || isInPlay("Mayor_POW") || isInPlay("Monarch_POW") || isInPlay("Marshal_POW") || isInPlay("Prosecutor_POW") || isInPlay("Pacifist_POW") || isInPlay("Executive_POW")))
+            {
+                messages.Add("The Executive is here.");
+            }
             if (!isEvilVillager())
             {
                 messages.Add("There is a Traitorous Villager.");
@@ -192,6 +200,16 @@ namespace Demon_Bluff_Mods
             neighbors.Add(myList[0]);
             neighbors.Add(myList[myList.Count - 1]);
             return neighbors;
+        }
+
+        public bool isInPlay(string ID)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            foreach (Character character in list1)
+            {
+                if(character.dataRef.characterId == ID) return true;
+            }
+            return false;
         }
         public bool DidPuppeteerFail()
         {
