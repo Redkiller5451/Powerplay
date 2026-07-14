@@ -100,12 +100,12 @@ public class Washerwoman : Role // Druid :
         if (trigger != ETriggerPhase.Day) return;
         chRef = charRef;
         CharacterPicker.Instance.StartPickCharacters(3, charRef);
-        CharacterPicker.OnCharactersPicked += action1;
+        CharacterPicker.OnCharactersPicked += action3;
         CharacterPicker.OnStopPick += action2;
     }
     private void CharacterPickedDrunk()
     {
-        CharacterPicker.OnCharactersPicked -= action1;
+        CharacterPicker.OnCharactersPicked -= action3;
         CharacterPicker.OnStopPick -= action2;
 
         List<Character> outsiders = new List<Character>();

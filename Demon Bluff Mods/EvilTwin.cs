@@ -28,11 +28,18 @@ namespace Demon_Bluff_Mods
         {
             if (trigger == ETriggerPhase.Start)
             {
-                
+
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Villager);
+                if (list1.Count <= 0)
+                {
+                    charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
+                    charRef.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
+                    onActed?.Invoke(new ActedInfo("UHHHHHHHHHHHH"));
+                    return;
+                }
                 Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                 MelonLogger.Msg($"Turned #{random.id} into the Good Twin");
                 //Code taken from Wingidon

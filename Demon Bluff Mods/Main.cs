@@ -62,7 +62,7 @@ public class Main : MelonMod
         marksman.characterName = "Marksman";
         marksman.description = "Learn how many Minions are revealed. \nIf there are none, learn it.";
         marksman.flavorText = "\"He has a sharp eye.\n Sees less than the Slayer though...\"";
-        marksman.hints = "";
+        marksman.hints = "My sharp eye bypasses misregistration. I always see accurately.";
         marksman.ifLies = "I say a false amount of revealed Minions";
         marksman.notes = "";
         marksman.picking = false;
@@ -131,8 +131,8 @@ public class Main : MelonMod
         washerwoman.characterName = "Demographer";
         washerwoman.description = "Pick 3 cards. I say an in-play Villager";
         washerwoman.flavorText = "\"Views the villager population. \n Has a bad memory.\"";
-        washerwoman.hints = "If no one is dead, even a lying Coroner won't state a killer.";
-        washerwoman.ifLies = "Points to a Good player instead.";
+        washerwoman.hints = "";
+        washerwoman.ifLies = "Says a Wrong Villager or No Villagers instead";
         washerwoman.notes = "";
         washerwoman.picking = true;
         washerwoman.startingAlignment = EAlignment.Good;
@@ -402,6 +402,196 @@ public class Main : MelonMod
         snakeCharmer.additionalFlavorTexts[0] = snakeCharmer.flavorText;
         snakeCharmer.gender = EGender.Male;
 
+        Il2Cpp.CharacterData amnesiac = new Il2Cpp.CharacterData();
+        amnesiac.role = new Amnesiac();
+        amnesiac.name = "Amnesiac";
+        amnesiac.characterName = "Amnesiac";
+        amnesiac.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one\nThe amount of non-villagers between me and the picked card\n\nYes or no:\nDo they have a status?\nWho is closer to the Demon.\nIf we share an alignement.";
+        amnesiac.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
+        amnesiac.hints = "";
+        amnesiac.ifLies = "Says a random number of the opposite of the statement";
+        amnesiac.notes = "";
+        amnesiac.picking = false;
+        amnesiac.startingAlignment = EAlignment.Good;
+        amnesiac.type = ECharacterType.Outcast;
+        amnesiac.abilityUsage = EAbilityUsage.Once;
+        amnesiac.bluffable = true;
+        amnesiac.characterId = "Amnesiac_POW";
+        amnesiac.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        amnesiac.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        amnesiac.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        amnesiac.color = new Color(0.9659f, 1f, 0.4472f);
+        amnesiac.additionalFlavorTexts = new Il2CppStringArray(1);
+        amnesiac.additionalFlavorTexts[0] = amnesiac.flavorText;
+        amnesiac.gender = EGender.Male;
+
+        Il2Cpp.CharacterData amnesiacPick1 = new Il2Cpp.CharacterData();
+        amnesiacPick1.role = new Amnesiac1Pick();
+        amnesiacPick1.name = "Amnesiac";
+        amnesiacPick1.characterName = "Amnesiac";
+        amnesiacPick1.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is \nThe amount of non-villagers between me and the picked card" +
+            "\n\nYes or no:\nDo they have a status? \nWho is closer to the Demon.\nIf we share an alignement.";
+        amnesiacPick1.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
+        amnesiacPick1.hints = "";
+        amnesiacPick1.ifLies = "Says a random number of the opposite of the statement";
+        amnesiacPick1.notes = "";
+        amnesiacPick1.picking = true;
+        amnesiacPick1.startingAlignment = EAlignment.Good;
+        amnesiacPick1.type = ECharacterType.Outcast;
+        amnesiacPick1.abilityUsage = EAbilityUsage.Once;
+        amnesiacPick1.bluffable = false;
+        amnesiacPick1.characterId = "Amne1_POW";
+        amnesiacPick1.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        amnesiacPick1.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        amnesiacPick1.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        amnesiacPick1.color = new Color(0.9659f, 1f, 0.4472f);
+        amnesiacPick1.additionalFlavorTexts = new Il2CppStringArray(1);
+        amnesiacPick1.additionalFlavorTexts[0] = amnesiacPick1.flavorText;
+        amnesiacPick1.gender = EGender.Male;
+
+        Il2Cpp.CharacterData amnesiacPick2 = new Il2Cpp.CharacterData();
+        amnesiacPick2.role = new Amnesiac2Pick();
+        amnesiacPick2.name = "Amnesiac";
+        amnesiacPick2.characterName = "Amnesiac";
+        amnesiacPick2.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is \nThe amount of non-villagers between me and the picked card" +
+            "\n\nYes or no:\nDo they have a status? \nWho is closer to the Demon.\nIf we share an alignement.";
+        amnesiacPick2.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
+        amnesiacPick2.hints = "";
+        amnesiacPick2.ifLies = "Says a random number of the opposite of the statement";
+        amnesiacPick2.notes = "";
+        amnesiacPick2.picking = true;
+        amnesiacPick2.startingAlignment = EAlignment.Good;
+        amnesiacPick2.type = ECharacterType.Outcast;
+        amnesiacPick2.abilityUsage = EAbilityUsage.Once;
+        amnesiacPick2.bluffable = false;
+        amnesiacPick2.characterId = "Amne2_POW";
+        amnesiacPick2.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        amnesiacPick2.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        amnesiacPick2.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        amnesiacPick2.color = new Color(0.9659f, 1f, 0.4472f);
+        amnesiacPick2.additionalFlavorTexts = new Il2CppStringArray(1);
+        amnesiacPick2.additionalFlavorTexts[0] = amnesiacPick2.flavorText;
+        amnesiacPick2.gender = EGender.Male;
+
+        Il2Cpp.CharacterData amnesiacPick3 = new Il2Cpp.CharacterData();
+        amnesiacPick3.role = new Amnesiac3Pick();
+        amnesiacPick3.name = "Amnesiac";
+        amnesiacPick3.characterName = "Amnesiac";
+        amnesiacPick3.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is \nThe amount of non-villagers between me and the picked card" +
+            "\n\nYes or no:\nDo they have a status? \nWho is closer to the Demon.\nIf we share an alignement.";
+        amnesiacPick3.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
+        amnesiacPick3.hints = "";
+        amnesiacPick3.ifLies = "Says a random number of the opposite of the statement";
+        amnesiacPick3.notes = "";
+        amnesiacPick3.picking = true;
+        amnesiacPick3.startingAlignment = EAlignment.Good;
+        amnesiacPick3.type = ECharacterType.Outcast;
+        amnesiacPick3.abilityUsage = EAbilityUsage.Once;
+        amnesiacPick3.bluffable = false;
+        amnesiacPick3.characterId = "Amne3_POW";
+        amnesiacPick3.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        amnesiacPick3.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        amnesiacPick3.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        amnesiacPick3.color = new Color(0.9659f, 1f, 0.4472f);
+        amnesiacPick3.additionalFlavorTexts = new Il2CppStringArray(1);
+        amnesiacPick3.additionalFlavorTexts[0] = amnesiacPick3.flavorText;
+        amnesiacPick3.gender = EGender.Male;
+
+        Il2Cpp.CharacterData amnesiacPick4 = new Il2Cpp.CharacterData();
+        amnesiacPick4.role = new Amnesiac4Pick();
+        amnesiacPick4.name = "Amnesiac";
+        amnesiacPick4.characterName = "Amnesiac";
+        amnesiacPick4.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is \nThe amount of non-villagers between me and the picked card" +
+            "\n\nYes or no:\nDo they have a status? \nWho is closer to the Demon.\nIf we share an alignement.";
+        amnesiacPick4.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
+        amnesiacPick4.hints = "";
+        amnesiacPick4.ifLies = "Says a random number of the opposite of the statement";
+        amnesiacPick4.notes = "";
+        amnesiacPick4.picking = true;
+        amnesiacPick4.startingAlignment = EAlignment.Good;
+        amnesiacPick4.type = ECharacterType.Outcast;
+        amnesiacPick4.abilityUsage = EAbilityUsage.Once;
+        amnesiacPick4.bluffable = false;
+        amnesiacPick4.characterId = "Amne4_POW";
+        amnesiacPick4.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        amnesiacPick4.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        amnesiacPick4.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        amnesiacPick4.color = new Color(0.9659f, 1f, 0.4472f);
+        amnesiacPick4.additionalFlavorTexts = new Il2CppStringArray(1);
+        amnesiacPick4.additionalFlavorTexts[0] = amnesiacPick4.flavorText;
+        amnesiacPick4.gender = EGender.Male;
+
+        Il2Cpp.CharacterData amnesiacPick5 = new Il2Cpp.CharacterData();
+        amnesiacPick5.role = new Amnesiac5Pick();
+        amnesiacPick5.name = "Amnesiac";
+        amnesiacPick5.characterName = "Amnesiac";
+        amnesiacPick5.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is \nThe amount of non-villagers between me and the picked card" +
+            "\n\nYes or no:\nDo they have a status? \nWho is closer to the Demon.\nIf we share an alignement.";
+        amnesiacPick5.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
+        amnesiacPick5.hints = "";
+        amnesiacPick5.ifLies = "Says a random number of the opposite of the statement";
+        amnesiacPick5.notes = "";
+        amnesiacPick5.picking = true;
+        amnesiacPick5.startingAlignment = EAlignment.Good;
+        amnesiacPick5.type = ECharacterType.Outcast;
+        amnesiacPick5.abilityUsage = EAbilityUsage.Once;
+        amnesiacPick5.bluffable = false;
+        amnesiacPick5.characterId = "Amne5_POW";
+        amnesiacPick5.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        amnesiacPick5.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        amnesiacPick5.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        amnesiacPick5.color = new Color(0.9659f, 1f, 0.4472f);
+        amnesiacPick5.additionalFlavorTexts = new Il2CppStringArray(1);
+        amnesiacPick5.additionalFlavorTexts[0] = amnesiacPick5.flavorText;
+        amnesiacPick5.gender = EGender.Male;
+
+        Il2Cpp.CharacterData amnesiacPick6 = new Il2Cpp.CharacterData();
+        amnesiacPick6.role = new Amnesiac6Pick();
+        amnesiacPick6.name = "Amnesiac";
+        amnesiacPick6.characterName = "Amnesiac";
+        amnesiacPick6.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is \nThe amount of non-villagers between me and the picked card" +
+            "\n\nYes or no:\nDo they have a status? \nWho is closer to the Demon.\nIf we share an alignement.";
+        amnesiacPick6.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
+        amnesiacPick6.hints = "";
+        amnesiacPick6.ifLies = "Says a random number of the opposite of the statement";
+        amnesiacPick6.notes = "";
+        amnesiacPick6.picking = true;
+        amnesiacPick6.startingAlignment = EAlignment.Good;
+        amnesiacPick6.type = ECharacterType.Outcast;
+        amnesiacPick6.abilityUsage = EAbilityUsage.Once;
+        amnesiacPick6.bluffable = false;
+        amnesiacPick6.characterId = "Amne6_POW";
+        amnesiacPick6.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        amnesiacPick6.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        amnesiacPick6.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        amnesiacPick6.color = new Color(0.9659f, 1f, 0.4472f);
+        amnesiacPick6.additionalFlavorTexts = new Il2CppStringArray(1);
+        amnesiacPick6.additionalFlavorTexts[0] = amnesiacPick5.flavorText;
+        amnesiacPick6.gender = EGender.Male;
+
+        Il2Cpp.CharacterData indust = new Il2Cpp.CharacterData();
+        indust.role = new Industrialist();
+        indust.name = "Industrialist";
+        indust.characterName = "Industrialist";
+        indust.description = "I make a character Mad as an in-play character.";
+        indust.flavorText = "\"If you'd be like that guy right there.\n Maybe you'd get hired here!\"";
+        indust.hints = "A Mad character registers as another character.";
+        indust.ifLies = "I say a Good character is mad when they aren't.";
+        indust.notes = "";
+        indust.picking = false;
+        indust.startingAlignment = EAlignment.Good;
+        indust.type = ECharacterType.Outcast;
+        indust.abilityUsage = EAbilityUsage.Once;
+        indust.bluffable = true;
+        indust.characterId = "Industrialist_POW";
+        indust.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        indust.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        indust.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        indust.color = new Color(0.9659f, 1f, 0.4472f);
+        indust.additionalFlavorTexts = new Il2CppStringArray(1);
+        indust.additionalFlavorTexts[0] = indust.flavorText;
+        indust.gender = EGender.Male;
+
         Il2Cpp.CharacterData veteran = new Il2Cpp.CharacterData();
         veteran.role = new Veteran();
         veteran.name = "Veteran";
@@ -610,6 +800,29 @@ public class Main : MelonMod
         boomdandy.additionalFlavorTexts[0] = boomdandy.flavorText;
         boomdandy.gender = EGender.Male;
 
+        Il2Cpp.CharacterData cerenovus = new Il2Cpp.CharacterData();
+        cerenovus.role = new Cerenovus();
+        cerenovus.name = "Manipulator";
+        cerenovus.characterName = "Manipulator";
+        cerenovus.description = "One Good card is Mad as the opposite type";
+        cerenovus.flavorText = "\"You aren't really accepted here. \nBelieve me, I have heard stuff.\"";
+        cerenovus.hints = "A Mad character registers as another character.";
+        cerenovus.ifLies = "";
+        cerenovus.notes = "";
+        cerenovus.picking = false;
+        cerenovus.startingAlignment = EAlignment.Evil;
+        cerenovus.type = ECharacterType.Minion;
+        cerenovus.abilityUsage = EAbilityUsage.Once;
+        cerenovus.bluffable = false;
+        cerenovus.characterId = "Manipulator_POW";
+        cerenovus.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        cerenovus.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        cerenovus.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        cerenovus.color = new Color(0.8510f, 0.4549f, 0.0f);
+        cerenovus.additionalFlavorTexts = new Il2CppStringArray(1);
+        cerenovus.additionalFlavorTexts[0] = cerenovus.flavorText;
+        cerenovus.gender = EGender.Male;
+
         Il2Cpp.CharacterData butcher = new Il2Cpp.CharacterData();
         butcher.role = new Butcher();
         butcher.name = "Balancer";
@@ -630,7 +843,7 @@ public class Main : MelonMod
         butcher.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
         butcher.color = new Color(0.8510f, 0.4549f, 0.0f);
         butcher.additionalFlavorTexts = new Il2CppStringArray(1);
-        butcher.additionalFlavorTexts[0] = boomdandy.flavorText;
+        butcher.additionalFlavorTexts[0] = butcher.flavorText;
         butcher.gender = EGender.Male;
 
         Il2Cpp.CharacterData gTwin = new Il2Cpp.CharacterData();
@@ -890,10 +1103,10 @@ public class Main : MelonMod
         sunnyW.additionalFlavorTexts[0] = sunnyW.flavorText;
 
         Il2Cpp.CharacterData snowyW = new Il2Cpp.CharacterData();
-        snowyW.role = new Sunny();
+        snowyW.role = new Snowy();
         snowyW.name = "Snowy";
         snowyW.characterName = "Snowy";
-        snowyW.description = "Some cards become Snowed In, making them unflippable";
+        snowyW.description = "Some cards become Snowed In, making them useless";
         snowyW.flavorText = "\"The air is chilly\"";
         snowyW.hints = "";
         snowyW.ifLies = "";
@@ -910,6 +1123,28 @@ public class Main : MelonMod
         snowyW.color = new Color(1f, 0.3804f, 0.3804f);
         snowyW.additionalFlavorTexts = new Il2CppStringArray(1);
         snowyW.additionalFlavorTexts[0] = snowyW.flavorText;
+
+        Il2Cpp.CharacterData snowedIn = new Il2Cpp.CharacterData();
+        snowedIn.role = new SnowedInChar();
+        snowedIn.name = "Snowed In";
+        snowedIn.characterName = "Snowed In";
+        snowedIn.description = "I am Good";
+        snowedIn.flavorText = "\"HELP ME!!!!\"";
+        snowedIn.hints = "";
+        snowedIn.ifLies = "";
+        snowedIn.notes = "";
+        snowedIn.picking = false;
+        snowedIn.startingAlignment = EAlignment.Good;
+        snowedIn.type = ECharacterType.Outcast;
+        snowedIn.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        snowedIn.bluffable = false;
+        snowedIn.characterId = "SnowedIn_POW";
+        snowedIn.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        snowedIn.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        snowedIn.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        snowedIn.color = new Color(0.9659f, 1f, 0.4472f);
+        snowedIn.additionalFlavorTexts = new Il2CppStringArray(1);
+        snowedIn.additionalFlavorTexts[0] = snowedIn.flavorText;
 
         CustomScriptData vortoxScriptData = new CustomScriptData();
         vortoxScriptData.name = "Vortox_1";
@@ -1110,12 +1345,15 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, fisherman);
             addRole(script.startingTownsfolks, coroner);
             addRole(script.startingOutsiders, veteran);
+            addRole(script.startingOutsiders, amnesiac);
+            addRole(script.startingOutsiders, indust);
             addRole(script.startingOutsiders, snakeCharmer);
             addRole(script.startingOutsiders, pirate);
             addRole(script.startingOutsiders, godfather);
             addRole(script.startingOutsiders, hangman);
             addRole(script.startingOutsiders, psycho);
             addRole(script.startingMinions, conjurer);
+            addRole(script.startingMinions, cerenovus);
             addRole(script.startingMinions, jinx);
             addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
@@ -1129,17 +1367,21 @@ public class Main : MelonMod
         }
         Characters.Instance.startGameActOrder = insertAfterAct("Baa", vortox);
         Characters.Instance.startGameActOrder = insertAfterAct("Baa", jinx);
+        Characters.Instance.startGameActOrder = insertAfterAct("Baa", snakeCharmer);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", stormyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", foggyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", sunnyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", snowyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
+        Characters.Instance.startGameActOrder = insertAfterAct("Shaman", cerenovus);
+        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", amnesiac);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
+        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", indust);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", official);
         
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", guard);
-        Characters.Instance.startGameActOrder = insertAfterAct("Jailor", snakeCharmer);
+        
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", godfather);

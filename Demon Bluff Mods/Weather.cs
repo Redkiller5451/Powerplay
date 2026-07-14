@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static MelonLoader.MelonLogger;
 
 namespace Demon_Bluff_Mods
 
@@ -47,7 +48,7 @@ namespace Demon_Bluff_Mods
         }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
-           
+
             return;
         }
 
@@ -90,9 +91,9 @@ namespace Demon_Bluff_Mods
             }
             CharacterData chosenMinion = possibleMinions[UnityEngine.Random.Range(0, possibleMinions.Count)];
             Role temp = charRef.dataRef.role;
-            charRef.Init(chosenMinion); 
+            charRef.Init(chosenMinion);
             Gameplay.Instance.AddScriptCharacter(ECharacterType.Minion, chosenMinion);
-            if(temp is Foggy)
+            if (temp is Foggy)
             {
                 DeckView.AddToObscuredDeckView(chosenMinion);
             }
@@ -101,7 +102,7 @@ namespace Demon_Bluff_Mods
     public static class WeatherType
     {
         public static ECharacterType Weather = (ECharacterType)50;
-        
+
     }
     public static class WeatherAlignement
     {
@@ -138,32 +139,32 @@ namespace Demon_Bluff_Mods
             }
         }
     }
-        [RegisterTypeInIl2Cpp]
-        public class Sunny : Weather
+    [RegisterTypeInIl2Cpp]
+    public class Sunny : Weather
+    {
+        public Sunny(IntPtr pointer)
+        : base(pointer)
         {
-            public Sunny(IntPtr pointer)
-            : base(pointer)
-            {
-            }
-            public Sunny() : base(ClassInjector.DerivedConstructorPointer<Sunny>())
-            {
-                ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
-            }
-            public override string Description
-        => "";
+        }
+        public Sunny() : base(ClassInjector.DerivedConstructorPointer<Sunny>())
+        {
+            ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
+        }
+        public override string Description
+    => "";
 
-            public override ActedInfo GetInfo(Character charRef)
+        public override ActedInfo GetInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override ActedInfo GetBluffInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override void Act(ETriggerPhase trigger, Character charRef)
+        {
+            if (trigger == ETriggerPhase.Start)
             {
-                return new ActedInfo("");
-            }
-            public override ActedInfo GetBluffInfo(Character charRef)
-            {
-                return new ActedInfo("");
-            }
-            public override void Act(ETriggerPhase trigger, Character charRef)
-            {
-                if (trigger == ETriggerPhase.Start)
-                {
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
@@ -171,7 +172,7 @@ namespace Demon_Bluff_Mods
                 int chanceOfCorruption = 0;
                 foreach (Character character in list2)
                 {
-                    if(UnityEngine.Random.Range(0, 4)<= chanceOfCorruption)
+                    if (UnityEngine.Random.Range(0, 4) <= chanceOfCorruption)
                     {
                         character.statuses.statuses.Add(ECharacterStatus.Corrupted);
                         chanceOfCorruption = 0;
@@ -182,37 +183,37 @@ namespace Demon_Bluff_Mods
                     }
                 }
                 becomeOtherMinion(charRef);
-                }
             }
         }
-    
-        [RegisterTypeInIl2Cpp]
-        public class Stormy : Weather
+    }
+
+    [RegisterTypeInIl2Cpp]
+    public class Stormy : Weather
+    {
+        public Stormy(IntPtr pointer)
+        : base(pointer)
         {
-            public Stormy(IntPtr pointer)
-            : base(pointer)
-            {
-            }
-            public Stormy() : base(ClassInjector.DerivedConstructorPointer<Stormy>())
-            {
-                ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
-            }
-            public override string Description
-        => "";
+        }
+        public Stormy() : base(ClassInjector.DerivedConstructorPointer<Stormy>())
+        {
+            ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
+        }
+        public override string Description
+    => "";
 
-            public override ActedInfo GetInfo(Character charRef)
-            {
-                return new ActedInfo("");
-            }
-            public override ActedInfo GetBluffInfo(Character charRef)
-            {
-                return new ActedInfo("");
-            }
-            public override void Act(ETriggerPhase trigger, Character charRef)
-            {
-                if (trigger == ETriggerPhase.Start)
+        public override ActedInfo GetInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override ActedInfo GetBluffInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override void Act(ETriggerPhase trigger, Character charRef)
+        {
+            if (trigger == ETriggerPhase.Start)
 
-                {
+            {
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
@@ -221,12 +222,12 @@ namespace Demon_Bluff_Mods
                 do
                 {
                     BecomeOtherOutcast(list2[UnityEngine.Random.Range(0, list2.Count)]);
-                   list2 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
-                   list3 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Outcast);
+                    list2 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                    list3 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Outcast);
                 } while (list2.Count > list3.Count);
                 becomeOtherMinion(charRef);
-                }
             }
+        }
         public static void BecomeOtherOutcast(Character charRef)
         {
             CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
@@ -247,7 +248,7 @@ namespace Demon_Bluff_Mods
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
-                if (d.type == ECharacterType.Outcast && !IfContains(list3,d))
+                if (d.type == ECharacterType.Outcast && !IfContains(list3, d))
                 {
                     possibleOucast.Add(d);
                 }
@@ -258,40 +259,40 @@ namespace Demon_Bluff_Mods
         {
             foreach (Character c in list3)
             {
-                if(c.dataRef.role == d.role)
+                if (c.dataRef.role == d.role)
                     return true;
             }
             return false;
         }
 
     }
-    
-        [RegisterTypeInIl2Cpp]
-        public class Foggy : Weather
-        {
-            public Foggy(IntPtr pointer)
-            : base(pointer)
-            {
-            }
-            public Foggy() : base(ClassInjector.DerivedConstructorPointer<Foggy>())
-            {
-                ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
-            }
-            public override string Description
-        => "";
 
-            public override ActedInfo GetInfo(Character charRef)
+    [RegisterTypeInIl2Cpp]
+    public class Foggy : Weather
+    {
+        public Foggy(IntPtr pointer)
+        : base(pointer)
+        {
+        }
+        public Foggy() : base(ClassInjector.DerivedConstructorPointer<Foggy>())
+        {
+            ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
+        }
+        public override string Description
+    => "";
+
+        public override ActedInfo GetInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override ActedInfo GetBluffInfo(Character charRef)
+        {
+            return new ActedInfo("");
+        }
+        public override void Act(ETriggerPhase trigger, Character charRef)
+        {
+            if (trigger == ETriggerPhase.AfterRoundStart)
             {
-                return new ActedInfo("");
-            }
-            public override ActedInfo GetBluffInfo(Character charRef)
-            {
-                return new ActedInfo("");
-            }
-            public override void Act(ETriggerPhase trigger, Character charRef)
-            {
-                if (trigger == ETriggerPhase.AfterRoundStart)
-                {
                 Il2CppSystem.Collections.Generic.List<CharacterData> deckview = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 deckview = Gameplay.Instance.GetScriptCharacters();
                 Il2CppSystem.Collections.Generic.List<CharacterData> deckview2 = new Il2CppSystem.Collections.Generic.List<CharacterData>();
@@ -308,9 +309,9 @@ namespace Demon_Bluff_Mods
                     DeckView.AddToObscuredDeckView(cd);
                 }
                 becomeOtherMinion(charRef);
-                }
             }
         }
+    }
     [RegisterTypeInIl2Cpp]
     public class Windy : Weather
     {
@@ -337,10 +338,11 @@ namespace Demon_Bluff_Mods
         {
             if (trigger == ETriggerPhase.Start)
             {
-                
+
             }
         }
     }
+    [RegisterTypeInIl2Cpp]
     public class Snowy : Weather
     {
         public Snowy(IntPtr pointer)
@@ -366,36 +368,62 @@ namespace Demon_Bluff_Mods
         {
             if (trigger == ETriggerPhase.Start)
             {
-                Gameplay gameplay = Gameplay.Instance;
-                Characters instance = Characters.Instance;
+
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 int nOfSnowedIn = 0;
-                foreach (Character character in list1)
+                do
                 {
-                    if(nOfSnowedIn < 4 && UnityEngine.Random.Range(0, 5) == 0)
+                    TurnIntoSnowedIn(list1[UnityEngine.Random.Range(0, list1.Count)]);
+                    list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                    nOfSnowedIn++;
+                } while (4 > nOfSnowedIn);
+                
+            }
+            becomeOtherMinion(charRef);
+        }
+        
+    
+        public void TurnIntoSnowedIn(Character charRef)
+        {
+            CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
+            Il2CppSystem.Collections.Generic.List<CharacterData> possibleOucast = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            if (allDatas.Length == 0)
+            {
+                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
+                if (loadedCharList != null)
+                {
+                    allDatas = new CharacterData[loadedCharList.Length];
+                    for (int j = 0; j < loadedCharList.Length; j++)
                     {
-                        character.statuses.statuses.Add(SnowedIn.snowedIn);
-                        nOfSnowedIn++;
+                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
                     }
                 }
             }
+            Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterRealCharacterType((Gameplay.CurrentCharacters), ECharacterType.Outcast);
+            for (int j = 0; j < allDatas.Length; j++)
+            {
+                CharacterData d = allDatas[j];
+                if (d.characterId == "SnowedIn_POW")
+                {
+                    possibleOucast.Add(d);
+                }
+            }
+            charRef.Init(possibleOucast[UnityEngine.Random.Range(0, possibleOucast.Count)]);
         }
     }
     public static class SnowedIn
     {
         public static ECharacterStatus snowedIn = (ECharacterStatus)250;
-        [HarmonyPatch(typeof(Character), nameof(Character.OnReveal))]
+        [HarmonyPatch(typeof(SnowedInChar), nameof(SnowedInChar.Act))]
         public static class isSnowedIn
         {
-            public static bool Prefix(Character __instance)
+            public static bool Prefix(SnowedInChar snowed,ETriggerPhase trigger, Character charRef)
             {
-                if (__instance.statuses.Contains(snowedIn))
+                if (trigger == ETriggerPhase.Day)
                 {
-                    {
-                        return false;
-                    }
+                    snowed.onActed.Invoke(snowed.GetInfo(charRef));
                 }
-                return true;
+                return false;
             }
         }
     }

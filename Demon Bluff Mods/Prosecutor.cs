@@ -58,6 +58,7 @@ namespace Demon_Bluff_Mods
                     random.Kill();
                    
                     line = $"I killed #{random.id}";
+                    random.RevealReal();
                 }
             else
             {
