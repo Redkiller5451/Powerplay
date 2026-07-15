@@ -43,22 +43,6 @@ public class Pirate : Neutrals
                 }
             }
         }
-        if (trigger == ETriggerPhase.OnExecuted)
-        {
-            Gameplay gameplay = Gameplay.Instance;
-            Characters instance = Characters.Instance;
-            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-            list1 = Characters.Instance.FilterCharacterContainsStatus(list1, Dueled.dueled);
-            if (list1.Count > 0)
-            {
-                list1[0].statuses.RemoveStatusIfAble(Dueled.dueled);
-                list1[0].statuses.RemoveStatusIfAble(ECharacterStatus.Silenced);
-                if (list1[0].dataRef.picking)
-                {
-                    list1[0].pickable.SetActive(true);
-                }
-            }
-        }
     }
     public override CharacterData GetBluffIfAble(Character charRef)
     {

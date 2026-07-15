@@ -81,6 +81,13 @@ namespace Demon_Bluff_Mods
             blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
             blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with.
             blacklistMinionIDs.Add("Wretch_Evil_91222191"); // That's the wrong Wretch.
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
+            foreach (Character character in list1)
+            {
+                blacklistMinionIDs.Add(character.dataRef.characterId);
+            }
+
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
@@ -245,10 +252,12 @@ namespace Demon_Bluff_Mods
                 }
             }
             Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterRealCharacterType((Gameplay.CurrentCharacters), ECharacterType.Outcast);
+            Il2CppSystem.Collections.Generic.List<string> blacklistMinionIDs = new();
+            blacklistMinionIDs.Add("SnowedIn_POW"); // Should never be added
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
-                if (d.type == ECharacterType.Outcast && !IfContains(list3, d))
+                if (d.type == ECharacterType.Outcast && !IfContains(list3, d) && !blacklistMinionIDs.Contains(d.characterId))
                 {
                     possibleOucast.Add(d);
                 }
@@ -297,12 +306,23 @@ namespace Demon_Bluff_Mods
                 deckview = Gameplay.Instance.GetScriptCharacters();
                 Il2CppSystem.Collections.Generic.List<CharacterData> deckview2 = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 deckview2 = Gameplay.Instance.GetNotInPlayCharacters();
+                Il2CppSystem.Collections.Generic.List<CharacterData> deckview3 = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+                deckview3 = Gameplay.Instance.GetAllAscensionCharacters();
                 foreach (CharacterData cd in deckview2)
                 {
                     if (!deckview.Contains(cd))
                     {
                         deckview.Add(cd);
                     }
+                 
+                }
+                foreach (CharacterData cd in deckview3)
+                {
+                    if (!deckview.Contains(cd))
+                    {
+                        deckview.Add(cd);
+                    }
+
                 }
                 foreach (CharacterData cd in deckview)
                 {
@@ -371,18 +391,22 @@ namespace Demon_Bluff_Mods
 
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 int nOfSnowedIn = 0;
+                int wantedAmount = 4;
+                if (Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager).Count < 4)
+                    wantedAmount = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager).Count;
                 do
                 {
+                    MelonLogger.Msg("Turning Into Snowed In");
                     TurnIntoSnowedIn(list1[UnityEngine.Random.Range(0, list1.Count)]);
                     list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                     nOfSnowedIn++;
-                } while (4 > nOfSnowedIn);
-                
+                } while (wantedAmount > nOfSnowedIn);
+                becomeOtherMinion(charRef);
             }
-            becomeOtherMinion(charRef);
+
         }
-        
-    
+
+
         public void TurnIntoSnowedIn(Character charRef)
         {
             CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
@@ -409,22 +433,6 @@ namespace Demon_Bluff_Mods
                 }
             }
             charRef.Init(possibleOucast[UnityEngine.Random.Range(0, possibleOucast.Count)]);
-        }
-    }
-    public static class SnowedIn
-    {
-        public static ECharacterStatus snowedIn = (ECharacterStatus)250;
-        [HarmonyPatch(typeof(SnowedInChar), nameof(SnowedInChar.Act))]
-        public static class isSnowedIn
-        {
-            public static bool Prefix(SnowedInChar snowed,ETriggerPhase trigger, Character charRef)
-            {
-                if (trigger == ETriggerPhase.Day)
-                {
-                    snowed.onActed.Invoke(snowed.GetInfo(charRef));
-                }
-                return false;
-            }
         }
     }
 }

@@ -29,7 +29,7 @@ public class Industrialist : Role
             else
                 Characters.Instance.FilterOutCharacterType(allChars2, ECharacterType.Outcast);
             randomIndex = UnityEngine.Random.Range(0, allChars2.Count);
-            Character random2 = allChars[randomIndex];
+            Character random2 = allChars2[randomIndex];
             random.statuses.AddStatus(MadVictim.madVictim, charRef);
             random2.statuses.AddStatus(Mad.mad, charRef);
         }
@@ -42,7 +42,12 @@ public class Industrialist : Role
             {
                 allChars.Add(character);
             }
-            onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is Mad!", null));
+            if(allChars.Count == 0)
+            {
+                onActed?.Invoke(new ActedInfo($"Nobody is Mad!", null));
+            }
+            else
+                onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is Mad!", null));
         }
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)

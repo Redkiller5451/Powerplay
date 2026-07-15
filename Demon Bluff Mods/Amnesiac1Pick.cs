@@ -67,11 +67,11 @@ public class Amnesiac1Pick : Role
         }
         Il2CppSystem.Collections.Generic.List<Character> neighborsOfPicked = GetNeighbors(outsiders[0]);
         int nOfEvilNeighbors = 0;
-        if (neighborsOfPicked[0].alignment == EAlignment.Evil)
+        if (neighborsOfPicked[0].GetRegisterAlignment() == EAlignment.Evil)
             nOfEvilNeighbors++;
-        if (neighborsOfPicked[1].alignment == EAlignment.Evil)
+        if (neighborsOfPicked[1].GetRegisterAlignment() == EAlignment.Evil)
             nOfEvilNeighbors++;
-        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors)));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors, outsiders[0])));
     }
 
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -99,7 +99,7 @@ public class Amnesiac1Pick : Role
         if (neighborsOfPicked[1].alignment == EAlignment.Evil)
             nOfEvilNeighbors++;
         nOfEvilNeighbors = Calculator.RemoveNumberAndGetRandomNumberFromList(nOfEvilNeighbors, 0, 2);
-        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors)));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors, outsiders[0])));
 
     }
     public Il2CppSystem.Collections.Generic.List<Character> GetNeighbors(Character charRef)
@@ -111,9 +111,9 @@ public class Amnesiac1Pick : Role
         neighbors.Add(myList[myList.Count - 1]);
         return neighbors;
     }
-    public string ConjourInfo(int nOfEvils)
+    public string ConjourInfo(int nOfEvils, Character picked)
     {
 
-        return $"I have received a {nOfEvils}";
+        return $"I picked #{picked.id}, and I have received a {nOfEvils}";
     }
 }

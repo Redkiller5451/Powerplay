@@ -67,7 +67,7 @@ public class Amnesiac4Pick : Role
             ids.Add(c.id);
             outsiders.Add(c);
         }
-        onActed?.Invoke(new ActedInfo(ConjourInfo(DoTheyHaveAStatus(outsiders[0]))));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(DoTheyHaveAStatus(outsiders[0]), outsiders[0])));
     }
 
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -88,19 +88,19 @@ public class Amnesiac4Pick : Role
             ids.Add(c.id);
             outsiders.Add(c);
         }
-        onActed?.Invoke(new ActedInfo(ConjourInfo(!DoTheyHaveAStatus(outsiders[0]))));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(!DoTheyHaveAStatus(outsiders[0]), outsiders[0])));
 
     }
     public bool DoTheyHaveAStatus(Character picked)
     {
         return picked.statuses.allStatuses.Count > 0;
     }
-    public string ConjourInfo(bool status)
+    public string ConjourInfo(bool status, Character picked)
     {
         if (status)
         {
-            return $"I have received a yes!";
+            return $"I picked #${picked.id} have received a yes!";
         }
-        return $"I have received a no!";
+        return $"I picked #${picked.id} have received a no!";
     }
 }

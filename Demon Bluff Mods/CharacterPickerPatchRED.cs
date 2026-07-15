@@ -19,6 +19,7 @@ public class CharacterPickerPatch
         if (picker != null)
         {
             Veteran.SetLastPicker(picker);
+            Goon.SetLastPicker(picker);
             if (picker.statuses.statuses.Contains(Jinxed.jinxed))
             {
                 picker.KillByDemon(picker);

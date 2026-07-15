@@ -66,7 +66,7 @@ public class Amnesiac2Pick : Role
             outsiders.Add(c);
         }
         int nPicks = GetClosestAlignement(outsiders[0]);
-        onActed?.Invoke(new ActedInfo(ConjourInfo(nPicks)));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(nPicks, outsiders[0])));
 
     }
 
@@ -90,7 +90,7 @@ public class Amnesiac2Pick : Role
         }
         int nPicks = GetClosestAlignement(outsiders[0]);
         nPicks = Calculator.RemoveNumberAndGetRandomNumberFromList(nPicks, 0, 5);
-        onActed?.Invoke(new ActedInfo(ConjourInfo(nPicks)));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(nPicks, outsiders[0])));
 
     }
     public int GetClosestAlignement(Character pickedGood)
@@ -129,9 +129,9 @@ public class Amnesiac2Pick : Role
 
         return savedCount;
     }
-    public string ConjourInfo(int nOfEvils)
+    public string ConjourInfo(int nOfEvils, Character picked)
     {
 
-        return $"I have received a {nOfEvils}";
+        return $"I picked #{picked.id}, and I have received a {nOfEvils}";
     }
 }

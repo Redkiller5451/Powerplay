@@ -12,13 +12,14 @@ using static UnityEngine.GraphicsBuffer;
 
 namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
-public class Auditor : Demon
+public class Goon : Role
 {
-    public Auditor() : base(ClassInjector.DerivedConstructorPointer<Auditor>())
+    private static Character lastPicker = null;
+    public Goon() : base(ClassInjector.DerivedConstructorPointer<Goon>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
     }
-    public Auditor(System.IntPtr ptr) : base(ptr)
+    public Goon(System.IntPtr ptr) : base(ptr)
     {
 
     }
@@ -29,16 +30,22 @@ public class Auditor : Demon
             return "This is a cool role!";
         }
     }
-    public override ActedInfo GetInfo(Character charRef)
-    {
-        ActedInfo actedInfo = new ActedInfo("I have declared a Tribunal!", null);
-        return actedInfo;
-    }
-   
+
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-       
+        if (trigger == ETriggerPhase.OnPicked)
+        {
+            if (charRef.state == ECharacterState.Dead) return;
+            if (lastPicker != null)
+            {
+                charRef.ChangeAlignment(lastPicker.alignment);
+            }
+        }
+    }
+    public static void SetLastPicker(Character picker)
+    {
+        lastPicker = picker;
     }
     //Taken from Wingidons Undying 
 }

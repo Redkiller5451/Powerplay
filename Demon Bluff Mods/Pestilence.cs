@@ -84,6 +84,7 @@ public class Pestilence : Demon
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterCharacterContainsStatus(list1, ECharacterStatus.Corrupted);
             list1 = Characters.Instance.FilterRevealedCharacters(list1);
+            list1 = Characters.Instance.FilterAliveCharacters(list1);
             foreach (Character character in list1)
             {
                 character.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);

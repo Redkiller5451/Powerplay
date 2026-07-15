@@ -61,7 +61,7 @@ namespace Demon_Bluff_Mods
                 if (charRef.statuses.Contains(ECharacterStatus.Corrupted))
                 {
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                    list1 = Characters.Instance.FilterOutStatus(list1,Protected.protect);
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     random = list1[randomIndex];
                     string line = $"#{random.id} is being protected";
@@ -72,9 +72,19 @@ namespace Demon_Bluff_Mods
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                     list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                     list1 = Characters.Instance.FilterCharacterContainsStatus(list1, Protected.protect);
-                    int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-                    random = list1[randomIndex];
-                string line = $"#{random.id} is being protected";
+                    
+                    string line = "";
+                    if(list1.Count == 0)
+                    {
+                        line = "Noone is protected";
+                    }
+                    else
+                    {
+                        int randomIndex = UnityEngine.Random.Range(0, list1.Count);
+                         random = list1[randomIndex];
+                        line = $"#{random.id} is being protected";
+                    }
+                        
                 onActed?.Invoke(new ActedInfo(line, null));
 
                 }
@@ -87,7 +97,7 @@ namespace Demon_Bluff_Mods
             if (trigger == ETriggerPhase.Day)
             {
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                list1 = Characters.Instance.FilterOutStatus(list1, Protected.protect);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 string line = $"#{random.id} is being protected";

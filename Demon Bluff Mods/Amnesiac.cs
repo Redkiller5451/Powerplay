@@ -61,7 +61,7 @@ public class Amnesiac : Role
 
             CharacterData chosenTPOW = possibleTPOWs[UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count)];
             charRef.Init(chosenTPOW);
-        }
+                   }
     }
      public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {

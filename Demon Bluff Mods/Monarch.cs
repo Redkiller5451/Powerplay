@@ -89,17 +89,17 @@ public class Monarch : Role
                     }
                     else
                     {
-                        line = $"\nthere are no more Villagers alive";
+                        line += $"\nAnd there are no more Villagers alive";
                     }
                 }
                  else
                  {
-                line = $"\nthere are no more Villagers alive";
+                line = $"\nAnd there are no more Villagers alive";
                 }
             }
             else
             {
-                line = $"there are no Villagers alive";
+                line = $"There are no Villagers alive";
             }
             
             onActed?.Invoke(new ActedInfo(line,null));

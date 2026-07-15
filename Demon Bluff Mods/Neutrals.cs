@@ -37,6 +37,7 @@ namespace Demon_Bluff_Mods
         }
         public static void changeAlignement(Character __instance)
         {
+            MelonLogger.Msg($"#{__instance.id} is swapping alignements");
                 int randoChance = UnityEngine.Random.Range(0, 99);
                 if (randoChance > 49)
                 {

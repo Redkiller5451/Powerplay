@@ -45,8 +45,17 @@ public class Amnesiac6Pick : Role
         if (trigger != ETriggerPhase.Day) return;
         chRef = charRef;
         CharacterPicker.Instance.StartPickCharacters(1, charRef);
-        CharacterPicker.OnCharactersPicked += action1;
-        CharacterPicker.OnStopPick += action2;
+        if (charRef.statuses.Contains(ECharacterStatus.Corrupted))
+        {
+            CharacterPicker.OnCharactersPicked += action3;
+            CharacterPicker.OnStopPick += action2;
+        }
+        else
+        {
+            CharacterPicker.OnCharactersPicked += action1;
+            CharacterPicker.OnStopPick += action2;
+        }
+            
     }
     private void StopPick()
     {
@@ -67,12 +76,13 @@ public class Amnesiac6Pick : Role
             ids.Add(c.id);
             outsiders.Add(c);
         }
-        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]))));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(PickedIsCloser(outsiders[0]), outsiders[0])));
     }
 
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
         if (trigger != ETriggerPhase.Day) return;
+        chRef = charRef;
         CharacterPicker.Instance.StartPickCharacters(1, charRef);
         CharacterPicker.OnCharactersPicked += action3;
         CharacterPicker.OnStopPick += action2;
@@ -88,7 +98,7 @@ public class Amnesiac6Pick : Role
             ids.Add(c.id);
             outsiders.Add(c);
         }
-        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]))));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]), outsiders[0])));
 
     }
     public bool PickedIsCloser(Character picked)
@@ -96,12 +106,12 @@ public class Amnesiac6Pick : Role
         return chRef.alignment == picked.alignment;
     }
 
-    public string ConjourInfo(bool status)
+    public string ConjourInfo(bool status, Character picked)
     {
         if (status)
         {
-            return $"I have received a yes!";
+            return $"I picked #${picked.id} have received a yes!";
         }
-        return $"I have received a no!";
+        return $"I picked #${picked.id} have received a no!";
     }
 }

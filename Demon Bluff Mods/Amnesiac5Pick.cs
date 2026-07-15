@@ -67,7 +67,7 @@ public class Amnesiac5Pick : Role
             ids.Add(c.id);
             outsiders.Add(c);
         }
-        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]))));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]),outsiders[0])));
     }
 
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -88,7 +88,7 @@ public class Amnesiac5Pick : Role
             ids.Add(c.id);
             outsiders.Add(c);
         }
-        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]))));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]), outsiders[0])));
 
     }
     public bool PickedIsCloser(Character picked)
@@ -132,12 +132,12 @@ public class Amnesiac5Pick : Role
         return savedCount;
     }
 
-    public string ConjourInfo(bool status)
+    public string ConjourInfo(bool status, Character picked)
     {
         if (status)
         {
-            return $"I have received a yes!";
+            return $"I picked #${picked.id} have received a yes!";
         }
-        return $"I have received a no!";
+        return $"I picked #${picked.id} have received a no!";
     }
 }

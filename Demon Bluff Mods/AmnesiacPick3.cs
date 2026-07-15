@@ -70,7 +70,7 @@ public class Amnesiac3Pick : Role
      
         int nOfEvilNeighbors = AmountOfEvils(chRef, outsiders[0]);
 
-        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors)));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors, outsiders[0])));
     }
 
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -93,7 +93,7 @@ public class Amnesiac3Pick : Role
         }
         int nOfEvilNeighbors = AmountOfEvils(chRef, outsiders[0]);
         nOfEvilNeighbors = Calculator.RemoveNumberAndGetRandomNumberFromList(nOfEvilNeighbors, 0, 5);
-        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors)));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(nOfEvilNeighbors, outsiders[0])));
 
     }
     public int AmountOfEvils(Character charRef, Character picked)
@@ -115,9 +115,9 @@ public class Amnesiac3Pick : Role
         }
         return amountOfNoneVillagers;
     }
-    public string ConjourInfo(int nOfEvils)
+    public string ConjourInfo(int nOfEvils, Character picked)
     {
 
-        return $"I have received a {nOfEvils}";
+        return $"I picked #{picked.id}, and I have received a {nOfEvils}";
     }
 }
