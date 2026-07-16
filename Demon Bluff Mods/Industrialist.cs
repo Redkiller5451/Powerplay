@@ -19,19 +19,13 @@ public class Industrialist : Role
     {
         if (trigger == ETriggerPhase.Start)
         {
-            Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
-            allChars = Characters.Instance.FilterAlignmentCharacters(allChars, EAlignment.Good);
-            int randomIndex = UnityEngine.Random.Range(0, allChars.Count);
-            Character random = allChars[randomIndex];
-            Il2CppSystem.Collections.Generic.List<Character> allChars2 = Gameplay.CurrentCharacters;
-            if(random.GetCharacterType() == ECharacterType.Villager)
-                Characters.Instance.FilterOutCharacterType(allChars2, ECharacterType.Villager);
-            else
-                Characters.Instance.FilterOutCharacterType(allChars2, ECharacterType.Outcast);
-            randomIndex = UnityEngine.Random.Range(0, allChars2.Count);
-            Character random2 = allChars2[randomIndex];
-            random.statuses.AddStatus(MadVictim.madVictim, charRef);
-            random2.statuses.AddStatus(Mad.mad, charRef);
+            Gameplay gameplay = Gameplay.Instance;
+            Characters instance = Characters.Instance;
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+            list1.Remove(charRef);
+            int randomIndex = UnityEngine.Random.Range(0, list1.Count);
+            list1[randomIndex].statuses.AddStatus(Mad.mad2, list1[randomIndex]);
         }
         if (trigger == ETriggerPhase.Day)
         {
@@ -123,18 +117,19 @@ public static class Madness
             }
             if(__instance.GetCharacterType() is ECharacterType.Villager)
             {
-                allChars = Characters.Instance.FilterCharacterType(allChars, ECharacterType.Outcast);
+                allChars = Characters.Instance.FilterOutCharacterType(allChars, ECharacterType.Villager);
                 if (allChars.Count == 0)
                     allChars.Add(ProjectContext.Instance.gameData.GetCharacterDataOfId("Bombardier_79093372"));
             }
             else
             {
-                allChars = Characters.Instance.FilterCharacterType(allChars, ECharacterType.Villager);
+                allChars = Characters.Instance.FilterOutCharacterType(allChars, ECharacterType.Outcast);
                 if (allChars.Count == 0)
                      allChars.Add(ProjectContext.Instance.gameData.GetCharacterDataOfId("Confessor_18741708"));
             }
                 
             CharacterData randomMinion = allChars[UnityEngine.Random.Range(0, allChars.Count)];
+            MelonLogger.Msg($"[LOG] #{__instance.id} is registering as the {randomMinion.characterName}");
             __instance.UpdateRegisterAsRole(randomMinion);
         }
     }

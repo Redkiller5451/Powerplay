@@ -76,6 +76,9 @@ namespace Demon_Bluff_Mods
             blacklistMinionIDs.Add("Trickster_m_scm"); // Just in case.
             blacklistMinionIDs.Add("Trickster_m_register_scm"); // Just in case.
             blacklistMinionIDs.Add("Undying_WING"); // Undying is face-up. Don't add him as a fake Minion.
+            blacklistMinionIDs.Add("Acolyte_WING"); // Undying is face-up. Don't add him as a fake Minion.
+            blacklistMinionIDs.Add("Fanatic_WING"); // Undying is face-up. Don't add him as a fake Minion.
+            blacklistMinionIDs.Add("Zealot_WING"); // Undying is face-up. Don't add him as a fake Minion.
             blacklistMinionIDs.Add("EvilTwin_POW"); // Not copying Evil Twin its dumb
             blacklistMinionIDs.Add("GoodTwin_POW"); // Not copying Good Twin its dumb
             blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
@@ -91,7 +94,7 @@ namespace Demon_Bluff_Mods
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
-                if (d.type == ECharacterType.Minion && !blacklistMinionIDs.Contains(d.characterId))
+                if (d.type == ECharacterType.Minion && !blacklistMinionIDs.Contains(d.characterId) && !inPlayMinion(d.characterId))
                 {
                     possibleMinions.Add(d);
                 }
@@ -104,6 +107,18 @@ namespace Demon_Bluff_Mods
             {
                 DeckView.AddToObscuredDeckView(chosenMinion);
             }
+        }
+        private static bool inPlayMinion(string id)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Minion);
+            foreach (Character c in list1)
+            {
+                if (c.dataRef.characterId == id)
+                    return true;
+
+            }
+            return false;
         }
     }
     public static class WeatherType
@@ -254,6 +269,7 @@ namespace Demon_Bluff_Mods
             Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterRealCharacterType((Gameplay.CurrentCharacters), ECharacterType.Outcast);
             Il2CppSystem.Collections.Generic.List<string> blacklistMinionIDs = new();
             blacklistMinionIDs.Add("SnowedIn_POW"); // Should never be added
+            blacklistMinionIDs.Add("Trickster_o_scm"); // Should never be added
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
@@ -388,17 +404,17 @@ namespace Demon_Bluff_Mods
         {
             if (trigger == ETriggerPhase.Start)
             {
-
+                
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 int nOfSnowedIn = 0;
-                int wantedAmount = 4;
+                int wantedAmount = 2;
                 if (Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager).Count < 4)
                     wantedAmount = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager).Count;
                 do
                 {
+                    list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                     MelonLogger.Msg("Turning Into Snowed In");
                     TurnIntoSnowedIn(list1[UnityEngine.Random.Range(0, list1.Count)]);
-                    list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                     nOfSnowedIn++;
                 } while (wantedAmount > nOfSnowedIn);
                 becomeOtherMinion(charRef);

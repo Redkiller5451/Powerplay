@@ -34,7 +34,7 @@ namespace Demon_Bluff_Mods
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
             Character random = null;
-            if (trigger == ETriggerPhase.Start)
+            if (trigger == ETriggerPhase.AfterRoundStart)
             {
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
@@ -48,6 +48,7 @@ namespace Demon_Bluff_Mods
                 else
                 {
                     list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                    list1.Remove(charRef);
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     random = list1[randomIndex];
                     random.statuses.AddStatus(Protected.protect, random);

@@ -37,7 +37,27 @@ namespace Demon_Bluff_Mods
             list1 = Characters.Instance.FilterCharacterContainsStatus(list1, ECharacterStatus.KilledByEvil);
             if (list1.Count == 0)
             {
-                return new ActedInfo("There are no dead players", null);
+                string line = "I speculate that: ";
+                Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterAlignmentCharacters(list2, EAlignment.Good);
+                Il2CppSystem.Collections.Generic.List<Character> list4 = new Il2CppSystem.Collections.Generic.List<Character>();
+                Il2CppSystem.Collections.Generic.List<Character> list5 = Characters.Instance.FilterAlignmentCharacters(list2, EAlignment.Evil);
+                if (UnityEngine.Random.Range(0, 2) < 1)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, list5.Count);
+                    Character random = list5[randomIndex];
+                    line += $"\n#{random.id} is a killer";
+                    list4.Add(random);
+                    list5.Remove(random);
+                }
+                else
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, list3.Count);
+                    Character random = list3[randomIndex];
+                    line += $"\n#{random.id} is a killer";
+                    list4.Add(random);
+                    list3.Remove(random);
+                }
+                return new ActedInfo(line, list4);
             }
             else
             {
@@ -74,7 +94,17 @@ namespace Demon_Bluff_Mods
             list1 = Characters.Instance.FilterCharacterContainsStatus(list1, ECharacterStatus.KilledByEvil);
             if (list1.Count == 0)
             {
-                return new ActedInfo("There are no dead players", null);
+                string line = "I speculate that: ";
+                Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterAlignmentCharacters(list2, EAlignment.Good);
+                Il2CppSystem.Collections.Generic.List<Character> list4 = new Il2CppSystem.Collections.Generic.List<Character>();
+               
+                int randomIndex = UnityEngine.Random.Range(0, list3.Count);
+                        Character random = list3[randomIndex];
+                        line += $"\n#{random.id} is a killer";
+                        list4.Add(random);
+                        list3.Remove(random);
+               
+                return new ActedInfo(line, list4);
             }
             else
             {

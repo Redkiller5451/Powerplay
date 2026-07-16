@@ -100,24 +100,24 @@ public class Amnesiac3Pick : Role
     {
         Il2CppSystem.Collections.Generic.List<Character> myList = CharactersHelper.GetSortedListWithCharacterFirst(Gameplay.CurrentCharacters, charRef);
         myList.RemoveAt(0);
-        Il2CppSystem.Collections.Generic.List<Character> neighbors = new Il2CppSystem.Collections.Generic.List<Character>();
         int amountOfNoneVillagers = 0;
         foreach(Character character in myList)
         {
-            if(character.GetCharacterType() != ECharacterType.Villager)
-            {
-                amountOfNoneVillagers++;
-            }
             if(character == picked)
             {
                 break;
             }
+            if(character.GetCharacterType() != ECharacterType.Villager)
+            {
+                amountOfNoneVillagers++;
+            }
+            
         }
         return amountOfNoneVillagers;
     }
     public string ConjourInfo(int nOfEvils, Character picked)
     {
-
+        MelonLogger.Msg($"[LOG] Amne 3 triggered");
         return $"I picked #{picked.id}, and I have received a {nOfEvils}";
     }
 }

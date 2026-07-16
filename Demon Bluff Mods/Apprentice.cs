@@ -25,6 +25,10 @@ public class Apprentice : Neutrals
                 becomeOtherMinion(charRef);
             else
                 becomeOtherVillager(charRef);
+            if(charRef.role is Apprentice)
+            {
+                onActed?.Invoke(new ActedInfo("I could not learn correctly..."));
+            }
         }
 
     }
@@ -54,20 +58,35 @@ public class Apprentice : Neutrals
         for (int j = 0; j < allDatas.Length; j++)
         {
             CharacterData d = allDatas[j];
-            if (d.type == ECharacterType.Villager)
+            if (d.type == ECharacterType.Villager && inPlayVillager(d.characterId))
             {
                 possibleMinions.Add(d);
             }
         }
+        if (possibleMinions.Count == 0) return;
         CharacterData chosenMinion = possibleMinions[UnityEngine.Random.Range(0, possibleMinions.Count)];
         Role temp = charRef.dataRef.role;
         charRef.Init(chosenMinion);
         
     }
+    private static bool inPlayVillager(string id)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+        list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+        foreach (Character c in list1)
+        {
+            if (c.dataRef.characterId == id)
+                return true;
+
+        }
+        return false;
+    }
     public static void becomeOtherMinion(Character charRef)
     {
         CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
         Il2CppSystem.Collections.Generic.List<CharacterData> possibleMinions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+        list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Minion);
         if (allDatas.Length == 0)
         {
             var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
@@ -96,13 +115,26 @@ public class Apprentice : Neutrals
         for (int j = 0; j < allDatas.Length; j++)
         {
             CharacterData d = allDatas[j];
-            if (d.type == ECharacterType.Minion && !blacklistMinionIDs.Contains(d.characterId))
+            if (d.type == ECharacterType.Minion && !blacklistMinionIDs.Contains(d.characterId) && inPlayMinion(d.characterId))
             {
                 possibleMinions.Add(d);
             }
         }
+        if (possibleMinions.Count == 0) return;
         CharacterData chosenMinion = possibleMinions[UnityEngine.Random.Range(0, possibleMinions.Count)];
         Role temp = charRef.dataRef.role;
         charRef.Init(chosenMinion);
+    }
+    private static bool inPlayMinion(string id)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+        list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Minion);
+        foreach (Character c in list1)
+        {
+            if(c.dataRef.characterId == id)
+                return true;
+
+        }
+        return false;
     }
 }

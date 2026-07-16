@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static MelonLoader.MelonLaunchOptions;
 using static UnityEngine.GraphicsBuffer;
 
 namespace Demon_Bluff_Mods;
@@ -22,45 +23,40 @@ public class Pirate : Neutrals
     {
         if (trigger == ETriggerPhase.Start)
         {
-            if (trigger == ETriggerPhase.Start)
-            {
-                changeAlignement(charRef);
-            }
+
+            changeAlignement(charRef);
+
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-            list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
             list1.Remove(charRef);
-            if (list1.Count > 0)
+            int characterId = UnityEngine.Random.Range(0, list1.Count);
+            list1[characterId].statuses.statuses.Add(Dueled.dueled);
+        }
+        if (trigger == ETriggerPhase.Day)
+        {
+            Gameplay gameplay = Gameplay.Instance;
+            Characters instance = Characters.Instance;
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            Character character = Characters.Instance.FilterCharacterContainsStatus(list1, Dueled.dueled)[0];
+            if (PickedAlignment(character,charRef))
             {
-                int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-                Character random = list1[randomIndex];
-                random.statuses.AddStatus(Dueled.dueled, random);
-                random.statuses.AddStatus(ECharacterStatus.Silenced, random);
-                if (random.dataRef.picking)
-                {
-                    random.pickable.SetActive(false);
-                }
+                charRef.KillByDemon(character);
+            }
+            else
+            {
+                character.KillByDemon(charRef);
+                onActed?.Invoke(new ActedInfo($"I have successfully plundered #{character.id}", Characters.Instance.FilterCharacterContainsStatus(list1, Dueled.dueled)));
             }
         }
     }
-    public override CharacterData GetBluffIfAble(Character charRef)
+    public bool PickedAlignment(Character picked, Character charRef)
     {
-        int diceRoll = Calculator.RollDice(10);
-
-        if (diceRoll < 5)
+        if (picked.role is Goon)
         {
-            // 100% Double Claim
-            return Characters.Instance.GetRandomDuplicateBluff();
+            return charRef.alignment == EAlignment.Good;
         }
-        else
-        {
-            // Become a new character
-            CharacterData bluff = Characters.Instance.GetRandomUniqueBluff();
-            Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
-
-            return bluff;
-        }
+        return charRef.GetRegisterAlignment() == picked.GetRegisterAlignment();
     }
     public Pirate() : base(ClassInjector.DerivedConstructorPointer<Pirate>())
     {
@@ -74,18 +70,5 @@ public class Pirate : Neutrals
     public static class Dueled
     {
         public static ECharacterStatus dueled = (ECharacterStatus)195;
-        [HarmonyPatch(typeof(Character), nameof(Character.ShowDescription))]
-        public static class ChangeKillByDemonText
-        {
-            public static void Postfix(Character __instance)
-            {
-                if (__instance.statuses.Contains(dueled))
-                {
-                    HintInfo info = new HintInfo();
-                    info.text = "I am being dueled by a <color=#F7ED88>Pirate</color>\nCannot use abilities.";
-                    UIEvents.OnShowHint.Invoke(info, __instance.hintPivot);
-                }
-            }
-        }
     }
 }

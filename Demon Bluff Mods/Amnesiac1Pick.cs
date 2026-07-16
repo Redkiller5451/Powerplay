@@ -113,7 +113,7 @@ public class Amnesiac1Pick : Role
     }
     public string ConjourInfo(int nOfEvils, Character picked)
     {
-
+        MelonLogger.Msg($"[LOG] Amne 1 triggered");
         return $"I picked #{picked.id}, and I have received a {nOfEvils}";
     }
 }

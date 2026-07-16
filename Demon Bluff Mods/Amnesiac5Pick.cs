@@ -67,7 +67,7 @@ public class Amnesiac5Pick : Role
             ids.Add(c.id);
             outsiders.Add(c);
         }
-        onActed?.Invoke(new ActedInfo(ConjourInfo(!PickedIsCloser(outsiders[0]),outsiders[0])));
+        onActed?.Invoke(new ActedInfo(ConjourInfo(PickedIsCloser(outsiders[0]),outsiders[0])));
     }
 
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -134,10 +134,11 @@ public class Amnesiac5Pick : Role
 
     public string ConjourInfo(bool status, Character picked)
     {
+        MelonLogger.Msg($"[LOG] Amne 5 triggered");
         if (status)
         {
-            return $"I picked #${picked.id} have received a yes!";
+            return $"I picked #{picked.id} have received a yes!";
         }
-        return $"I picked #${picked.id} have received a no!";
+        return $"I picked #{picked.id} have received a no!";
     }
 }

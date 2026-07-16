@@ -58,8 +58,10 @@ public class Amnesiac : Role
                     possibleTPOWs.Add(allDatas[j]);
                 }
             }
+            int randomize = UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count);
+            CharacterData chosenTPOW = possibleTPOWs[randomize];
 
-            CharacterData chosenTPOW = possibleTPOWs[UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count)];
+            MelonLogger.Msg($"[LOG] Amnesiac chose ability {chosenTPOW.characterId}");
             charRef.Init(chosenTPOW);
                    }
     }

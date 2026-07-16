@@ -26,6 +26,17 @@ public static class TargetClassExtensions2
         }
         return filteredList;
     }
+    public static Il2CppSystem.Collections.Generic.List<CharacterData> FilterOutCharacterType(this Characters instance, Il2CppSystem.Collections.Generic.List<CharacterData> allChars, ECharacterType charType)
+    {
+        Il2CppSystem.Collections.Generic.List<CharacterData> filteredList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        // You can now access public members of the instance
+        foreach (CharacterData character in allChars)
+        {
+            if (character.type != charType)
+                filteredList.Add(character);
+        }
+        return filteredList;
+    }
     public static Il2CppSystem.Collections.Generic.List<Character> FilterOutStatus(this Characters instance, Il2CppSystem.Collections.Generic.List<Character> allChars, ECharacterStatus status)
     {
         Il2CppSystem.Collections.Generic.List<Character> filteredList = new Il2CppSystem.Collections.Generic.List<Character>();
@@ -36,5 +47,16 @@ public static class TargetClassExtensions2
                 filteredList.Add(character);
         }
         return filteredList;
+    }
+    public static CharacterData GetDuplicateBluffWithoutType(this Characters instance, ECharacterType charType)
+    {
+        Il2CppSystem.Collections.Generic.List<CharacterData> filteredList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        // You can now access public members of the instance
+        foreach (CharacterData character in instance.DuplicatesPool)
+        {
+            if (character.type != charType)
+                filteredList.Add(character);
+        }
+        return filteredList[UnityEngine.Random.Range(0, filteredList.Count)];
     }
 }

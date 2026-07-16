@@ -39,12 +39,32 @@ namespace Demon_Bluff_Mods
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Demon);
-                foreach (Character character in list1)
+                if (ApprenticeCheck(charRef))
                 {
-                    character.statuses.statuses.Remove(Protected.protect);
+                    foreach (Character character in list1)
+                    {
+                        character.statuses.statuses.Remove(Protected.protect);
+                    }
                 }
             }
 
+        }
+        private bool ApprenticeCheck(Character charRef)
+        {
+            Gameplay gameplay = Gameplay.Instance;
+            Characters instance = Characters.Instance;
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Minion);
+            list1.Remove(charRef);
+            list1 = Characters.Instance.FilterAliveCharacters(list1);
+            foreach (Character character in list1)
+            {
+                if(character.role is DevilsAdvocate)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

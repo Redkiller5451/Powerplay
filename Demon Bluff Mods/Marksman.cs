@@ -64,25 +64,20 @@ namespace Demon_Bluff_Mods
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            Il2CppSystem.Collections.Generic.List<Character> list2 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Minion);
             int nOfMinions = list1.Count;
             list1 = Characters.Instance.FilterRevealedCharacters(list1);
+            list2 = Characters.Instance.FilterRevealedCharacters(list2);
             string line;
                 if(nOfMinions > 0)
                 {
-                    int randomMinionAmount = UnityEngine.Random.Range(1, nOfMinions);
-                    if (randomMinionAmount == list1.Count)
-                    {
-                        int chance = UnityEngine.Random.Range(0, 1);
-                        if(chance == 0)
-                        {
-                            randomMinionAmount--;
-                        }
-                        else
-                        {
-                            randomMinionAmount++;
-                        }
-                    }
+                 
+                int randomMinionAmount = Calculator.RemoveNumberAndGetRandomNumberFromList(list1.Count, 0, nOfMinions);
+                if (list2.Count < randomMinionAmount)
+                {
+                    randomMinionAmount = list2.Count;
+                }
                     if (randomMinionAmount == 0)
                     {
                         line = $"There are no revealed Minions";

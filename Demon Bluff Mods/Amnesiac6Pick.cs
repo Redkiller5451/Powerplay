@@ -103,15 +103,20 @@ public class Amnesiac6Pick : Role
     }
     public bool PickedIsCloser(Character picked)
     {
-        return chRef.alignment == picked.alignment;
+        if(picked.role is Goon)
+        {
+            return chRef.alignment == EAlignment.Evil;
+        }
+        return chRef.GetRegisterAlignment() == picked.GetRegisterAlignment();
     }
 
     public string ConjourInfo(bool status, Character picked)
     {
+        MelonLogger.Msg($"[LOG] Amne 6 triggered");
         if (status)
         {
-            return $"I picked #${picked.id} have received a yes!";
+            return $"I picked #{picked.id} have received a yes!";
         }
-        return $"I picked #${picked.id} have received a no!";
+        return $"I picked #{picked.id} have received a no!";
     }
 }

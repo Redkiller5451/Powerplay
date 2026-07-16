@@ -29,6 +29,7 @@ public class Scapegoat : Neutrals
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+                list1.Remove(charRef);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 random.statuses.AddStatus(Sacrifice.sacrifice, random);
@@ -39,11 +40,20 @@ public class Scapegoat : Neutrals
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+                list1.Remove(charRef);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 random.statuses.AddStatus(Sacrifice.sacrifice, random);
             }
-        }        
+        }
+        if(trigger == ETriggerPhase.Day)
+        {
+            Gameplay gameplay = Gameplay.Instance;
+            Characters instance = Characters.Instance;
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterCharacterContainsStatus(list1, Sacrifice.sacrifice);
+            onActed?.Invoke(new ActedInfo($"I am protecting #{list1[0].id}"));
+        }
     }   
     public Scapegoat() : base(ClassInjector.DerivedConstructorPointer<Scapegoat>())
     {

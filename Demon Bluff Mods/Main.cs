@@ -4,8 +4,9 @@ using Il2Cpp;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MelonLoader;
-using UnityEngine;
+using MelonLoader.Utils;
 using Patty_CustomScenario_MOD;
+using UnityEngine;
 [assembly: MelonInfo(typeof(Demon_Bluff_Mods.Main), "Demon Bluff Mods", "1.0", "Redkiller")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
@@ -51,10 +52,22 @@ public class Main : MelonMod
         ClassInjector.RegisterTypeInIl2Cpp<War>();
 
     }
+    public MelonPreferences_Category configCategory = null!;
     public override void OnLateInitializeMelon()
     {
         GameObject content = GameObject.Find("Game/Gameplay/Content");
         NightPhase nightPhase = content.GetComponent<NightPhase>();
+        configCategory = MelonPreferences.CreateCategory("PowerplaySettings");
+
+        configCategory.CreateEntry("DebugMode", false, "Debug Mode", "Whether or not debug mode is enabled. Debug Mode outputs logs to the console about some roles and what they're doing.");
+        configCategory.CreateEntry("Death_Weight", 1, description: "How likely Death will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.CreateEntry("Famine_Weight", 1, description: "How likely Famine will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.CreateEntry("Pestilence_Weight", 1, description: "How likely Pestilence will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.CreateEntry("War_Weight", 1, description: "How likely War will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.CreateEntry("Vortox_Weight", 2, description: "How likely Vortox will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.CreateEntry("Crazed_Weight", 3, description: "How likely Crazed will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.SetFilePath(Path.Combine(MelonEnvironment.UserDataDirectory, "PowerplayConfig.cfg"));
+        configCategory.SaveToFile();
 
         Il2Cpp.CharacterData marksman = new Il2Cpp.CharacterData();
         marksman.role = new Marksman();
@@ -83,10 +96,10 @@ public class Main : MelonMod
         coroner.role = new Coroner();
         coroner.name = "Coroner";
         coroner.characterName = "Coroner";
-        coroner.description = "If there is a card killed by an Evil, learn an Evil character.";
+        coroner.description = "If there is a card killed by an Evil, learn an Evil character.\nIf not, there is a 50% chance I point at Good, and a 50% chance I point at evil";
         coroner.flavorText = "\"Has valuable information!\nOnly in niche circumstances.\"";
-        coroner.hints = "If no one is dead, even a lying Coroner won't state a killer.";
-        coroner.ifLies = "Points to a Good player instead.";
+        coroner.hints = "";
+        coroner.ifLies = "Always points to a Good card instead.";
         coroner.notes = "";
         coroner.picking = false;
         coroner.startingAlignment = EAlignment.Good;
@@ -170,6 +183,29 @@ public class Main : MelonMod
         knowItAll.additionalFlavorTexts = new Il2CppStringArray(1);
         knowItAll.additionalFlavorTexts[0] = knowItAll.flavorText;
         knowItAll.gender = EGender.Male;
+
+        Il2Cpp.CharacterData newsman = new Il2Cpp.CharacterData();
+        newsman.role = new Newsman();
+        newsman.name = "Newsman";
+        newsman.characterName = "Newsman";
+        newsman.description = "Learn the closest Mad Character";
+        newsman.flavorText = "\"HEAR IT HEAR IT, The Demographer mistook the Poet for the Drunk! \nMore at 5\"";
+        newsman.hints = "";
+        newsman.ifLies = "Learn a random number";
+        newsman.notes = "";
+        newsman.picking = false;
+        newsman.startingAlignment = EAlignment.Good;
+        newsman.type = ECharacterType.Villager;
+        newsman.abilityUsage = EAbilityUsage.Once;
+        newsman.bluffable = true;
+        newsman.characterId = "Newsman_POW";
+        newsman.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        newsman.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        newsman.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        newsman.color = new Color(1f, 0.935f, 0.7302f);
+        newsman.additionalFlavorTexts = new Il2CppStringArray(1);
+        newsman.additionalFlavorTexts[0] = knowItAll.flavorText;
+        newsman.gender = EGender.Male;
 
         Il2Cpp.CharacterData fisherman = new Il2Cpp.CharacterData();
         fisherman.role = new Fisherman();
@@ -406,8 +442,8 @@ public class Main : MelonMod
         amnesiac.role = new Amnesiac();
         amnesiac.name = "Amnesiac";
         amnesiac.characterName = "Amnesiac";
-        amnesiac.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
+        amnesiac.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
+            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
         amnesiac.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
         amnesiac.hints = "";
         amnesiac.ifLies = "Says a random number of the opposite of the statement";
@@ -430,8 +466,8 @@ public class Main : MelonMod
         amnesiacPick1.role = new Amnesiac1Pick();
         amnesiacPick1.name = "Amnesiac";
         amnesiacPick1.characterName = "Amnesiac";
-        amnesiacPick1.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
+        amnesiacPick1.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
+            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
         amnesiacPick1.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
         amnesiacPick1.hints = "";
         amnesiacPick1.ifLies = "Says a random number of the opposite of the statement";
@@ -454,8 +490,8 @@ public class Main : MelonMod
         amnesiacPick2.role = new Amnesiac2Pick();
         amnesiacPick2.name = "Amnesiac";
         amnesiacPick2.characterName = "Amnesiac";
-        amnesiacPick2.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
+        amnesiacPick2.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
+            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me \n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
         amnesiacPick2.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
         amnesiacPick2.hints = "";
         amnesiacPick2.ifLies = "Says a random number of the opposite of the statement";
@@ -478,8 +514,8 @@ public class Main : MelonMod
         amnesiacPick3.role = new Amnesiac3Pick();
         amnesiacPick3.name = "Amnesiac";
         amnesiacPick3.characterName = "Amnesiac";
-        amnesiacPick3.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
+        amnesiacPick3.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
+            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
         amnesiacPick3.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
         amnesiacPick3.hints = "";
         amnesiacPick3.ifLies = "Says a random number of the opposite of the statement";
@@ -502,8 +538,8 @@ public class Main : MelonMod
         amnesiacPick4.role = new Amnesiac4Pick();
         amnesiacPick4.name = "Amnesiac";
         amnesiacPick4.characterName = "Amnesiac";
-        amnesiacPick4.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
+        amnesiacPick4.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
+            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
         amnesiacPick4.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
         amnesiacPick4.hints = "";
         amnesiacPick4.ifLies = "Says a random number of the opposite of the statement";
@@ -526,8 +562,8 @@ public class Main : MelonMod
         amnesiacPick5.role = new Amnesiac5Pick();
         amnesiacPick5.name = "Amnesiac";
         amnesiacPick5.characterName = "Amnesiac";
-        amnesiacPick5.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
+        amnesiacPick5.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
+            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
         amnesiacPick5.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
         amnesiacPick5.hints = "";
         amnesiacPick5.ifLies = "Says a random number of the opposite of the statement";
@@ -550,8 +586,8 @@ public class Main : MelonMod
         amnesiacPick6.role = new Amnesiac6Pick();
         amnesiacPick6.name = "Amnesiac";
         amnesiacPick6.characterName = "Amnesiac";
-        amnesiacPick6.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same alignement is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
+        amnesiacPick6.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
+            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
         amnesiacPick6.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
         amnesiacPick6.hints = "";
         amnesiacPick6.ifLies = "Says a random number of the opposite of the statement";
@@ -574,7 +610,7 @@ public class Main : MelonMod
         indust.role = new Industrialist();
         indust.name = "Industrialist";
         indust.characterName = "Industrialist";
-        indust.description = "I make a character Mad as an in-play character.";
+        indust.description = "I make a Good Characater Mad as an out-of-play Character. Learn one Mad character.";
         indust.flavorText = "\"If you'd be like that guy right there.\n Maybe you'd get hired here!\"";
         indust.hints = "A Mad character registers as another character.";
         indust.ifLies = "I say a Good character is mad when they aren't.";
@@ -643,7 +679,7 @@ public class Main : MelonMod
         pirate.role = new Pirate();
         pirate.name = "Pirate";
         pirate.characterName = "Pirate";
-        pirate.description = "I duel someone, preventing them from getting information\nI Lie and Disguise.";
+        pirate.description = "I duel a card. I die if they are of the same alignement, they die if they are of a different alignement";
         pirate.flavorText = "\"You've got a fine coin there!\n Mind if I take it?\"";
         pirate.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
         pirate.ifLies = "";
@@ -778,11 +814,34 @@ public class Main : MelonMod
         scapegoat.additionalFlavorTexts[0] = scapegoat.flavorText;
         scapegoat.gender = EGender.Male;
 
+        Il2Cpp.CharacterData jester = new Il2Cpp.CharacterData();
+        jester.role = new Jester();
+        jester.name = "Court Fool";
+        jester.characterName = "Court Fool";
+        jester.description = "If you kill me, I kill someone opposing my alignment. \nI lie and disguise. \n I ALWAYS register as Evil and as a Minion";
+        jester.flavorText = "\"My job's to entertain and REIGN\"";
+        jester.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
+        jester.ifLies = "";
+        jester.notes = "";
+        jester.picking = false;
+        jester.startingAlignment = NeutralAlignement.Neutral;
+        jester.type = NeutralType.Neutral;
+        jester.abilityUsage = EAbilityUsage.Once;
+        jester.bluffable = false;
+        jester.characterId = "Jester_POW";
+        jester.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        jester.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        jester.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        jester.color = new Color(0.8510f, 0.4549f, 0.0f);
+        jester.additionalFlavorTexts = new Il2CppStringArray(1);
+        jester.additionalFlavorTexts[0] = jester.flavorText;
+        jester.gender = EGender.Male;
+
         Il2Cpp.CharacterData devilsAdvocate = new Il2Cpp.CharacterData();
         devilsAdvocate.role = new DevilsAdvocate();
         devilsAdvocate.name = "Supporter";
         devilsAdvocate.characterName = "Supporter";
-        devilsAdvocate.description = "The Demon can't be executed as long as I am alive. \n The Demon doesn't disguise. \n I lie and disguise.";
+        devilsAdvocate.description = "The Demon can't be executed as long as I am alive. \n I lie and disguise.";
         devilsAdvocate.flavorText = "\"Has an excellent reason on why the Demon should stay alive. \n Never actually says.\"";
         devilsAdvocate.hints = "";
         devilsAdvocate.ifLies = "";
@@ -962,6 +1021,29 @@ public class Main : MelonMod
         eTwin.additionalFlavorTexts = new Il2CppStringArray(1);
         eTwin.additionalFlavorTexts[0] = eTwin.flavorText;
         eTwin.gender = EGender.Female;
+
+        Il2Cpp.CharacterData crazed = new Il2Cpp.CharacterData();
+        crazed.role = new Crazed();
+        crazed.name = "Crazed";
+        crazed.characterName = "Crazed";
+        crazed.description = "All Villagers and Outcasts are Mad. \nI lie and disguise.";
+        crazed.flavorText = "\"I'm you, you, you\"";
+        crazed.hints = "";
+        crazed.ifLies = "";
+        crazed.notes = "";
+        crazed.picking = false;
+        crazed.startingAlignment = EAlignment.Evil;
+            crazed.type = ECharacterType.Demon;
+        crazed.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        crazed.bluffable = false;
+        crazed.characterId = "Crazed_POW";
+        crazed.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        crazed.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        crazed.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        crazed.color = new Color(1f, 0.3804f, 0.3804f);
+        crazed.additionalFlavorTexts = new Il2CppStringArray(1);
+        crazed.additionalFlavorTexts[0] = crazed.flavorText;
+        crazed.gender = EGender.Male;
 
         Il2Cpp.CharacterData vortox = new Il2Cpp.CharacterData();
         vortox.role = new Vortox();
@@ -1216,6 +1298,66 @@ public class Main : MelonMod
         snowedIn.additionalFlavorTexts = new Il2CppStringArray(1);
         snowedIn.additionalFlavorTexts[0] = snowedIn.flavorText;
 
+        CustomScriptData crazedScriptData = new CustomScriptData();
+        crazedScriptData.name = "Crazed_1";
+        ScriptInfo crazedScript = new ScriptInfo();
+        Il2CppSystem.Collections.Generic.List<CharacterData> crazedList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        crazedList.Add(crazed);
+        crazedScript.mustInclude = crazedList;
+        crazedScript.startingDemons = crazedList;
+        crazedScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
+        crazedScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
+        crazedScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
+        CharactersCount crazedCounter1 = setCharacterCount(4, 3, 2, 1);
+        CharactersCount crazedCounter2 = setCharacterCount(5, 3, 2, 1);
+        Il2CppSystem.Collections.Generic.List<CharactersCount> crazedCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1); 
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter1);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedCounterList.Add(crazedCounter2);
+        crazedScript.characterCounts = crazedCounterList;
+        crazedScriptData.scriptInfo = crazedScript;
+
         CustomScriptData vortoxScriptData = new CustomScriptData();
         vortoxScriptData.name = "Vortox_1";
         ScriptInfo vortoxScript = new ScriptInfo();
@@ -1401,6 +1543,7 @@ public class Main : MelonMod
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData);
         addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData);
         addDemon(advancedAscension, vortox, "Baa_Difficult", "Vortox_1", vortoxScriptData);
+       // addDemon(advancedAscension, crazed, "Baa_Difficult", "Crazed_1", crazedScriptData);
         //addDemon(advancedAscension, god, "Baa_Difficult", "God_1", godScriptData);
 
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
@@ -1408,6 +1551,7 @@ public class Main : MelonMod
             ScriptInfo script = scriptData.scriptInfo;
             addRole(script.startingTownsfolks, official);
             addRole(script.startingTownsfolks, guard);
+            addRole(script.startingTownsfolks, newsman);
             addRole(script.startingTownsfolks, teaLady);
             addRole(script.startingTownsfolks, washerwoman);
             addRole(script.startingTownsfolks, knowItAll);
@@ -1417,8 +1561,9 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, veteran);
             addRole(script.startingOutsiders, amnesiac);
             addRole(script.startingOutsiders, indust);
-            addRole(script.startingOutsiders, goon);
-            addRole(script.startingOutsiders, scapegoat);
+            addRole(script.startingOutsiders, goon); 
+            addRole(script.startingOutsiders, jester);
+           addRole(script.startingOutsiders, scapegoat);
             addRole(script.startingOutsiders, snakeCharmer);
             addRole(script.startingOutsiders, apprentice);
             addRole(script.startingOutsiders, pirate);
@@ -1438,24 +1583,24 @@ public class Main : MelonMod
             addRole(script.startingMinions, snowyW);
 
         }
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", vortox);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", jinx);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", snakeCharmer);
-        Characters.Instance.startGameActOrder = insertAfterAct("Baa", apprentice);
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(snakeCharmer);
+        Characters.Instance.startGameActOrder = insertAfterAct("Flutist", vortox);
+        
+        Characters.Instance.startGameActOrder = insertAfterAct("Flutist", apprentice);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", snowyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", stormyW);
         //Characters.Instance.startGameActOrder = insertAfterAct("Vortox", foggyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", sunnyW);
-        Characters.Instance.startGameActOrder = insertAfterAct("Shaman", conjurer);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", cerenovus);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", amnesiac);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", indust);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", scapegoat);
+        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", jester);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", official);
         
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
-        Characters.Instance.startGameActOrder = insertAfterAct("Executive", guard);
+       // Characters.Instance.startGameActOrder = insertAfterAct("Executive", guard);
         
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
@@ -1463,9 +1608,9 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", pestilence);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", eTwin);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", devilsAdvocate);
-        Characters.Instance.startGameActOrder = insertAfterAct("Godfather", teaLady);
-        
-        
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", teaLady);
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", crazed);
+
         List<CharacterData> characters = new List<CharacterData>();
         characters.Add(official);
         characters.Add(conjurer);
@@ -1527,6 +1672,19 @@ public class Main : MelonMod
         CharactersCount myCharacterCount = new CharactersCount(Villagers + Outcasts + Minions + Demons, Villagers, Demons, Outcasts, Minions);
         myCharacterCount.dOuts = Outcasts + 1;
         return myCharacterCount;
+    }
+
+    public CharacterData[] InsertAtStartOfActOrder(CharacterData data)
+    {
+        CharacterData[] actList = Characters.Instance.startGameActOrder;
+        int actSize = actList.Length;
+        CharacterData[] newActList = new CharacterData[actSize + 1];
+        for (int i = 0; i < actSize; i++)
+        {
+            newActList[i + 1] = actList[i];
+        }
+        newActList[0] = data;
+        return newActList;
     }
     public CharacterData[] insertAfterAct(string previous, CharacterData data)
     {
