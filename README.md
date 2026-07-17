@@ -66,7 +66,7 @@ Pick 4 cards. If all are good, you win.
 If a Good card picks me, I kill them, deal 2 damage and undisguise. I disguise.
 
 ### Flutist (Good, Outcast)
-I swap with an Evil. They say if they have been swapped. I disguise. 
+I swap with an Evil. They say if they have been swapped. I disguise. I register as Evil, I cannot be Evil.
 
 ### Amnesiac (Good, Outcast)
 I have 6 random abilities. You dont learn which.
@@ -75,7 +75,7 @@ I have 6 random abilities. You dont learn which.
 I turn into the alignement of the card that last picks me
 
 ### Industrialist (Good, Outcast)
-One character is Mad as an in-play character
+One character is Mad as an Out of play Character. Learn a mad card.
 
 ## MINIONS
 
@@ -119,7 +119,7 @@ The 2nd Gimmick. Neutrals! Neutral characters take up an Outcast slot. On Rounds
 effects might change depending on their alignement.
 
 ### Pirate
-On Roundstart, I duel a card, silencing them and preventing them from using their abilities.
+On Roundstart, I duel a card. If I duel my alignement, I die. If not, they die. 
 
 ### Psychopath
 Every night, I kill a card. I kill Good if I am Evil, and Evil if I am Good.
@@ -151,4 +151,4 @@ You cannot see your deckview
 Villagers have an increasing chance of becoming corrupted
 
 ### Snowy
-Some cards become Snowed in, and become useless
+2 cards become Snowed in, and become useless
