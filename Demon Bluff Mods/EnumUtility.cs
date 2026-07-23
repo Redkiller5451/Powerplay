@@ -9,7 +9,6 @@ using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
 using MelonLoader;
-using Patty_CustomScenario_MOD.Patch;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,12 +20,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Patty_CustomScenario_MOD
+namespace Demon_Bluff_Mods
 {
     public static class UniversalUtility
     {
         public static void AddEnum<T>(string enumName, object value) where T : System.Enum
         {
+            MelonLogger.Msg($"[Powerplay] Enum name = {enumName}");
             if (!AccessTools.IsValue(value.GetType()))
             {
                 MelonLogger.Error($"Value must be a number, applied type {value.GetType().FullName}");

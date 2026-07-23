@@ -73,7 +73,7 @@ public static class ButcherPatch
                     random.KillByDemon(__instance);
                     Health health = PlayerController.PlayerInfo.health;
                     if(!isRoundOver())
-                        health.Damage(2);
+                        health.Damage(1);
                 }
             }
             return true;

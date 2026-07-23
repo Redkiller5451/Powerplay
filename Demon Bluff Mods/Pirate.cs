@@ -29,8 +29,12 @@ public class Pirate : Neutrals
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-            list1.Remove(charRef);
-            int characterId = UnityEngine.Random.Range(0, list1.Count);
+            int characterId = 0;
+            do
+            {
+                characterId = UnityEngine.Random.Range(0, list1.Count);
+            } while (list1[characterId] != charRef);
+
             list1[characterId].statuses.statuses.Add(Dueled.dueled);
         }
         if (trigger == ETriggerPhase.Day)

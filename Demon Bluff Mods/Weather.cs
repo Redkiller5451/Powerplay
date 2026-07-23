@@ -124,6 +124,7 @@ namespace Demon_Bluff_Mods
     public static class WeatherType
     {
         public static ECharacterType Weather = (ECharacterType)50;
+        
 
     }
     public static class WeatherAlignement
@@ -342,6 +343,7 @@ namespace Demon_Bluff_Mods
                 }
                 foreach (CharacterData cd in deckview)
                 {
+                    if(cd.role is not Foggy)
                     DeckView.AddToObscuredDeckView(cd);
                 }
                 becomeOtherMinion(charRef);

@@ -93,7 +93,7 @@ public class Pestilence : Demon
                 {
                     character.pickable.SetActive(false);
                 }
-                PlayerController.PlayerInfo.health.Damage(2);
+                PlayerController.PlayerInfo.health.Damage(1);
             }
         }
     }

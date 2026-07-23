@@ -48,9 +48,9 @@ namespace Demon_Bluff_Mods
                 victim.statuses.statuses.Add(ECharacterStatus.KilledByEvil);
                 victim.KillByDemon(charRef);
                 victim.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, victim);
-                if (!isRoundOver())
+                if (!isRoundOver() || SpecificRequirements())
                 {
-                    health.Damage(3);
+                    health.Damage(2);
                 }
             }
         }
@@ -62,6 +62,23 @@ namespace Demon_Bluff_Mods
             list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
             list1 = Characters.Instance.FilterAliveCharacters(list1);
             return list1.Count <= 0;
+        }
+        private bool SpecificRequirements()
+        {
+            Gameplay gameplay = Gameplay.Instance;
+            Characters instance = Characters.Instance;
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+            list1 = Characters.Instance.FilterAliveCharacters(list1);
+            if(list1.Count == 1)
+            foreach (Character character in list1)
+            {
+                if(character.dataRef.characterId == "Undying_WING")
+                    {
+                        return true;
+                    }
+            }
+            return false;
         }
     }
 }

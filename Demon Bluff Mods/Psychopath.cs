@@ -40,8 +40,6 @@ public class Psychopath : Neutrals
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 random.KillByDemon(charRef);
-                Health health = PlayerController.PlayerInfo.health;
-                health.Damage(4);
             }
             else
             {
@@ -53,7 +51,7 @@ public class Psychopath : Neutrals
                 Character random = list1[randomIndex];
                 random.KillByDemon(charRef);
                 Health health = PlayerController.PlayerInfo.health;
-                health.Damage(4);
+                health.Damage(2);
             }
         }
     }
@@ -63,11 +61,19 @@ public class Psychopath : Neutrals
 
         if (diceRoll < 5)
         {
+            if(charRef.alignment is EAlignment.Good)
+            {
+                charRef.statuses.statuses.Add(ECharacterStatus.HealthyBluff);
+            }
             // 100% Double Claim
             return Characters.Instance.GetRandomDuplicateBluff();
         }
         else
         {
+            if (charRef.alignment is EAlignment.Good)
+            {
+                charRef.statuses.statuses.Add(ECharacterStatus.HealthyBluff);
+            }
             // Become a new character
             CharacterData bluff = Characters.Instance.GetRandomUniqueBluff();
             Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);

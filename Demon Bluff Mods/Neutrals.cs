@@ -51,7 +51,7 @@ namespace Demon_Bluff_Mods
     }
     public static class NeutralType
     {
-        public static ECharacterType Neutral = (ECharacterType)40;
+        public static ECharacterType Neutral = (ECharacterType)150;
         [HarmonyPatch(typeof(Character), nameof(Character.ShowDescription))]
         public static void Postfix(Character __instance)
         {
@@ -64,7 +64,7 @@ namespace Demon_Bluff_Mods
     }
     public static class NeutralAlignement
     {
-        public static EAlignment Neutral = (EAlignment)30;
+        public static EAlignment Neutral = (EAlignment)150;
         [HarmonyPatch(typeof(Character), nameof(Character.ShowDescription))]
         public static void Postfix(Character __instance)
         {

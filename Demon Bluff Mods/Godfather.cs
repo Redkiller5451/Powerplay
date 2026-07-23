@@ -27,9 +27,12 @@ public class Godfather : Neutrals
                     Gameplay gameplay = Gameplay.Instance;
                     Characters instance = Characters.Instance;
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+                list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Villager);
+                list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+                    
                     Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                     random.ChangeAlignment(EAlignment.Evil);
+                random.statuses.statuses.Add(ECharacterStatus.Lying);
                 random.statuses.AddStatus(Swapped.swapped, charRef);
             }
                 else
@@ -42,6 +45,7 @@ public class Godfather : Neutrals
                 list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
                 Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                     random.ChangeAlignment(EAlignment.Good);
+                random.statuses.statuses.Add(ECharacterStatus.HealthyBluff);
                 random.statuses.AddStatus(Swapped.swapped,charRef);
                 }
             }

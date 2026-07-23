@@ -24,6 +24,7 @@ public static class TargetClassExtensions2
             if(character.GetCharacterType() != charType)
                 filteredList.Add (character);
         }
+        
         return filteredList;
     }
     public static Il2CppSystem.Collections.Generic.List<CharacterData> FilterOutCharacterType(this Characters instance, Il2CppSystem.Collections.Generic.List<CharacterData> allChars, ECharacterType charType)

@@ -111,6 +111,11 @@ public class Apprentice : Neutrals
         blacklistMinionIDs.Add("GoodTwin_POW"); // Not copying Good Twin its dumb
         blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
         blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with.
+        blacklistMinionIDs.Add("Acolyte_WING"); // Undying is face-up. Don't add him as a fake Minion.
+        blacklistMinionIDs.Add("Fanatic_WING"); // Undying is face-up. Don't add him as a fake Minion.
+        blacklistMinionIDs.Add("Zealot_WING");
+        blacklistMinionIDs.Add("Snake Charmer_WING");
+        blacklistMinionIDs.Add("Turncoat_WING");
         blacklistMinionIDs.Add("Wretch_Evil_91222191"); // That's the wrong Wretch.
         for (int j = 0; j < allDatas.Length; j++)
         {
@@ -124,6 +129,7 @@ public class Apprentice : Neutrals
         CharacterData chosenMinion = possibleMinions[UnityEngine.Random.Range(0, possibleMinions.Count)];
         Role temp = charRef.dataRef.role;
         charRef.Init(chosenMinion);
+        
     }
     private static bool inPlayMinion(string id)
     {

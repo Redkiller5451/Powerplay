@@ -14,7 +14,7 @@ namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
 public class Crazed : Demon
 {
-    public Crazed() : base(ClassInjector.DerivedConstructorPointer<Auditor>())
+    public Crazed() : base(ClassInjector.DerivedConstructorPointer<Crazed>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
     }
