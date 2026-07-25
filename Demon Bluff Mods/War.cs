@@ -66,8 +66,10 @@ public class War : Demon
             Character myTarget2 = list1[UnityEngine.Random.Range(0, list1.Count)];
             list1.Remove(myTarget2);
             myTarget.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
+            myTarget.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
             myTarget.KillByDemon(charRef);
             myTarget2.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
+            myTarget2.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
             myTarget2.KillByDemon(charRef);
             if (myTarget.dataRef.picking)
             {

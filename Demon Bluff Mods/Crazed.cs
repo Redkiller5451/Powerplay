@@ -47,6 +47,7 @@ public class Crazed : Demon
             {
                 MelonLogger.Msg($"#{c.id} is now mad");
                 c.statuses.statuses.Add(Mad.mad2);
+                c.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
             }
         }
     }

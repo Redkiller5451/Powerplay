@@ -30,11 +30,10 @@ public class Main : MelonMod
             base.LoggerInstance.BigError(ex.ToString());
         }
 
-        MelonLogger.Msg((ECharacterType)40);
-        MelonLogger.Msg((ECharacterType)20);
         ClassInjector.RegisterTypeInIl2Cpp<Coroner>();
         ClassInjector.RegisterTypeInIl2Cpp<Marksman>();
         ClassInjector.RegisterTypeInIl2Cpp<Prosecutor>();
+        ClassInjector.RegisterTypeInIl2Cpp<Lookout2>();
         ClassInjector.RegisterTypeInIl2Cpp<Mayor>();
         ClassInjector.RegisterTypeInIl2Cpp<Marshal>();
         ClassInjector.RegisterTypeInIl2Cpp<Monarch>();
@@ -72,6 +71,7 @@ public class Main : MelonMod
         ClassInjector.RegisterTypeInIl2Cpp<DevilsAdvocate>();
         ClassInjector.RegisterTypeInIl2Cpp<Butcher>();
         ClassInjector.RegisterTypeInIl2Cpp<Cerenovus>();
+        ClassInjector.RegisterTypeInIl2Cpp<Wildling>();
 
         ClassInjector.RegisterTypeInIl2Cpp<Death>();
         ClassInjector.RegisterTypeInIl2Cpp<Famine>();
@@ -194,6 +194,29 @@ public class Main : MelonMod
         washerwoman.additionalFlavorTexts = new Il2CppStringArray(1);
         washerwoman.additionalFlavorTexts[0] = washerwoman.flavorText;
         washerwoman.gender = EGender.Male;
+
+        Il2Cpp.CharacterData lookout = new Il2Cpp.CharacterData();
+        lookout.role = new Lookout2();
+        lookout.name = "Lookout";
+        lookout.characterName = "Lookout";
+        lookout.description = "Learn how many cards have been affected by evils.";
+        lookout.flavorText = "\"Always on the watch. \nCannot seem to catch Evils though.\"";
+        lookout.hints = "";
+        lookout.ifLies = "Learn a random number instead.";
+        lookout.notes = "";
+        lookout.picking = false;
+        lookout.startingAlignment = EAlignment.Good;
+        lookout.type = ECharacterType.Villager;
+        lookout.abilityUsage = EAbilityUsage.Once;
+        lookout.bluffable = true;
+        lookout.characterId = "Lookout_POW";
+        lookout.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        lookout.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        lookout.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        lookout.color = new Color(1f, 0.935f, 0.7302f);
+        lookout.additionalFlavorTexts = new Il2CppStringArray(1);
+        lookout.additionalFlavorTexts[0] = lookout.flavorText;
+        lookout.gender = EGender.Male;
 
         Il2Cpp.CharacterData knowItAll = new Il2Cpp.CharacterData();
         knowItAll.role = new KnowItAll();
@@ -644,9 +667,9 @@ public class Main : MelonMod
         indust.role = new Industrialist();
         indust.name = "Industrialist";
         indust.characterName = "Industrialist";
-        indust.description = "I make a Good Characater Mad as an out-of-play Character. Learn one Mad character.";
+        indust.description = "I make a Good Characater Mad. Learn one Mad character.";
         indust.flavorText = "\"If you'd be like that guy right there.\n Maybe you'd get hired here!\"";
-        indust.hints = "A Mad character registers as another character.";
+        indust.hints = "A Mad character registers as another in-play character.";
         indust.ifLies = "I say a Good character is mad when they aren't.";
         indust.notes = "";
         indust.picking = false;
@@ -782,7 +805,7 @@ public class Main : MelonMod
         psycho.role = new Psychopath();
         psycho.name = "Psychopath";
         psycho.characterName = "Psychopath";
-        psycho.description = "I kill at night, dealing 4 damage. I kill cards opposite of my alignement.\n I disguise and lie";
+        psycho.description = "I kill at night, dealing 2 damage if I am Good and 0 if I am evil. I kill cards opposite of my alignement.\n I disguise and lie";
         psycho.flavorText = "\"Has a select few targets in mind\nFriendly or Adversary\"";
         psycho.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.\nArt made by Wingidon, based off the Original Psychopath's art. Shoutout to him!";
         psycho.ifLies = "";
@@ -806,7 +829,7 @@ public class Main : MelonMod
         hangman.role = new Hangman();
         hangman.name = "Hangman";
         hangman.characterName = "Hangman";
-        hangman.description = "I point to a player, and call them Evil\n If I am Good, I am saying Truth. \n If I am Evil, I lie.";
+        hangman.description = "I point to a player, and call them Evil\n If I am Good, I am saying Truth. \n If I am Evil, I lie. Executing the person I point to when I lie deals extra damage.";
         hangman.flavorText = "\"Is always convinced someone is Evil. \n Is sometimes correct \"";
         hangman.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
         hangman.ifLies = "";
@@ -964,11 +987,34 @@ public class Main : MelonMod
         conjurer.additionalFlavorTexts[0] = conjurer.flavorText;
         conjurer.gender = EGender.Female;
 
+        Il2Cpp.CharacterData wildling = new Il2Cpp.CharacterData();
+        wildling.role = new Wildling();
+        wildling.name = "Wildling";
+        wildling.characterName = "Wildling";
+        wildling.description = "One Evil registers as truthful and tells the truth, they also register as being Messed By Evil.\nI lie and disguise. I follow the Demon disguise rules.";
+        wildling.flavorText = "\"The wild has taught her how to tell the truth.\nShe has difficulty teaching this to others.\"";
+        wildling.hints = "I cannot turn the Iris or Professional truthful... I really don't like their attitude.";
+        wildling.ifLies = "";
+        wildling.notes = "";
+        wildling.picking = false;
+        wildling.startingAlignment = EAlignment.Evil;
+        wildling.type = ECharacterType.Minion;
+        wildling.abilityUsage = EAbilityUsage.Once;
+        wildling.bluffable = false;
+        wildling.characterId = "Wildling_POW";
+        wildling.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        wildling.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        wildling.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        wildling.color = new Color(0.8510f, 0.4549f, 0.0f);
+        wildling.additionalFlavorTexts = new Il2CppStringArray(1);
+        wildling.additionalFlavorTexts[0] = wildling.flavorText;
+        wildling.gender = EGender.Female;
+
         Il2Cpp.CharacterData boomdandy = new Il2Cpp.CharacterData();
         boomdandy.role = new Boomdandy();
         boomdandy.name = "Grenadier";
         boomdandy.characterName = "Grenadier";
-        boomdandy.description = "When Executed, I kill 2 Villagers. I deal 3 Damage upon being executed.";
+        boomdandy.description = "When Executed, I kill 2 Villagers. I deal 2 Damage upon being executed.";
         boomdandy.flavorText = "\"Plays too much with bombs\nIs the Bombardier's brother\"";
         boomdandy.hints = "If I am the last evil executed, I don't deal 3 damage.";
         boomdandy.ifLies = "";
@@ -991,9 +1037,9 @@ public class Main : MelonMod
         cerenovus.role = new Cerenovus();
         cerenovus.name = "Manipulator";
         cerenovus.characterName = "Manipulator";
-        cerenovus.description = "One Good card is Mad as the opposite type";
+        cerenovus.description = "One Good card is Mad. \n I lie and disguise.";
         cerenovus.flavorText = "\"You aren't really accepted here. \nBelieve me, I have heard stuff.\"";
-        cerenovus.hints = "A Mad character registers as another character.";
+        cerenovus.hints = "A Mad character registers as another in-play character.";
         cerenovus.ifLies = "";
         cerenovus.notes = "";
         cerenovus.picking = false;
@@ -1014,7 +1060,7 @@ public class Main : MelonMod
         butcher.role = new Butcher();
         butcher.name = "Balancer";
         butcher.characterName = "Balancer";
-        butcher.description = "If I am alive:\n Each time you execute, I kill a good character, dealing 2 damage.";
+        butcher.description = "If I am alive:\n Each time you execute, I kill a good character, dealing 1 damage.";
         butcher.flavorText = "\"Eye for an eye is his motto. \nHasn't gone blind yet\"";
         butcher.hints = "";
         butcher.ifLies = "";
@@ -1132,7 +1178,7 @@ public class Main : MelonMod
         pestilence.role = new Pestilence();
         pestilence.name = "Pestilence";
         pestilence.characterName = "Pestilence";
-        pestilence.description = "Every Villager has a 80% chance of being Corrupted\n At night, I kill all revealed Corrupted cards.";
+        pestilence.description = "Every Villager has a 80% chance of being Corrupted\n At night, I kill all revealed Corrupted cards, dealing 1 damage each.";
         pestilence.flavorText = "\"I came to look upon it with unutterable loathing,\n and to flee silently from its odious presence, as from the breath of a pestilence. \n - Edgar Allen Poe\"";
         pestilence.hints = "One card is Immune, meaning they cannot be corrupted";
         pestilence.ifLies = "";
@@ -1156,7 +1202,7 @@ public class Main : MelonMod
         famine.role = new Famine();
         famine.name = "Famine";
         famine.characterName = "Famine";
-        famine.description = "5 cards become starved. \nWhen Executed: I kill all revealed starved cards.";
+        famine.description = "5 cards become starved. \nWhen Executed: I kill all revealed starved cards, dealing 2 damage each.";
         famine.flavorText = "\"They that die by famine die by inches.\n -Matthew Henry\"";
         famine.hints = "";
         famine.ifLies = "";
@@ -1613,7 +1659,8 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, official);
              addRole(script.startingTownsfolks, guard);
                addRole(script.startingTownsfolks, newsman);
-             addRole(script.startingTownsfolks, teaLady);
+            addRole(script.startingTownsfolks, lookout);
+            addRole(script.startingTownsfolks, teaLady);
               addRole(script.startingTownsfolks, washerwoman);
               addRole(script.startingTownsfolks, knowItAll);
               addRole(script.startingTownsfolks, marksman);
@@ -1634,6 +1681,7 @@ public class Main : MelonMod
             addRole(script.startingMinions, conjurer);
             addRole(script.startingMinions, cerenovus);
             addRole(script.startingMinions, jinx);
+            addRole(script.startingMinions, wildling);
             addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
             addRole(script.startingMinions, butcher);

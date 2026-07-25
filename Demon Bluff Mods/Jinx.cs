@@ -34,6 +34,7 @@ namespace Demon_Bluff_Mods
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 list1[randomIndex].statuses.AddStatus(Jinxed.jinxed, list1[randomIndex]);
+                list1[randomIndex].statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
             }
 
         }
@@ -52,7 +53,6 @@ namespace Demon_Bluff_Mods
                     if (__instance.statuses.statuses.Contains(Jinxed.jinxed))
                     {
                         __instance.KillByDemon(__instance);
-                        __instance.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, __instance);
                     __instance.statuses.AddStatus(ECharacterStatus.KilledByEvil, __instance);
                 }
                 }

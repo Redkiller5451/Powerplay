@@ -41,6 +41,7 @@ namespace Demon_Bluff_Mods
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     Character random = list1[randomIndex];
                     random.KillByDemon(charRef);
+                    random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 }
             }
         }

@@ -27,6 +27,19 @@ public static class TargetClassExtensions2
         
         return filteredList;
     }
+
+    public static Il2CppSystem.Collections.Generic.List<Character> FilterOutRole(this Characters instance, Il2CppSystem.Collections.Generic.List<Character> allChars, string id)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> filteredList = new Il2CppSystem.Collections.Generic.List<Character>();
+        // You can now access public members of the instance
+        foreach (Character character in allChars)
+        {
+            if (character.dataRef.characterId != id)
+                filteredList.Add(character);
+        }
+
+        return filteredList;
+    }
     public static Il2CppSystem.Collections.Generic.List<CharacterData> FilterOutCharacterType(this Characters instance, Il2CppSystem.Collections.Generic.List<CharacterData> allChars, ECharacterType charType)
     {
         Il2CppSystem.Collections.Generic.List<CharacterData> filteredList = new Il2CppSystem.Collections.Generic.List<CharacterData>();

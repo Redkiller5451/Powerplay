@@ -33,6 +33,7 @@ public class Hangman : Neutrals
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                 random.statuses.AddStatus(HangTarget.hangtarget, random);
+                random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 onActed?.Invoke(new ActedInfo($"#{random.id} is Evil!", null));
             }
             else

@@ -71,6 +71,7 @@ public class Pestilence : Demon
                 if(randomIndex < 3)
                {
                     character.statuses.statuses.Add(ECharacterStatus.Corrupted);
+                    character.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 }
             }
             }

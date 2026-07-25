@@ -54,26 +54,31 @@ public class Famine : Demon
             if (list1.Count > 0)
             {
                 Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 list2.Add(random);
                 list1.Remove(random);
                 if (list1.Count > 0)
                 {
                     random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                    random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                     list2.Add(random);
                     list1.Remove(random);
                     if (list1.Count > 0)
                     {
                         random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                        random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                         list2.Add(random);
                         list1.Remove(random);
                         if (list1.Count > 0)
                         {
                             random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                            random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                             list2.Add(random);
                             list1.Remove(random);
                             if (list1.Count > 0)
                             {
                                 random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                                random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                                 list2.Add(random);
                                 list1.Remove(random);
                             }

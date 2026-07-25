@@ -33,6 +33,7 @@ public class Godfather : Neutrals
                     Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                     random.ChangeAlignment(EAlignment.Evil);
                 random.statuses.statuses.Add(ECharacterStatus.Lying);
+                random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 random.statuses.AddStatus(Swapped.swapped, charRef);
             }
                 else

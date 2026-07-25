@@ -34,6 +34,7 @@ namespace Demon_Bluff_Mods
                 list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 list1[randomIndex].statuses.AddStatus(Mad.mad2, list1[randomIndex]);
+                list1[randomIndex].statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
             }
 
         }

@@ -54,6 +54,8 @@ namespace Demon_Bluff_Mods
                 
                 viableCharacters.Remove(pickedCharacter);
                 notInPlayOutsiders.Remove(pickedOutsider);
+                pickedCharacter.statuses.AddStatus(ECharacterStatus.AlteredCharacter, charRef);
+                pickedCharacter.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 pickedCharacter.Act(ETriggerPhase.Start);
             }
 

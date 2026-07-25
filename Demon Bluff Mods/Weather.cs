@@ -274,7 +274,7 @@ namespace Demon_Bluff_Mods
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
-                if (d.type == ECharacterType.Outcast && !IfContains(list3, d) && !blacklistMinionIDs.Contains(d.characterId))
+                if (d.type == ECharacterType.Outcast && !IfContains(list3, d) && !blacklistMinionIDs.Contains(d.characterId) && !inPlayOutcast(d.characterId))
                 {
                     possibleOucast.Add(d);
                 }
@@ -287,6 +287,18 @@ namespace Demon_Bluff_Mods
             {
                 if (c.dataRef.role == d.role)
                     return true;
+            }
+            return false;
+        }
+        private static bool inPlayOutcast(string id)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Outcast);
+            foreach (Character c in list1)
+            {
+                if (c.dataRef.characterId == id)
+                    return true;
+
             }
             return false;
         }
