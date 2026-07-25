@@ -13,12 +13,12 @@ Anyhow: Here are the Characters/Gimmicks
 Taken from TheCaldosMod2, this effect makes a card unable to say information.
 
 ### Madness
-Mad cards register as the wrong thing
+Mad cards register as the wrong thing.
 
 ## VILLAGERS
 
 ### Coroner (Good, Villager)
-If a card dies by an evil, I learn an Evil card. If no card died by Evil, I do nothing. 
+If a card dies by an evil, I learn an Evil card. If no card died by Evil, I have a 50% chance of pointing at an evil
 
 ### Marksman (Good, Villager)
 I learn how many Minions have been revealed.
@@ -31,6 +31,12 @@ Learn a factually true or false statement, and learn if it is true or false.
 
 ### Fisherman (Good, Villager)
 Learn how far away a specific villager is to their nearest Villager.
+
+### Lookout (Good, Villager)
+Learn how many characters were affected by evils.
+
+### Newsman (Good, Villager)
+Learn the closest Mad character to me.
 
 ### Guard (Good, Villager) 
 A random Villager is protected
@@ -55,7 +61,7 @@ I kill a Minion when revealed.
 I point to 3 Cards, they are Villagers.
 
 ### Jailor (Good, Villager) _POWER ROLE_
-Outcasts 2 cards away from me dont hurt the village.
+The Demon cannot act.
 
 ### Pacifist (Good, Villager) _POWER ROLE_
 Pick 4 cards. If all are good, you win.
@@ -75,7 +81,7 @@ I have 6 random abilities. You dont learn which.
 I turn into the alignement of the card that last picks me
 
 ### Industrialist (Good, Outcast)
-One character is Mad as an Out of play Character. Learn a mad card.
+One character is Mad. Learn a mad card.
 
 ## MINIONS
 
@@ -86,16 +92,22 @@ Upon starting, I kill a Good card.
 You cannot kill the Demon whilst I am alive.
 
 ### Grenadier (Evil, Minion)
-When executed, I deal 3 damage and kill 2 good cards. I dont deal damage if I am the last evil killed.
+When executed, I deal 2 damage and kill 2 good cards. I dont deal damage if I am the last evil killed.
 
 ### Manipulator (Evil, Minion)
 One character is Mad as an out-of-play character
 
 ### Balancer (Evil, Minion)
-Each time you kill a card, I kill a good card and deal damage to you. I don't deal damage if I am killed.
+Each time you kill a card, I kill a good card and deal 1 damage to you. I don't deal damage if I am killed.
 
 ### Ambusher (Evil, Minion)
 One card dies upon being revealed
+
+### Traveler (Evil, Minion)
+A card next to me becomes a Traveler. I sit next to them.
+
+### Wildling (Evil, Minion)
+A random evil becomes truthful. They are marked as being affected by evil.
 
 ## DEMONS
 
@@ -103,7 +115,7 @@ One card dies upon being revealed
 5 cards become Starved. If I am executed, all revealed Starved cards are killed, dealing 2 damage each.
 
 ### Pestilence (Evil, Demon)
-Every Villager has an 80% chance of being corrupted. At night, I kill every revealed Corrupted card, dealing 2 damage per killed card. I lie and disguise. One card cannot be corrupted
+Every Villager has an 80% chance of being corrupted. At night, I kill every revealed Corrupted card, dealing 1 damage per killed card. I lie and disguise. One card cannot be corrupted
 
 ### War (Evil, Demon)
 Every night, I kill 2 cards, dealing 2 damage. I lie and disguise. More Outcasts and Minions are in-play.
@@ -113,6 +125,9 @@ You have one day. Good luck.
 
 ### Vortox (Evil, Demon)
 A random Weather card is summoned.
+
+### Crazed (Evil, Demon)
+All Good cards are Mad. 
 
 ## NEUTRALS
 The 2nd Gimmick. Neutrals! Neutral characters take up an Outcast slot. On Roundstart, there is a 50% chance they turn Evil, or turn Good. Their
@@ -135,6 +150,9 @@ I become an in-play Villager or Minion
 
 ### Scapegoat
 If you kill my target, I die and deal 5 damage to you
+
+### Court Fool
+I lie and disguise. I register as Evil. If I am executed, I kill an opposing card.
 
 
 ## WEATHER 
