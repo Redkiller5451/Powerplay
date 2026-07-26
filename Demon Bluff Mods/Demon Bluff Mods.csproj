@@ -50,6 +50,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Demon Bluff Demo\MelonLoader\Il2CppAssemblies\UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

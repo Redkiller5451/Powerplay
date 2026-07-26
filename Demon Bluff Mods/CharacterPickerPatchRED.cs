@@ -20,12 +20,13 @@ public class CharacterPickerPatch
         {
             Veteran.SetLastPicker(picker);
             Goon.SetLastPicker(picker);
+
             if (picker.statuses.statuses.Contains(Jinxed.jinxed))
             {
                 picker.KillByDemon(picker);
                 picker.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, picker);
             }
         }
-        
+
     }
 }

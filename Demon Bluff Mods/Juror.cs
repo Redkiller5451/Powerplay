@@ -12,13 +12,13 @@ using static UnityEngine.GraphicsBuffer;
 
 namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
-public class Court : Demon
+public class Juror : Role
 {
-    public Court() : base(ClassInjector.DerivedConstructorPointer<Court>())
+    public Juror() : base(ClassInjector.DerivedConstructorPointer<Juror>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
     }
-    public Court(System.IntPtr ptr) : base(ptr)
+    public Juror(System.IntPtr ptr) : base(ptr)
     {
 
     }
@@ -31,14 +31,68 @@ public class Court : Demon
     }
     public override ActedInfo GetInfo(Character charRef)
     {
-        ActedInfo actedInfo = new ActedInfo("I have declared a Tribunal!", null);
+        Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+        int characterId = 0;
+        do
+        {
+            characterId = UnityEngine.Random.Range(0, list1.Count);
+        } while (list1[characterId] == charRef);
+        Character random = list1[characterId];
+        ActedInfo actedInfo;
+        
+        if (random.alignment == EAlignment.Good)
+        {
+            actedInfo = new ActedInfo($"I vote #{random.id} innocent!", null);
+        }
+        else
+        {
+            actedInfo = new ActedInfo($"I vote #{random.id} guilty!", null);
+        }
         return actedInfo;
     }
 
+    public override ActedInfo GetBluffInfo(Character charRef)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+        int characterId = 0;
+        do
+        {
+            characterId = UnityEngine.Random.Range(0, list1.Count);
+        } while (list1[characterId] == charRef);
+        Character random = list1[characterId];
+        ActedInfo actedInfo;
 
+        if (random.alignment == EAlignment.Good)
+        {
+            actedInfo = new ActedInfo($"I vote #{random.id} guilty!", null);
+        }
+        else
+        {
+            actedInfo = new ActedInfo($"I vote #{random.id} innocent!", null);
+        }
+        return actedInfo;
+    }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Day)
+        {
+            if (charRef.statuses.statuses.Contains(ECharacterStatus.Corrupted))
+            {
+                onActed?.Invoke(GetBluffInfo(charRef));
+            }
+            else
+            {
+                onActed?.Invoke(GetInfo(charRef));
+            }
+
+        }
 
     }
-    //Taken from Wingidons Undying 
+    public override void BluffAct(ETriggerPhase trigger, Character charRef)
+    {
+        if (trigger == ETriggerPhase.Day)
+        {
+            onActed?.Invoke(GetBluffInfo(charRef));
+        }
+    }
 }

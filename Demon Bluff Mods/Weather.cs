@@ -270,11 +270,18 @@ namespace Demon_Bluff_Mods
             Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterRealCharacterType((Gameplay.CurrentCharacters), ECharacterType.Outcast);
             Il2CppSystem.Collections.Generic.List<string> blacklistMinionIDs = new();
             blacklistMinionIDs.Add("SnowedIn_POW"); // Should never be added
+            blacklistMinionIDs.Add("Repossessed_POW"); // Only Auditor adds this
             blacklistMinionIDs.Add("Trickster_o_scm"); // Should never be added
+            blacklistMinionIDs.Add("Amne1_POW"); // First Amne
+            blacklistMinionIDs.Add("Amne2_POW"); // Second Amne
+            blacklistMinionIDs.Add("Amne3_POW"); // Third Amne
+            blacklistMinionIDs.Add("Amne4_POW"); // Fourth Amne
+            blacklistMinionIDs.Add("Amne5_POW"); // Fifth Amne
+            blacklistMinionIDs.Add("Amne6_POW"); // Sixth Amne
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
-                if (d.type == ECharacterType.Outcast && !IfContains(list3, d) && !blacklistMinionIDs.Contains(d.characterId) && !inPlayOutcast(d.characterId))
+                if (d.type == ECharacterType.Outcast && !IfContains(list3, d) && !blacklistMinionIDs.Contains(d.characterId) && !InPlayOutcast(d.characterId,d.characterName))
                 {
                     possibleOucast.Add(d);
                 }
@@ -290,13 +297,13 @@ namespace Demon_Bluff_Mods
             }
             return false;
         }
-        private static bool inPlayOutcast(string id)
+        private static bool InPlayOutcast(string id, string name)
         {
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Outcast);
             foreach (Character c in list1)
             {
-                if (c.dataRef.characterId == id)
+                if (c.dataRef.characterId == id || c.dataRef.characterName == name)
                     return true;
 
             }

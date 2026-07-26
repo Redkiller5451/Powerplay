@@ -26,7 +26,7 @@ public class Amnesiac : Role
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Start)
+        if (trigger == ETriggerPhase.Day)
         {
             //NOT MY OWN CODE
             Il2CppSystem.Collections.Generic.List<CharacterData> possibleTPOWs = new Il2CppSystem.Collections.Generic.List<CharacterData>();
@@ -67,7 +67,7 @@ public class Amnesiac : Role
     }
      public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Start)
+        if (trigger == ETriggerPhase.Day)
              allDatas = Il2CppSystem.Array.Empty<CharacterData>();
         {
             //NOT MY OWN CODE
