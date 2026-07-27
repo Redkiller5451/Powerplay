@@ -80,7 +80,7 @@ namespace Demon_Bluff_Mods
         }
         private bool WhatType()
         {
-            return UnityEngine.Random.Range(0, 1) == 1;
+            return UnityEngine.Random.Range(0, 2) < 1;
         }
         private ArrayList TrueMessages()
         {
@@ -122,6 +122,22 @@ namespace Demon_Bluff_Mods
             if (isInPlay("Jailor_POW") || isInPlay("Mayor_POW") || isInPlay("Monarch_POW") || isInPlay("Marshal_POW") || isInPlay("Prosecutor_POW") || isInPlay("Pacifist_POW") || isInPlay("Executive_POW"))
             {
                 messages.Add("The Executive is here.");
+            }
+            if (isInPlay("Mendaverte_WING"))
+            {
+                messages.Add("The Mendaverte is in-play.");
+            }
+            if (isInPlay("Citizen_WING") || isInPlay("Pariah_WING") || isInPlay("Underling_WING"))
+            {
+                messages.Add("The great Djinn has intervened.");
+            }
+            if (isTruthfulEvil())
+            {
+                messages.Add("There is a Truthful Evil.");
+            }
+            if (ThereIsEvilNeutral())
+            {
+                messages.Add("There is an Evil Neutral.");
             }
             if (isEvilVillager())
             {
@@ -177,6 +193,22 @@ namespace Demon_Bluff_Mods
             if (!(isInPlay("Jailor_POW") || isInPlay("Mayor_POW") || isInPlay("Monarch_POW") || isInPlay("Marshal_POW") || isInPlay("Prosecutor_POW") || isInPlay("Pacifist_POW") || isInPlay("Executive_POW")))
             {
                 messages.Add("The Executive is here.");
+            }
+            if (!isInPlay("Mendaverte_WING")) {
+                messages.Add("The Mendaverte is in-play.");
+            }
+
+            if (!isInPlay("Citizen_WING") && !isInPlay("Pariah_WING") && !isInPlay("Underling_WING"))
+            {
+                messages.Add("The great Djinn has intervened.");
+            }
+            if (!isTruthfulEvil())
+            {
+                messages.Add("There is a Truthful Evil.");
+            }
+            if (!ThereIsEvilNeutral())
+            {
+                messages.Add("There is an Evil Neutral.");
             }
             if (!isEvilVillager())
             {
@@ -286,6 +318,37 @@ namespace Demon_Bluff_Mods
             foreach (Character character in list1)
             {
                 if (character.alignment is EAlignment.Evil)
+                {
+                    thereIsEvil = true;
+                }
+            }
+            return thereIsEvil;
+        }
+
+        public bool isTruthfulEvil()
+        {
+            ArrayList messages = new ArrayList();
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+            bool thereIsEvil = false;
+            foreach (Character character in list1)
+            {
+                if (character.statuses.Contains(ECharacterStatus.AppearTruthfull) || character.statuses.Contains(ECharacterStatus.HealthyBluff))
+                {
+                    thereIsEvil = true;
+                }
+            }
+            return thereIsEvil;
+        }
+        public bool ThereIsEvilNeutral()
+        {
+            ArrayList messages = new ArrayList();
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            list1 = Characters.Instance.FilterCharacterType(list1, NeutralType.Neutral);
+            bool thereIsEvil = false;
+            foreach (Character character in list1)
+            {
+                if (character.GetRegisterAlignment() == EAlignment.Evil)
                 {
                     thereIsEvil = true;
                 }

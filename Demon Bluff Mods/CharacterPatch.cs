@@ -31,6 +31,30 @@ public static class TargetClassExtensions
 [HarmonyPatch]
 public static class Patch
 {
+
+    [HarmonyPatch(typeof(Character), nameof(Character.OnClick))]
+    public static class UOPatch
+    {
+        static bool Prefix(Character __instance)
+        {
+
+            if (__instance == null)
+                return true;
+            
+            if (__instance.statuses.Contains(UO.UnknownObstacle) && !Gameplay.GameplayState.Equals(EGameplayState.Killing))
+            {
+                MelonLogger.Msg("UO on them");
+                return false;
+            }
+            if (__instance.statuses.Contains(Protected.protect) && Gameplay.GameplayState.Equals(EGameplayState.Killing))
+            {
+                Gameplay.ChangeGameplayState(EGameplayState.Day);
+                MelonLogger.Msg("Protected the Kill!");
+                return false;
+            }
+            return true;
+        }
+    }
     [HarmonyPatch(typeof(Character), nameof(Character.Kill))]
     public static class ProtectionPatch
     {

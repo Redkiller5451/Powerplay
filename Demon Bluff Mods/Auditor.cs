@@ -91,7 +91,3 @@ public class Auditor : Demon
         }
     }
 }
-public static class Audited
-{
-    public static ECharacterStatus audited = (ECharacterStatus)300;
-}

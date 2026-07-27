@@ -64,37 +64,4 @@ public class Scapegoat : Neutrals
     }
 
     //Thank you to Caldo for the PoKill status
-    public static class Sacrifice
-    {
-        public static ECharacterStatus sacrifice = (ECharacterStatus)270;
-        [HarmonyPatch(typeof(Character), nameof(Character.Kill))]
-        public static class ChangeKillByDemonText
-        {
-            public static bool Prefix(Character __instance)
-            {
-                if (__instance.statuses.Contains(sacrifice))
-                {
-                    Gameplay gameplay = Gameplay.Instance;
-                    Characters instance = Characters.Instance;
-                    Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterAliveCharacters(list1);
-                    foreach (Character c in list1)
-                    {
-                        if (c.role is Scapegoat)
-                        {
-                            c.Kill();
-                            if (c.alignment is EAlignment.Evil)
-                            {
-                                PlayerController.PlayerInfo.health.Damage(5);
-                            }
-                            return false;
-                        }
-                    }
-                    return true;
-
-                }
-                return true;
-            }
-        }
-    }
 }

@@ -79,10 +79,6 @@ namespace Demon_Bluff_Mods
         {
         }
     }
-    public static class Protected
-    {
-        public static ECharacterStatus protect = (ECharacterStatus)210;
-        
-    }
+    
 
 }

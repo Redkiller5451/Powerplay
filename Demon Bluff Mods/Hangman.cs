@@ -57,31 +57,3 @@ public class Hangman : Neutrals
     {
     }
 }
-public static class HangTarget
-{
-    public static ECharacterStatus hangtarget = (ECharacterStatus)255;
-    [HarmonyPatch(typeof(Character), nameof(Character.Kill))]
-    public static class isTheTarget
-    {
-        public static void Postfix(Character __instance)
-        {
-            if (__instance.statuses.Contains(hangtarget) && __instance.GetRealAlignment() == EAlignment.Good)
-            {
-                PlayerController.PlayerInfo.health.Damage(3);
-            }
-        }
-    }
-    [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
-    public static class hangEffect
-    {
-        public static void Postfix(Character __instance)
-        {
-            if (__instance.statuses.Contains(HangTarget.hangtarget))
-            {
-                
-                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#616161><size=18>\n<Target></color></size>";
-               
-            }
-        }
-    }
-}

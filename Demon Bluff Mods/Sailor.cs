@@ -118,7 +118,3 @@ namespace Demon_Bluff_Mods
         }
     }
 }
-public static class SailorPing
-{
-    public static ECharacterStatus sailorPing = (ECharacterStatus)299;
-}

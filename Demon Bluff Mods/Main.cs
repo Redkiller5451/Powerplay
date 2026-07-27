@@ -52,6 +52,8 @@ public class Main : MelonMod
         ClassInjector.RegisterTypeInIl2Cpp<Veteran>();
         ClassInjector.RegisterTypeInIl2Cpp<SnakeCharmer>();
         ClassInjector.RegisterTypeInIl2Cpp<SnowedInChar>();
+        ClassInjector.RegisterTypeInIl2Cpp<Vanished>();
+        ClassInjector.RegisterTypeInIl2Cpp<TavernKeeper>();
         ClassInjector.RegisterTypeInIl2Cpp<Amnesiac>();
         ClassInjector.RegisterTypeInIl2Cpp<Repossessed>();
         ClassInjector.RegisterTypeInIl2Cpp<Goon>();
@@ -83,6 +85,7 @@ public class Main : MelonMod
         ClassInjector.RegisterTypeInIl2Cpp<Vortox>();
         ClassInjector.RegisterTypeInIl2Cpp<Court>();
         ClassInjector.RegisterTypeInIl2Cpp<Crazed>();
+        ClassInjector.RegisterTypeInIl2Cpp<Starspawn>();
         ClassInjector.RegisterTypeInIl2Cpp<Auditor>();
 
         ClassInjector.RegisterTypeInIl2Cpp<Stormy>();
@@ -106,6 +109,7 @@ public class Main : MelonMod
         configCategory.CreateEntry("Crazed_Weight", 2, description: "How likely Crazed will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
         configCategory.CreateEntry("Court_Weight", 3, description: "How likely Court will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
         configCategory.CreateEntry("Auditor_Weight", 3, description: "How likely Auditor will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.CreateEntry("Starspawn_Weight", 3, description: "How likely Starspawn will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
         configCategory.SetFilePath(Path.Combine(MelonEnvironment.UserDataDirectory, "PowerplayConfig.cfg"));
         configCategory.SaveToFile();
 
@@ -739,6 +743,52 @@ public class Main : MelonMod
         veteran.additionalFlavorTexts[0] = veteran.flavorText;
         veteran.gender = EGender.Male;
 
+        Il2Cpp.CharacterData vanished = new Il2Cpp.CharacterData();
+        vanished.role = new Vanished();
+        vanished.name = "Vanished";
+        vanished.characterName = "Vanished";
+        vanished.description = "I cast Unknown Obstacle on myself. \n \bOn Picked: \nI silence and cast UO on Good that pick me.";
+        vanished.flavorText = "\"Out of sight, out of mind is his motto.\"";
+        vanished.hints = "Unknown Obstacle means that noone can pick that card. You also cannot reveal them.";
+        vanished.ifLies = "I still cast Unknown Obstacle. I cast Unknown obstacle on Evils";
+        vanished.notes = "";
+        vanished.picking = false;
+        vanished.startingAlignment = EAlignment.Good;
+        vanished.type = ECharacterType.Outcast;
+        vanished.abilityUsage = EAbilityUsage.Once;
+        vanished.bluffable = true;
+        vanished.characterId = "Vanished_POW";
+        vanished.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        vanished.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        vanished.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        vanished.color = new Color(0.9659f, 1f, 0.4472f);
+        vanished.additionalFlavorTexts = new Il2CppStringArray(1);
+        vanished.additionalFlavorTexts[0] = vanished.flavorText;
+        vanished.gender = EGender.Male;
+
+        Il2Cpp.CharacterData tav = new Il2Cpp.CharacterData();
+        tav.role = new TavernKeeper();
+        tav.name = "Winemaker";
+        tav.characterName = "Winemaker";
+        tav.description = "I roleblock a random Good card. Learn a roleblocked card.";
+        tav.flavorText = "\"Likes to celebrate.\nKnows the Drunk a bit too well.\"";
+        tav.hints = "Roleblock means a card cannot act.";
+        tav.ifLies = "Learn a random card. I don't roleblock.";
+        tav.notes = "";
+        tav.picking = false;
+        tav.startingAlignment = EAlignment.Good;
+        tav.type = ECharacterType.Outcast;
+        tav.abilityUsage = EAbilityUsage.Once;
+        tav.bluffable = true;
+        tav.characterId = "Winemaker_POW";
+        tav.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        tav.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
+        tav.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        tav.color = new Color(0.9659f, 1f, 0.4472f);
+        tav.additionalFlavorTexts = new Il2CppStringArray(1);
+        tav.additionalFlavorTexts[0] = tav.flavorText;
+        tav.gender = EGender.Female;
+
         Il2Cpp.CharacterData goon = new Il2Cpp.CharacterData();
         goon.role = new Goon();
         goon.name = "Mobster";
@@ -1017,6 +1067,29 @@ public class Main : MelonMod
         conjurer.additionalFlavorTexts[0] = conjurer.flavorText;
         conjurer.gender = EGender.Female;
 
+        Il2Cpp.CharacterData bootlegger = new Il2Cpp.CharacterData();
+        bootlegger.role = new Bootlegger();
+        bootlegger.name = "Bootlegger";
+        bootlegger.characterName = "Bootlegger";
+        bootlegger.description = "Two cards are Roleblocked. \nI lie and disguise.";
+        bootlegger.flavorText = "\"Makes amazing drinks. \n The Winemaker is jealous of her.\"";
+        bootlegger.hints = "";
+        bootlegger.ifLies = "";
+        bootlegger.notes = "";
+        bootlegger.picking = false;
+        bootlegger.startingAlignment = EAlignment.Evil;
+        bootlegger.type = ECharacterType.Minion;
+        bootlegger.abilityUsage = EAbilityUsage.Once;
+        bootlegger.bluffable = false;
+        bootlegger.characterId = "Bootlegger_POW";
+        bootlegger.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        bootlegger.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        bootlegger.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        bootlegger.color = new Color(0.8510f, 0.4549f, 0.0f);
+        bootlegger.additionalFlavorTexts = new Il2CppStringArray(1);
+        bootlegger.additionalFlavorTexts[0] = bootlegger.flavorText;
+        bootlegger.gender = EGender.Female;
+
         Il2Cpp.CharacterData wildling = new Il2Cpp.CharacterData();
         wildling.role = new Wildling();
         wildling.name = "Wildling";
@@ -1249,6 +1322,29 @@ public class Main : MelonMod
         audi.additionalFlavorTexts[0] = audi.flavorText;
         audi.gender = EGender.Male;
         audi.additionalPossibleCharacters = MakeAddedCharacters(0, 1, 0, 0);
+
+        Il2Cpp.CharacterData star = new Il2Cpp.CharacterData();
+        star.role = new Starspawn();
+        star.name = "Starspawn";
+        star.characterName = "Starspawn";
+        star.description = "3 cards at random are unrevealable. \nI lie and disguise. \n When Executed: \nAll previously unrevealable cards become revealable.";
+        star.flavorText = "\"The being of above calls for endless night.\"";
+        star.hints = "";
+        star.ifLies = "";
+        star.notes = "";
+        star.picking = false;
+        star.startingAlignment = EAlignment.Evil;
+        star.type = ECharacterType.Demon;
+        star.abilityUsage = Il2Cpp.EAbilityUsage.Once;
+        star.bluffable = false;
+        star.characterId = "Starspawn_POW";
+        star.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        star.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        star.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        star.color = new Color(1f, 0.3804f, 0.3804f);
+        star.additionalFlavorTexts = new Il2CppStringArray(1);
+        star.additionalFlavorTexts[0] = star.flavorText;
+        star.gender = EGender.Female;
 
         Il2Cpp.CharacterData repo = new Il2Cpp.CharacterData();
         repo.role = new Repossessed();
@@ -1781,6 +1877,69 @@ public class Main : MelonMod
         courtScript.characterCounts = courtCounterList;
         courtScriptData.scriptInfo = courtScript;
 
+        CustomScriptData starScriptData = new CustomScriptData();
+        starScriptData.name = "Starspawn_1";
+        ScriptInfo starScript = new ScriptInfo();
+        Il2CppSystem.Collections.Generic.List<CharacterData> starList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        starList.Add(star);
+        starScript.mustInclude = starList;
+        starScript.startingDemons = starList;
+        starScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
+        starScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
+        starScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
+        CharactersCount starCounter1 = setCharacterCount(7, 1, 2, 1);
+        CharactersCount starCounter2 = setCharacterCount(6, 2, 1, 1);
+        CharactersCount starCounter3 = setCharacterCount(6, 1, 1, 1);
+        CharactersCount starCounter4 = setCharacterCount(5, 1, 0, 1);
+        Il2CppSystem.Collections.Generic.List<CharactersCount> starCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter1);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter2);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter3);
+        starCounterList.Add(starCounter4);
+        starCounterList.Add(starCounter4);
+        starCounterList.Add(starCounter4);
+        starCounterList.Add(starCounter4);
+        starCounterList.Add(starCounter4);
+        starCounterList.Add(starCounter4);
+        starCounterList.Add(starCounter4);
+        starCounterList.Add(starCounter4);
+        starScript.characterCounts = starCounterList;
+        starScriptData.scriptInfo = starScript;
+
         //Code taken from theCaldoMod, the Dependency
         CustomScriptData deathScriptData = new CustomScriptData();
         deathScriptData.name = "Death_1";
@@ -1903,6 +2062,7 @@ public class Main : MelonMod
         addDemon(advancedAscension, crazed, "Baa_Difficult", "Crazed_1", crazedScriptData);
         addDemon(advancedAscension, audi, "Baa_Difficult", "Auditor_1", audiScriptData);
         addDemon(advancedAscension, court, "Baa_Difficult", "Court_1", courtScriptData);
+        addDemon(advancedAscension, star, "Baa_Difficult", "Starspawn_1", starScriptData);
         //addDemon(advancedAscension, god, "Baa_Difficult", "God_1", godScriptData);
 
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
@@ -1917,20 +2077,25 @@ public class Main : MelonMod
               addRole(script.startingTownsfolks, washerwoman);
               addRole(script.startingTownsfolks, knowItAll);
               addRole(script.startingTownsfolks, marksman);
-              addRole(script.startingTownsfolks, fisherman);
+            addRole(script.startingTownsfolks, fisherman);
              addRole(script.startingTownsfolks, coroner);
+
             addRole(script.startingOutsiders, veteran);
+            addRole(script.startingOutsiders, tav);
+            addRole(script.startingOutsiders, vanished);
             addRole(script.startingOutsiders, amnesiac);
             addRole(script.startingOutsiders, indust);
             addRole(script.startingOutsiders, goon); 
+        addRole(script.startingOutsiders, snakeCharmer);
+
             addRole(script.startingOutsiders, jester);
            addRole(script.startingOutsiders, scapegoat);
-            addRole(script.startingOutsiders, snakeCharmer);
             addRole(script.startingOutsiders, apprentice);
             addRole(script.startingOutsiders, pirate);
             addRole(script.startingOutsiders, godfather);
             addRole(script.startingOutsiders, hangman);
             addRole(script.startingOutsiders, psycho);
+
             addRole(script.startingMinions, conjurer);
             addRole(script.startingMinions, cerenovus);
             addRole(script.startingMinions, jinx);
@@ -1938,8 +2103,10 @@ public class Main : MelonMod
             addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
             addRole(script.startingMinions, butcher);
+            addRole(script.startingMinions, bootlegger);
             addRole(script.startingMinions, eTwin);
             addRole(script.startingMinions, traveler);
+
            addRole(script.startingMinions, stormyW);
             addRole(script.startingMinions, foggyW);
             addRole(script.startingMinions, sunnyW);

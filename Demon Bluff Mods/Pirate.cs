@@ -71,8 +71,4 @@ public class Pirate : Neutrals
     }
 
     //Thank you to Caldo for the PoKill status
-    public static class Dueled
-    {
-        public static ECharacterStatus dueled = (ECharacterStatus)195;
-    }
 }

@@ -59,27 +59,3 @@ public class Godfather : Neutrals
     {
     }
 }
-public static class Swapped
-{
-    public static ECharacterStatus swapped = (ECharacterStatus)235;
-    
-    //Taken from Snake Charmer, Wingidon
-    [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
-    public static class swapStat
-    {
-        public static void Postfix(Character __instance)
-        {
-            if (__instance.statuses.Contains(Swapped.swapped))
-            {
-                if (__instance.alignment == EAlignment.Good)
-                {
-                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#41BF69><size=18>\n<Swapped(Good)></color></size>";
-                }
-                else
-                {
-                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#D62222><size=18>\n<Swapped(Evil)></color></size>";
-                }
-            }
-        }
-    }
-}

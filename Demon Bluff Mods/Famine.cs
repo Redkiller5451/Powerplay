@@ -108,22 +108,4 @@ public class Famine : Demon
        
     }
 }
-public static class Starved
-{
-    public static ECharacterStatus starved = (ECharacterStatus)200;
-    [HarmonyPatch(typeof(Character), nameof(Character.ShowDescription))]
-    public static class becomeStarved
-    {
-        public static void Postfix(Character __instance)
-        {
-            if (__instance.statuses.Contains(starved))
-            {
-                HintInfo info = new HintInfo();
-                info.text = "I am starved.\nRevealing me would kill me when Famine is killed, dealing 2 damage";
-                UIEvents.OnShowHint.Invoke(info, __instance.hintPivot);
-            }
-
-        }
-    }
-}
  

@@ -1,4 +1,4 @@
-﻿/**using Il2Cpp;
+﻿using Il2Cpp;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppSystem;
@@ -21,7 +21,7 @@ public class Vanished : Role
         if(trigger == ETriggerPhase.AfterRoundStart)
         {
             charRef.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
-            
+            charRef.statuses.AddStatus(UO.UnknownObstacle, charRef);
         }
         if (trigger == ETriggerPhase.OnPicked)
         {
@@ -30,7 +30,9 @@ public class Vanished : Role
             {
                 if(lastPicker.alignment == EAlignment.Good)
                 {
-                    lastPicker.     }
+                    lastPicker.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
+                    lastPicker.statuses.AddStatus(UO.UnknownObstacle, charRef);
+                }
             }
         }
     }
@@ -38,8 +40,17 @@ public class Vanished : Role
     {       if (trigger == ETriggerPhase.AfterRoundStart)
         {
             charRef.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
-
+            charRef.statuses.AddStatus(UO.UnknownObstacle, charRef);
         }
+        if (lastPicker != null)
+        {
+            if (lastPicker.alignment == EAlignment.Evil)
+            {
+                lastPicker.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
+                lastPicker.statuses.AddStatus(UO.UnknownObstacle, charRef);
+            }
+        }
+
     }
     public static void SetLastPicker(Character picker)
     {
@@ -53,4 +64,4 @@ public class Vanished : Role
     public Vanished(System.IntPtr ptr) : base(ptr)
     {
     }
-}*/
+}

@@ -99,21 +99,3 @@ public class Pestilence : Demon
         }
     }
 }
-public static class Immune
-{
-    public static ECharacterStatus immune = (ECharacterStatus)205;
-    [HarmonyPatch(typeof(Character), nameof(Character.ShowDescription))]
-    public static class becomeImmune
-    {
-        public static void Postfix(Character __instance)
-        {
-            if (__instance.statuses.Contains(immune))
-            {
-                HintInfo info = new HintInfo();
-                info.text = "I am Good and Uncorrupted. I cannot be Corrupted";
-                UIEvents.OnShowHint.Invoke(info, __instance.hintPivot);
-                __instance.statuses.AddResistance(ECharacterStatus.Corrupted, __instance);
-            }
-        }
-    }
-}

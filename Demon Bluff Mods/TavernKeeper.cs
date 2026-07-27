@@ -1,5 +1,4 @@
 ﻿using Il2Cpp;
-using HarmonyLib;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
@@ -12,12 +11,12 @@ using static UnityEngine.GraphicsBuffer;
 
 namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
-public class Industrialist : Role
+public class TavernKeeper : Role
 {
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Start)
+        if (trigger == ETriggerPhase.AfterRoundStart)
         {
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
@@ -25,39 +24,34 @@ public class Industrialist : Role
             list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
             list1.Remove(charRef);
             int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-            list1[randomIndex].statuses.AddStatus(Mad.mad2, list1[randomIndex]);
+            list1[randomIndex].statuses.AddStatus(Rbed.roleblocked, list1[randomIndex]);
         }
         if (trigger == ETriggerPhase.Day)
         {
             Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
-            Il2CppSystem.Collections.Generic.List<Character> allChars2 = Characters.Instance.FilterCharacterContainsStatus(allChars, Mad.mad2);
-            allChars = Characters.Instance.FilterCharacterContainsStatus(allChars, Mad.mad);
-            foreach (Character character in allChars2)
+            Il2CppSystem.Collections.Generic.List<Character> allChars2 = Characters.Instance.FilterCharacterContainsStatus(allChars, Rbed.roleblocked);
+            if (allChars2.Count == 0)
             {
-                allChars.Add(character);
-            }
-            if(allChars.Count == 0)
-            {
-                onActed?.Invoke(new ActedInfo($"Nobody is Mad!", null));
+                onActed?.Invoke(new ActedInfo($"I roleblocked noone!", null));
             }
             else
-                onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is Mad!", null));
+                onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars2.Count)].id} is roleblocked!", null));
         }
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
-    { 
+    {
         if (trigger == ETriggerPhase.Day)
         {
             Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
             allChars = Characters.Instance.FilterAlignmentCharacters(allChars, EAlignment.Good);
-            onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is Mad!", null));
+            onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is roleblocked!", null));
         }
     }
-    public Industrialist() : base(ClassInjector.DerivedConstructorPointer<Industrialist>())
+    public TavernKeeper() : base(ClassInjector.DerivedConstructorPointer<TavernKeeper>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
     }
-    public Industrialist(System.IntPtr ptr) : base(ptr)
+    public TavernKeeper(System.IntPtr ptr) : base(ptr)
     {
     }
 }

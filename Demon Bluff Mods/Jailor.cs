@@ -80,19 +80,3 @@ public class Jailor : Role
         }
     }
 }
-public static class Jailed
-{
-    public static ECharacterStatus jailed = (ECharacterStatus)290;
-    [HarmonyPatch(typeof(Character), nameof(Character.Act))]
-    public static class BecomeJailed
-    {
-        public static bool Prefix(Character __instance)
-        {
-            if (__instance.statuses.Contains(jailed))
-            {
-                return false;
-            }
-            return true;
-        }
-    }
-}
