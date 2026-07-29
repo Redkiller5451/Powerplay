@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static MelonLoader.MelonLogger;
 
 namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
@@ -123,9 +124,33 @@ public class Washerwoman : Role // Druid :
             .ToList();
 
         string info = $"";
-
+        //All this code is courtesy of BetterLies. Go thank Skill Cycler
         if (outsiders.Count > 0)
             info = ConjourInfo(ids[0], ids[1], ids[2], null);
+        // picking an outcast + minion disguised as a different outcast should say the minion disguise
+        CharacterData fake = null;
+        foreach (Character c in CharacterPicker.PickedCharacters)
+        {
+            if (c.bluff)
+            {
+                if (c.bluff.type == ECharacterType.Villager)
+                {
+                    bool valid = true;
+                    foreach (Character c2 in CharacterPicker.PickedCharacters)
+                    {
+                        if (c.bluff.characterId == c2.dataRef.characterId)
+                        {
+                            valid = false;
+                        }
+                    }
+                    if (valid) fake = c.bluff;
+                }
+            }
+        }
+        if (fake != null)
+        {
+            info = ConjourInfo(ids[0], ids[1], ids[2], fake);
+        }
         else
         {
             Il2CppSystem.Collections.Generic.List<CharacterData> scriptOutsiders = Gameplay.Instance.GetScriptCharacters();
@@ -142,26 +167,26 @@ public class Washerwoman : Role // Druid :
                 scriptOutsiders = Characters.Instance.FilterCharacterType(scriptOutsiders, ECharacterType.Villager);
 
                 foreach (CharacterData c in scriptOutsiders)
-                    if (!c.bluffable)
+                    if (!c.bluffable && c.name != "Saint")
                         pickedOutsiders.Add(c);
 
                 if (pickedOutsiders.Count == 0)
                 {
                     foreach (CharacterData c in scriptOutsiders)
-                        pickedOutsiders.Add(c);
+                        if (c.name != "Saint")
+                            pickedOutsiders.Add(c);
                 }
-            }
-
-            if (pickedOutsiders.Count == 0)
-            {
-                CharacterData drunkData = ProjectContext.Instance.gameData.GetCharacterDataOfId(drunkId);
-                info = ConjourInfo(ids[0], ids[1], ids[2], drunkData);
             }
             else
             {
-                CharacterData randomOutsider = pickedOutsiders[UnityEngine.Random.Range(0, pickedOutsiders.Count)];
-                info = ConjourInfo(ids[0], ids[1], ids[2], randomOutsider);
+                foreach (CharacterData c in scriptOutsiders)
+                    if (c.bluffable && c.name != "Saint")
+                        pickedOutsiders.Add(c);
             }
+
+            CharacterData randomOutsider = pickedOutsiders[UnityEngine.Random.Range(0, pickedOutsiders.Count)];
+           info = ConjourInfo(ids[0], ids[1], ids[2], randomOutsider);
+            
         }
 
         Il2CppSystem.Collections.Generic.List<Character> chars = CharacterPicker.PickedCharacters;

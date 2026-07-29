@@ -302,7 +302,7 @@ public class Main : MelonMod
         sailor.role = new Sailor();
         sailor.name = "Armorsmith";
         sailor.characterName = "Armorsmith";
-        sailor.description = "I point at a Good Villager. Either them or myself cannot die.";
+        sailor.description = "When revealed: \n I point at a card. \n If they are Good, they can't die. If else, I can't die.";
         sailor.flavorText = "\"She makes great armor. \n The Knight got better elsewhere...\"";
         sailor.hints = "I see the Wretch as Good.";
         sailor.ifLies = "I don't protect either card.";
@@ -512,9 +512,9 @@ public class Main : MelonMod
         snakeCharmer.characterName = "Flutist";
         snakeCharmer.description = "I swap with an Evil.\nI register as Evil.\nI cannot be Evil";
         snakeCharmer.flavorText = "\"Tries to charm the Evils into revealing themselves. \n Become one instead.\"";
-        snakeCharmer.hints = "";
+        snakeCharmer.hints = "I prioritize swapping with evils that summon stuff next to them.";
         snakeCharmer.ifLies = "";
-        snakeCharmer.notes = "";
+        snakeCharmer.notes = "The Corruption is there to prevent disco.";
         snakeCharmer.picking = false;
         snakeCharmer.startingAlignment = EAlignment.Good;
         snakeCharmer.type = ECharacterType.Outcast;
@@ -770,9 +770,9 @@ public class Main : MelonMod
         tav.role = new TavernKeeper();
         tav.name = "Winemaker";
         tav.characterName = "Winemaker";
-        tav.description = "I roleblock a random Good card. Learn a roleblocked card.";
+        tav.description = $"I {formattedKeyText("Roleblock")} a random Good card. Learn a {formattedKeyText("Roleblock")}ed card.";
         tav.flavorText = "\"Likes to celebrate.\nKnows the Drunk a bit too well.\"";
-        tav.hints = "Roleblock means a card cannot act.";
+        tav.hints = "Roleblock means a card cannot act if it's an On Pick card.";
         tav.ifLies = "Learn a random card. I don't roleblock.";
         tav.notes = "";
         tav.picking = false;
@@ -816,7 +816,7 @@ public class Main : MelonMod
         pirate.role = new Pirate();
         pirate.name = "Pirate";
         pirate.characterName = "Pirate";
-        pirate.description = "I duel a card. I die if they are of the same alignement, they die if they are of a different alignement";
+        pirate.description = $"I {formattedKeyText("Duel")} a card. I die if they are of the same alignement, they die if they are of a different alignement";
         pirate.flavorText = "\"You've got a fine coin there!\n Mind if I take it?\"";
         pirate.hints = "I am a Neutral. I have a 50% chance of becoming Evil on start.";
         pirate.ifLies = "";
@@ -1071,9 +1071,9 @@ public class Main : MelonMod
         bootlegger.role = new Bootlegger();
         bootlegger.name = "Bootlegger";
         bootlegger.characterName = "Bootlegger";
-        bootlegger.description = "Two cards are Roleblocked. \nI lie and disguise.";
+        bootlegger.description = $"Two cards are {formattedKeyText("Roleblock")}ed. \nI lie and disguise.";
         bootlegger.flavorText = "\"Makes amazing drinks. \n The Winemaker is jealous of her.\"";
-        bootlegger.hints = "";
+        bootlegger.hints = "I prioritize roleblocking on-pick cards. \nRoleblock means a card cannot act if it's an On Pick card.";
         bootlegger.ifLies = "";
         bootlegger.notes = "";
         bootlegger.picking = false;
@@ -2086,7 +2086,7 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, amnesiac);
             addRole(script.startingOutsiders, indust);
             addRole(script.startingOutsiders, goon); 
-        addRole(script.startingOutsiders, snakeCharmer);
+            addRole(script.startingOutsiders, snakeCharmer);
 
             addRole(script.startingOutsiders, jester);
            addRole(script.startingOutsiders, scapegoat);
@@ -2113,9 +2113,9 @@ public class Main : MelonMod
             addRole(script.startingMinions, snowyW);
 
         }
-        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(snakeCharmer);
-        Characters.Instance.startGameActOrder = insertAfterAct("Flutist", vortox);
-        Characters.Instance.startGameActOrder = insertAfterAct("Flutist", apprentice);
+       // Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(snakeCharmer);
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(vortox);
+        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", apprentice);
         
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", snowyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", stormyW);
@@ -2250,6 +2250,50 @@ public class Main : MelonMod
 
         return newActList;
     }
+    //Wingidon moment
+    public CharacterData[] InsertAtEndOfActOrder(CharacterData data)
+    {
+        MelonLogger.Msg($"Adding {data.name.ToString()} to end of act order");
+        CharacterData[] actList = Characters.Instance.startGameActOrder;
+        int actSize = actList.Length;
+        CharacterData[] newActList = new CharacterData[actSize + 1];
+        for (int i = 0; i < actSize; i++)
+        {
+            newActList[i] = actList[i];
+        }
+        newActList[actSize] = data;
+        return newActList;
+    }
+    public CharacterData[] insertBeforeAct(string next, CharacterData data)
+    {
+        MelonLogger.Msg($"insertBeforeAct called adding {data.name.ToString()} before {next}");
+        int actSize = Characters.Instance.startGameActOrder.Length;
+        Il2CppSystem.Collections.Generic.List<CharacterData> newActList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        bool added = false;
+        foreach (CharacterData character in Characters.Instance.startGameActOrder)
+        {
+            MelonLogger.Msg($"Attempting to add {character.name.ToString()} to act order");
+            if (character.name.ToString() == next) MelonLogger.Msg($"Found target {character.name.ToString()}");
+            if (character.name.ToString() == next && added == false)
+            {
+                MelonLogger.Msg($"Adding target {data.name.ToString()} to newActList");
+                newActList.Add(data);
+                MelonLogger.Msg($"Added {data.name.ToString()} to newActList");
+            }
+            MelonLogger.Msg($"Adding {character.name.ToString()} to newActList");
+            newActList.Add(character);
+        }
+        CharacterData[] newActArray = new CharacterData[actSize + 1];
+        int counter = 0;
+        MelonLogger.Msg($"Beginning loop");
+        foreach (CharacterData character in newActList)
+        {
+            Debug.Log(string.Format("Adding {0} to act order at array position {1}", character.name.ToString(), counter));
+            newActArray[counter] = character;
+            counter += 1;
+        }
+        return newActArray;
+    }
     public void addDemon(AscensionsData advancedAscension, CharacterData? data, string oldScriptName, string newScriptName, CustomScriptData NewScript, int weight = 1)
     {
         if (data == null)
@@ -2366,7 +2410,8 @@ public class Main : MelonMod
         switch (target)
         {
             // Keywords
-            case "Dueled": return "<color=#F7ED88>Honest</color>";
+            case "Duel": return "<color=#E0FFAB>Duel</color>";
+            case "Roleblock": return "<color=#56A3FC>Roleblock</color>";
         }
         return "Formatted key text invalid, please report this to Wingidon and not Redkiller fr fr";
     }

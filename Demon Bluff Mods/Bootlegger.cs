@@ -22,13 +22,31 @@ public class Bootlegger : Minion
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
-            int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-            list1[randomIndex].statuses.AddStatus(Rbed.roleblocked, list1[randomIndex]);
-            list1.Remove(list1[randomIndex]);
-            randomIndex = UnityEngine.Random.Range(0, list1.Count);
-            list1[randomIndex].statuses.AddStatus(Rbed.roleblocked, list1[randomIndex]);
+            Character char1 = PrioritizeOnPick(list1);
+            char1.statuses.AddStatus(Rbed.roleblocked, charRef);
+            list1.Remove(char1);
+            char1 = PrioritizeOnPick(list1);
+            char1.statuses.AddStatus(Rbed.roleblocked, charRef);
         }
     }
+    private Character PrioritizeOnPick(Il2CppSystem.Collections.Generic.List<Character> list1)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> list2 = new();
+        foreach (Character c in list1)
+        {
+            if (c.dataRef.picking)
+            {
+                list2.Add(c);
+            }
+        }
+        if (list2.Count > 0)
+        {
+            return list2[UnityEngine.Random.Range(0, list2.Count)];
+        }
+        else
+            return list1[UnityEngine.Random.Range(0, list1.Count)];
+    }
+
     public Bootlegger() : base(ClassInjector.DerivedConstructorPointer<Bootlegger>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);

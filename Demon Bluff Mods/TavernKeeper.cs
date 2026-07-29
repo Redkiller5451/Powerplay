@@ -35,7 +35,7 @@ public class TavernKeeper : Role
                 onActed?.Invoke(new ActedInfo($"I roleblocked noone!", null));
             }
             else
-                onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars2.Count)].id} is roleblocked!", null));
+                onActed?.Invoke(new ActedInfo($"#{allChars2[UnityEngine.Random.Range(0, allChars2.Count)].id} is roleblocked!", null));
         }
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)

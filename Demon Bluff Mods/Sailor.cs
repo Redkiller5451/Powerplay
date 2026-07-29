@@ -34,26 +34,27 @@ namespace Demon_Bluff_Mods
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
             Character random = null;
-            if (trigger == ETriggerPhase.AfterRoundStart)
+            if (trigger == ETriggerPhase.Day)
             {
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 if (charRef.statuses.Contains(ECharacterStatus.Corrupted))
                 {
+                    list1 = Characters.Instance.FilterOutStatus(list1, Protected.protect);
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     random = list1[randomIndex];
+                    string line = $"I trusted #{random.id} with my armor";
+                    onActed?.Invoke(new ActedInfo(line, null));
 
                 }
                 else
                 {
-                    list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
-                    list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
                     list1 = Characters.Instance.FilterOutRole(list1, "Knight_47970624");
                     list1.Remove(charRef);
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     random = list1[randomIndex];
-                    if (UnityEngine.Random.Range(0, 2) < 1)
+                    if (random.alignment == EAlignment.Good)
                     {
                         random.statuses.AddStatus(Protected.protect, charRef);
                     }
@@ -61,28 +62,6 @@ namespace Demon_Bluff_Mods
                     {
                         charRef.statuses.AddStatus(Protected.protect, charRef);
                     }
-                    random.statuses.AddStatus(SailorPing.sailorPing, charRef);
-                }
-
-
-            }
-            if (trigger == ETriggerPhase.Day)
-            {
-                if (charRef.statuses.Contains(ECharacterStatus.Corrupted))
-                {
-                    Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterOutStatus(list1, SailorPing.sailorPing);
-                    int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-                    random = list1[randomIndex];
-                    string line = $"#{random.id} or I are being protected";
-                    onActed?.Invoke(new ActedInfo(line, null));
-                }
-                else
-                {
-                    Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
-                    list1 = Characters.Instance.FilterCharacterContainsStatus(list1, SailorPing.sailorPing);
-
                     string line = "";
                     if (list1.Count == 0)
                     {
@@ -90,17 +69,23 @@ namespace Demon_Bluff_Mods
                     }
                     else
                     {
-                        int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-                        random = list1[randomIndex];
-                        random.statuses.statuses.Remove(SailorPing.sailorPing);
-                        line = $"#{random.id} or I are being protected";
+                        if (random.alignment == EAlignment.Good)
+                        {
+                            line = $"I trusted #{random.id} with my armor";
+                        }
+                        else
+                        {
+                        line = $"I did not trust #{random.id} with my armor";
+                        }
+                            
                     }
 
                     onActed?.Invoke(new ActedInfo(line, null));
-
                 }
 
+
             }
+            
 
         }
         public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -109,9 +94,10 @@ namespace Demon_Bluff_Mods
             {
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterOutStatus(list1, Protected.protect);
+                list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
-                string line = $"#{random.id} or I are being protected";
+                string line = $"I trusted #{random.id} with my armor";
                 onActed?.Invoke(new ActedInfo(line, null));
             }
 

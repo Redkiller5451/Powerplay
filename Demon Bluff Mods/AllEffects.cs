@@ -36,6 +36,10 @@ namespace Demon_Bluff_Mods
             }
         }
     }
+    public static class StarspawnCheck
+    {
+        public static ECharacterStatus starspawnCheck = (ECharacterStatus)197;
+    }
     public static class Starved
     {
         public static ECharacterStatus starved = (ECharacterStatus)200;
@@ -286,20 +290,39 @@ namespace Demon_Bluff_Mods
     public static class Rbed
     {
         public static ECharacterStatus roleblocked = (ECharacterStatus)291;
-        [HarmonyPatch(typeof(Character), nameof(Character.Act))]
+        public static ECharacterStatus silentRB = (ECharacterStatus)292;
+        [HarmonyPatch(typeof(Character), nameof(Character.RoleAct))]
         public static class BecomeJailed
         {
             public static bool Prefix(Character __instance, ETriggerPhase trigger)
             {
-                if (__instance.statuses.Contains(roleblocked))
+                if (__instance.statuses.Contains(roleblocked) && __instance.dataRef.picking)
                 {
-                    if(trigger == ETriggerPhase.Day)
+                    if (trigger == ETriggerPhase.Day)
                     {
                         __instance.role.onActed?.Invoke(new ActedInfo("I have been Roleblocked"));
                     }
                     return false;
                 }
+
+                if (__instance.statuses.Contains(silentRB) && (trigger == ETriggerPhase.AfterRoundStart || trigger == ETriggerPhase.Start))
+                {
+                    
+                    return false;
+                }
                 return true;
+            }
+        }
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        public static class pvt
+        {
+            public static void Postfix(Character __instance)
+            {
+                if (__instance.statuses.Contains(roleblocked))
+                {
+
+                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#56A3FC><size=15>\n<Roleblocked></color></size>";
+                }
             }
         }
     }

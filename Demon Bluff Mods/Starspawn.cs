@@ -47,25 +47,31 @@ public class Starspawn : Demon
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            Il2CppSystem.Collections.Generic.List<Character> list3 = new();
+            foreach(Character chara in list1)
+                list3.Add(chara);
             Il2CppSystem.Collections.Generic.List<Character> list2 = new Il2CppSystem.Collections.Generic.List<Character>();
             if (list1.Count > 0)
             {
-                Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                Character random = list3[UnityEngine.Random.Range(0, list3.Count)];
                 random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
+                random.statuses.AddStatus(StarspawnCheck.starspawnCheck, charRef);
                 list2.Add(random);
-                list1.Remove(random);
+                list3.Remove(random);
                 if (list1.Count > 0)
                 {
-                    random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                    random = list3[UnityEngine.Random.Range(0, list3.Count)];
                     random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
+                    random.statuses.AddStatus(StarspawnCheck.starspawnCheck, charRef);
                     list2.Add(random);
-                    list1.Remove(random);
+                    list3.Remove(random);
                     if (list1.Count > 0)
                     {
-                        random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                        random = list3[UnityEngine.Random.Range(0, list3.Count)];
                         random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
+                        random.statuses.AddStatus(StarspawnCheck.starspawnCheck, charRef);
                         list2.Add(random);
-                        list1.Remove(random);
+                        list3.Remove(random);
                     }
                 }
             }
@@ -79,7 +85,7 @@ public class Starspawn : Demon
         if(trigger == ETriggerPhase.OnExecuted)
         {
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-            list1 = Characters.Instance.FilterCharacterContainsStatus(list1, UO.UnknownObstacle);
+            list1 = Characters.Instance.FilterCharacterContainsStatus(list1, StarspawnCheck.starspawnCheck);
             foreach (Character character in list1)
             {
                 character.statuses.statuses.Remove(UO.UnknownObstacle);

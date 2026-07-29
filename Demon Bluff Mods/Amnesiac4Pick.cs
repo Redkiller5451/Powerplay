@@ -115,6 +115,7 @@ public class Amnesiac4Pick : Role
             status.Equals((ECharacterStatus)1203) || status.Equals((ECharacterStatus)1204) ||
             status.Equals((ECharacterStatus)874) || status.Equals((ECharacterStatus)876) ||
             status.Equals((ECharacterStatus)879) || status.Equals((ECharacterStatus)882) ||
+            status.Equals((ECharacterStatus)197) ||
             status.Equals((ECharacterStatus)318251620) || status.Equals(SailorPing.sailorPing) ||
             status.Equals((ECharacterStatus.HealthyBluff)) || status.Equals((ECharacterStatus.AppearDisguised)) ||
             status.Equals((ECharacterStatus.AppearHonest)) || status.Equals((ECharacterStatus.AppearLying)) ||
