@@ -39,36 +39,11 @@ namespace Demon_Bluff_Mods;
         ActedInfo actedInfo = new ActedInfo("I am corrupted", null);
         return actedInfo;
     }
-    public void checkForTpows()
-    {
-        Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-        for (int i = 0; i < list1.Count; i++)
-        {
-            Character c = list1[i];
-            if (c.role is Monarch || c.role is Mayor || c.role is Prosecutor || c.role is Jailor)
-            {
-                for (int j = 0; j < list1.Count; j++)
-                {
-                    if (list1[j].role is Marshal)
-                    {
-                        list1[j].statuses.statuses.Add(ECharacterStatus.Corrupted);
-                    }
-                }
-
-            }
-            else if (c.role is Marshal)
-            {
-                break;
-            }
-        }
-    }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-       
-
-            if (trigger == ETriggerPhase.Day)
+        if (trigger == ETriggerPhase.Day)
         {
-            checkForTpows();
+          
             Health health = PlayerController.PlayerInfo.health;
             health.AddMaxHp(10);
            

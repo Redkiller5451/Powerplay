@@ -1,4 +1,5 @@
 ﻿using Il2Cpp;
+using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppSystem;
@@ -14,8 +15,7 @@ using UnityEngine;
 namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
 public class SnakeCharmer : Role
-{
-
+{ 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
         if (trigger == ETriggerPhase.AfterRoundStart && !charRef.statuses.Contains(ECharacterStatus.Corrupted))
@@ -25,24 +25,50 @@ public class SnakeCharmer : Role
             Character random = PrioritizeCertainEvils(charRef);
             CharacterData pickedEvil = random.dataRef;
             MelonLogger.Msg($"{random.id} is the Evil");
-            random.Init(charRef.dataRef);
+            random.Init(GetFlutistData());
             charRef.Init(pickedEvil);
             random.DisableStartAbility();
             charRef.DisableStartAbility();
             charRef.statuses.statuses.Add(Rbed.silentRB);
-            random.statuses.statuses.Add(ECharacterStatus.Corrupted);
+            random.statuses.statuses.Add(Rbed.silentRB);
+            charRef.statuses.statuses.Add(ECharacterStatus.AlteredCharacter);
+            random.statuses.statuses.Add(ECharacterStatus.AlteredCharacter);
+
             MelonLogger.Msg($"{random.id} is the Evil");
             MelonLogger.Msg($"The Snake Charmer has swapped #{charRef.id} and #{random.id}");
         }
-        if(trigger == ETriggerPhase.Day)
+        if(trigger == ETriggerPhase.Day || trigger == ETriggerPhase.OnReveal)
         {
+            
+            charRef.role.onActed.Invoke(new ActedInfo($"I have been charmed by the Flutist!"));
             MelonLogger.Msg($"Flutist said their piece");
-            onActed?.Invoke(new ActedInfo($"I have been charmed by the Flutist!", null));
+            return;
         }
+    }
+    private CharacterData GetFlutistData()
+    {
+        CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
+        var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
+        if (loadedCharList != null)
+        {
+            allDatas = new CharacterData[loadedCharList.Length];
+            for (int j = 0; j < loadedCharList.Length; j++)
+            {
+                allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
+            }
+        }
+        for (int j = 0; j < allDatas.Length; j++)
+        {
+            if (allDatas[j].characterId == "Flutist_POW")
+            {
+                    return (allDatas[j]);
+            }
+        }
+        return null;
     }
     private Character PrioritizeCertainEvils(Character charRef) {
         Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-        list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+        list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Evil);
         list1.Remove(charRef);
         Il2CppSystem.Collections.Generic.List<Character> prioritizedEvils = new();
         foreach (Character character in list1)
@@ -86,11 +112,15 @@ public class SnakeCharmer : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Day)
+        if (trigger == ETriggerPhase.Day || trigger == ETriggerPhase.OnReveal)
         {
             MelonLogger.Msg($"Flutist said their piece incorrectly...");
-            onActed?.Invoke(new ActedInfo($"I have been charmed by the Flutist!", null));
+            onActed?.Invoke(new ActedInfo($"I have been charmed by the Flutist!"));
         }
+    }
+    public override CharacterData GetBluffIfAble(Character charRef)
+    {
+        return null;
     }
     public override CharacterData GetRegisterAsRole(Character charRef)
     {

@@ -38,13 +38,11 @@ public class Court : Demon
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.AfterRoundStart)
+        if (trigger == ETriggerPhase.Start)
         {
         Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
         Il2CppSystem.Collections.Generic.List<Character> list2 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
         Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
-        foreach (Character c in list2)
-        {
             CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
             var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
             if (loadedCharList != null)
@@ -53,50 +51,50 @@ public class Court : Demon
                 for (int j = 0; j < loadedCharList.Length; j++)
                 {
                     allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
-                    c.statuses.AddStatus(ECharacterStatus.AlteredCharacter, charRef);
-                    c.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
+                    
+                        
                 }
             }
+     
+            
             for (int j = 0; j < allDatas.Length; j++)
             {
                 if (allDatas[j].characterId == "Juror_POW")
                 {
-                    if (c.GetRegisterAs().characterId != allDatas[j].characterId)
-                    {
-                        c.Init(allDatas[j]);
-                    }
+                        foreach (Character c in list2)
+                        {
+                            if (c.GetRegisterAs().characterId != allDatas[j].characterId)
+                                {
+                                    c.Init(allDatas[j]);
+                                    c.statuses.statuses.RemoveRange(0, c.statuses.statuses.Count);
+                                    c.statuses.AddStatus(ECharacterStatus.AppearTruthfull, c);
+                                    c.statuses.AddStatus(ECharacterStatus.HealthyBluff, c);
+                                }
+                        }
+                    break;
                 }
-            }
 
-            c.statuses.AddStatus(ECharacterStatus.AppearTruthfull, c);
-            c.statuses.AddStatus(ECharacterStatus.HealthyBluff, c);
-        }
-        foreach (Character c in list3)
-        {
-                CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
-                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
-                if (loadedCharList != null)
-                {
-                    allDatas = new CharacterData[loadedCharList.Length];
-                    for (int j = 0; j < loadedCharList.Length; j++)
-                    {
-                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
-                        c.statuses.AddStatus(ECharacterStatus.AlteredCharacter, charRef);
-                        c.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
-                    }
-                }
+            
+             }
+        
                 for (int j = 0; j < allDatas.Length; j++)
                 {
                     if (allDatas[j].characterId == "Court_POW")
                     {
-                        if (c.GetRegisterAs().characterId != allDatas[j].characterId)
-                        {
+                    foreach (Character c in list3)
+                       {        
+                           if (c.GetRegisterAs().characterId != allDatas[j].characterId)
+                            {
                             c.Init(allDatas[j]);
-                        }
+                            if (c.statuses.statuses.Contains(Protected.protect)){
+                                c.statuses.statuses.Remove(Protected.protect);
+                            }
+                           }
+                    }
+                    break;
                     }
                 }
             }
-        }
         
 
     }

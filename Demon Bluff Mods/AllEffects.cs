@@ -287,12 +287,13 @@ namespace Demon_Bluff_Mods
             }
         }
     }
+    
     public static class Rbed
     {
         public static ECharacterStatus roleblocked = (ECharacterStatus)291;
         public static ECharacterStatus silentRB = (ECharacterStatus)292;
         [HarmonyPatch(typeof(Character), nameof(Character.RoleAct))]
-        public static class BecomeJailed
+        public static class BecomeRbd
         {
             public static bool Prefix(Character __instance, ETriggerPhase trigger)
             {
@@ -326,6 +327,7 @@ namespace Demon_Bluff_Mods
             }
         }
     }
+
     public static class SailorPing
     {
         public static ECharacterStatus sailorPing = (ECharacterStatus)299;

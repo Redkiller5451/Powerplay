@@ -6,6 +6,7 @@ using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MelonLoader;
 using MelonLoader.Utils;
+using Microsoft.Win32.SafeHandles;
 using UnityEngine;
 [assembly: MelonInfo(typeof(Demon_Bluff_Mods.Main), "Demon Bluff Mods", "1.6.1", "Redkiller")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
@@ -135,7 +136,29 @@ public class Main : MelonMod
         marksman.additionalFlavorTexts = new Il2CppStringArray(1);
         marksman.additionalFlavorTexts[0] = marksman.flavorText;
         marksman.gender = EGender.Male;
-   
+
+        Il2Cpp.CharacterData vigilante = new Il2Cpp.CharacterData();
+        vigilante.role = new Vigilante();
+        vigilante.name = "Vigilante";
+        vigilante.characterName = "Vigilante";
+        vigilante.description = "On Pick:\n I execute. ";
+        vigilante.flavorText = "\"This Slayer doesn't have restraint.\nIsn't always effective...\"";
+        vigilante.hints = "";
+        vigilante.ifLies = "My bullet is defective and I cannot shoot.";
+        vigilante.notes = "";
+        vigilante.picking = true;
+        vigilante.startingAlignment = EAlignment.Good;
+        vigilante.type = ECharacterType.Villager;
+        vigilante.abilityUsage = EAbilityUsage.Once;
+        vigilante.bluffable = true;
+        vigilante.characterId = "Vigilante_POW";
+        vigilante.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        vigilante.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        vigilante.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        vigilante.color = new Color(1f, 0.935f, 0.7302f);
+        vigilante.additionalFlavorTexts = new Il2CppStringArray(1);
+        vigilante.additionalFlavorTexts[0] = vigilante.flavorText;
+        vigilante.gender = EGender.Male;
 
         Il2Cpp.CharacterData coroner = new Il2Cpp.CharacterData();
         coroner.role = new Coroner();
@@ -505,6 +528,28 @@ public class Main : MelonMod
         jailor.additionalFlavorTexts = new Il2CppStringArray(1);
         jailor.additionalFlavorTexts[0] = jailor.flavorText;
         jailor.gender = EGender.Female;
+
+        Il2Cpp.CharacterData choirboy = new Il2Cpp.CharacterData();
+        choirboy.role = new ChoirBoy();
+        choirboy.name = "Royal Knight";
+        choirboy.characterName = "Royal Knight";
+        choirboy.description = "If the Power role is dead or has a status, learn all Demons.";
+        choirboy.flavorText = "\"A good Royal Knight that protects the Executive!\"";
+        choirboy.hints = "If Truthful: \n If the Executive is not in-play I say so.";
+        choirboy.ifLies = "Learn no Demons or learn that the Executive is fine when they aren't.";
+        choirboy.notes = "";
+        choirboy.picking = false;
+        choirboy.startingAlignment = EAlignment.Good;
+        choirboy.type = ECharacterType.Villager;
+        choirboy.abilityUsage = EAbilityUsage.Once;
+        choirboy.bluffable = true;
+        choirboy.characterId = "RoyalKnight_POW";
+        choirboy.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        choirboy.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        choirboy.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        choirboy.color = new Color(1f, 0.935f, 0.7302f);
+        choirboy.additionalFlavorTexts = new Il2CppStringArray(1);
+        choirboy.additionalFlavorTexts[0] = official.flavorText;
 
         Il2Cpp.CharacterData snakeCharmer = new Il2Cpp.CharacterData();
         snakeCharmer.role = new SnakeCharmer();
@@ -2057,13 +2102,13 @@ public class Main : MelonMod
         addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData);
         addDemon(advancedAscension, war, "Baa_Difficult", "War_1", warScriptData);
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData);
-        addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData);
+       addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData);
         addDemon(advancedAscension, vortox, "Baa_Difficult", "Vortox_1", vortoxScriptData);
-        addDemon(advancedAscension, crazed, "Baa_Difficult", "Crazed_1", crazedScriptData);
+       addDemon(advancedAscension, crazed, "Baa_Difficult", "Crazed_1", crazedScriptData);
         addDemon(advancedAscension, audi, "Baa_Difficult", "Auditor_1", audiScriptData);
         addDemon(advancedAscension, court, "Baa_Difficult", "Court_1", courtScriptData);
         addDemon(advancedAscension, star, "Baa_Difficult", "Starspawn_1", starScriptData);
-        //addDemon(advancedAscension, god, "Baa_Difficult", "God_1", godScriptData);
+     //   addDemon(advancedAscension, god, "Baa_Difficult", "God_1", //godScriptData);
 
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
         {
@@ -2071,21 +2116,23 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, official);
              addRole(script.startingTownsfolks, guard);
             addRole(script.startingTownsfolks, sailor);
+            addRole(script.startingTownsfolks, choirboy);
             addRole(script.startingTownsfolks, newsman);
             addRole(script.startingTownsfolks, lookout);
             addRole(script.startingTownsfolks, teaLady);
-              addRole(script.startingTownsfolks, washerwoman);
-              addRole(script.startingTownsfolks, knowItAll);
+            addRole(script.startingTownsfolks, washerwoman);
+            addRole(script.startingTownsfolks, vigilante);
+            addRole(script.startingTownsfolks, knowItAll);
               addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, fisherman);
              addRole(script.startingTownsfolks, coroner);
 
             addRole(script.startingOutsiders, veteran);
             addRole(script.startingOutsiders, tav);
-            addRole(script.startingOutsiders, vanished);
+           addRole(script.startingOutsiders, vanished);
             addRole(script.startingOutsiders, amnesiac);
             addRole(script.startingOutsiders, indust);
-            addRole(script.startingOutsiders, goon); 
+           addRole(script.startingOutsiders, goon); 
             addRole(script.startingOutsiders, snakeCharmer);
 
             addRole(script.startingOutsiders, jester);
@@ -2113,10 +2160,11 @@ public class Main : MelonMod
             addRole(script.startingMinions, snowyW);
 
         }
-       // Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(snakeCharmer);
-        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(vortox);
+        // Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(snakeCharmer);
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(court);
+        Characters.Instance.startGameActOrder = insertAfterAct("Court",vortox);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", apprentice);
-        
+        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", choirboy);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", snowyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", stormyW);
         //Characters.Instance.startGameActOrder = insertAfterAct("Vortox", foggyW);

@@ -45,7 +45,20 @@ public class Repossessed : Role
         Il2CppSystem.Collections.Generic.List<Character> infoTranslation = new();
         foreach (Character character in infoList)
             infoTranslation.Add(character);
-        string info = ConjourInfo(infoList[0].id, infoList[1].id, infoList[2].id, charRef);
+
+        string info = "";
+        if(infoList.Count == 3)
+        {
+            info = ConjourInfo(infoList[0].id, infoList[1].id, infoList[2].id, charRef);
+        }
+       else if (infoList.Count == 2)
+        {
+            info = ConjourInfo(infoList[0].id, infoList[1].id, charRef);
+        }
+        else
+        {
+            info = ConjourInfo(infoList[0].id, charRef);
+        }
         return new ActedInfo(info, infoTranslation);
     }
     public string ConjourInfo(int id, int id2, int id3, Character charRef)
@@ -55,6 +68,26 @@ public class Repossessed : Role
         //return localization;
 
         string info = $"One is the Auditor:\n#{id}, #{id2} or #{id3}";
+
+        return info;
+    }
+    public string ConjourInfo(int id, int id2, Character charRef)
+    {
+        //string localization = TryLocalize<AlchemistLoc>(new List<object>() { howManyCures });
+        //if (!string.IsNullOrEmpty(localization))
+        //return localization;
+
+        string info = $"One is the Auditor:\n#{id} or #{id2}";
+
+        return info;
+    }
+    public string ConjourInfo(int id, Character charRef)
+    {
+        //string localization = TryLocalize<AlchemistLoc>(new List<object>() { howManyCures });
+        //if (!string.IsNullOrEmpty(localization))
+        //return localization;
+
+        string info = $"The Auditor messed up!\nThey are #{id}";
 
         return info;
     }

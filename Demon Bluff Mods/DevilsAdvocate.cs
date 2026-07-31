@@ -33,7 +33,7 @@ namespace Demon_Bluff_Mods
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Demon);
                 list1[0].statuses.AddStatus(Protected.protect, list1[0]);
             }
-            if(trigger == ETriggerPhase.OnExecuted)
+            if(trigger == ETriggerPhase.OnExecuted || charRef.state == ECharacterState.Dead)
             {
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
