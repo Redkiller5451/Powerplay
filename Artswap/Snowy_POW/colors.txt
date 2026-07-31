@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 color FFA6F8FF
 cardBgColor 180B0BFF
 cardBorderColor FF7AE0FF
 artBgColor FC58D2FF
+=======
+color FFA6F8FF
+cardBgColor 180B0BFF
+cardBorderColor FF7AE0FF
+artBgColor FC58D2FF
+>>>>>>> 6bc668e466a28ec5b61d6b1620efa0c09b5703c4
