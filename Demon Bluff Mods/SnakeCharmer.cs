@@ -18,29 +18,49 @@ public class SnakeCharmer : Role
 { 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.AfterRoundStart && !charRef.statuses.Contains(ECharacterStatus.Corrupted))
+        if (trigger == ETriggerPhase.Start && !charRef.statuses.Contains(ECharacterStatus.Corrupted))
         {
             //if (charRef.statuses.Contains(ECharacterStatus.Corrupted)) return;
 
             Character random = PrioritizeCertainEvils(charRef);
+            if (random == null)
+            {
+                onActed.Invoke(new ActedInfo($"I couldn't charm anyone..."));
+                return;
+            }
             CharacterData pickedEvil = random.dataRef;
             MelonLogger.Msg($"{random.id} is the Evil");
+            Il2CppSystem.Collections.Generic.List<ECharacterStatus> statuses = random.statuses.statuses;
             random.Init(GetFlutistData());
             charRef.Init(pickedEvil);
             random.DisableStartAbility();
             charRef.DisableStartAbility();
-            charRef.statuses.statuses.Add(Rbed.silentRB);
             random.statuses.statuses.Add(Rbed.silentRB);
             charRef.statuses.statuses.Add(ECharacterStatus.AlteredCharacter);
             random.statuses.statuses.Add(ECharacterStatus.AlteredCharacter);
-
+            if (pickedEvil.characterName == "Puppet")
+            {
+                charRef.statuses.statuses.Add(ECharacterStatus.HealthyBluff);
+                charRef.statuses.statuses.Add(ECharacterStatus.WorkingAbility);
+            }
+            foreach (ECharacterStatus status in statuses)
+            {
+                charRef.statuses.statuses.Add((ECharacterStatus)status);
+            }
             MelonLogger.Msg($"{random.id} is the Evil");
             MelonLogger.Msg($"The Snake Charmer has swapped #{charRef.id} and #{random.id}");
         }
-        if(trigger == ETriggerPhase.Day || trigger == ETriggerPhase.OnReveal)
+        if(trigger == ETriggerPhase.Day)
         {
-            
-            charRef.role.onActed.Invoke(new ActedInfo($"I have been charmed by the Flutist!"));
+            MelonLogger.Msg($"Flutist is saying their piece");
+            if (this.onActed == null)
+            {
+                this.onActed?.Invoke(new ActedInfo($"I have been charmed by the Flutist!"));
+            }
+            else
+            {
+                charRef.role.onActed.Invoke(new ActedInfo($"I have been charmed by the Flutist!"));
+            }
             MelonLogger.Msg($"Flutist said their piece");
             return;
         }
@@ -82,6 +102,7 @@ public class SnakeCharmer : Role
         }
         else
         {
+            list1 = Characters.Instance.FilterCharacterContainsStatus(list1, NecroWielder.Necronomicon);
             return list1[UnityEngine.Random.Range(0, list1.Count)];
         }
     }
@@ -91,6 +112,7 @@ public class SnakeCharmer : Role
             || character.dataRef.characterId == "Puppet_15989619" || character.dataRef.characterId == "Traveler_POW"
             || character.dataRef.characterId == "Pooka_13445289";
     }
+
     private bool IsntBaronSpawned(Character charRef)
     {
         Il2CppSystem.Collections.Generic.List<Character> list = GetNeighbors(charRef);
@@ -115,7 +137,7 @@ public class SnakeCharmer : Role
         if (trigger == ETriggerPhase.Day || trigger == ETriggerPhase.OnReveal)
         {
             MelonLogger.Msg($"Flutist said their piece incorrectly...");
-            onActed?.Invoke(new ActedInfo($"I have been charmed by the Flutist!"));
+            charRef.role.onActed.Invoke(new ActedInfo($"I have been charmed by the Flutist!"));
         }
     }
     public override CharacterData GetBluffIfAble(Character charRef)

@@ -1,20 +1,18 @@
-﻿using Il2Cpp;
+﻿using Demon_Bluff_Mods;
+using Il2Cpp;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppSystem;
 using MelonLoader;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.Design;
 using UnityEngine;
 
 namespace Demon_Bluff_Mods
 {
     [RegisterTypeInIl2Cpp]
-    public class Wildling : Minion
+    public class Wildling : CovenFollower
     {
         public Wildling() : base(ClassInjector.DerivedConstructorPointer<Wildling>())
         {
@@ -39,6 +37,10 @@ namespace Demon_Bluff_Mods
                 random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 random.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
                 random.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
+            }
+            if (trigger == ETriggerPhase.Night && IsBookHolder(charRef))
+            {
+                KillHidden(charRef);
             }
         }
         public override CharacterData GetBluffIfAble(Character charRef)

@@ -28,12 +28,12 @@ namespace Demon_Bluff_Mods
             string info = "";
             if (WhatType())
             {
-                messages = TrueMessages();
+                messages = TrueMessages(charRef);
                 info = $"To say \" {messages[UnityEngine.Random.Range(0, messages.Count)]} \" would be saying truths";
             }
             else
             {
-                messages = FalseMessages();
+                messages = FalseMessages(charRef);
                 info = $"To say \" {messages[UnityEngine.Random.Range(0, messages.Count)]} \" would be saying falsehoods";
             }
             return new ActedInfo(info);
@@ -67,12 +67,12 @@ namespace Demon_Bluff_Mods
             string info = "";
             if (WhatType())
             {
-                messages = TrueMessages();
+                messages = TrueMessages(charRef);
                 info = $"To say: \"{messages[UnityEngine.Random.Range(0, messages.Count)]}\",would be saying falsehoods";
             }
             else
             {
-                messages = FalseMessages();
+                messages = FalseMessages(charRef);
                 info = $"To say: \"{messages[UnityEngine.Random.Range(0, messages.Count)]}\",would be saying truths";
             }
             return new ActedInfo(info);
@@ -82,7 +82,7 @@ namespace Demon_Bluff_Mods
         {
             return UnityEngine.Random.Range(0, 2) < 1;
         }
-        private ArrayList TrueMessages()
+        private ArrayList TrueMessages(Character charRef)
         {
             ArrayList messages = new ArrayList();
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
@@ -99,7 +99,7 @@ namespace Demon_Bluff_Mods
             {
                 messages.Add("Someone is silenced in the Village");
             }
-            if (isNextToMyFriend())
+            if (isNextToMyFriend(charRef))
             {
                 messages.Add("I am sitting next to my best friend!");
             }
@@ -107,7 +107,7 @@ namespace Demon_Bluff_Mods
             {
                 messages.Add("There is a Puppet in-play.");
             }
-            if (isNextToOutcast())
+            if (isNextToOutcast(charRef))
             {
                 messages.Add("I sit next to an Outcast");
             }
@@ -115,7 +115,7 @@ namespace Demon_Bluff_Mods
             {
                 messages.Add("The Lycanthrope is now a Werewolf");
             }
-            if (isNextToMinion())
+            if (isNextToMinion(charRef))
             {
                 messages.Add("I am next to a Minion.");
             }
@@ -153,7 +153,7 @@ namespace Demon_Bluff_Mods
             }
             return messages;
         }
-        private ArrayList FalseMessages()
+        private ArrayList FalseMessages(Character charRef)
         {
             ArrayList messages = new ArrayList();
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
@@ -170,7 +170,7 @@ namespace Demon_Bluff_Mods
             {
                 messages.Add("Someone is silenced in the Village");
             }
-            if (!isNextToMyFriend())
+            if (!isNextToMyFriend(charRef))
             {
                 messages.Add("I am sitting next to my best friend!");
             }
@@ -178,7 +178,7 @@ namespace Demon_Bluff_Mods
             {
                 messages.Add("There is a Puppet in-play.");
             }
-            if (!isNextToOutcast())
+            if (!isNextToOutcast(charRef))
             {
                 messages.Add("I sit next to an Outcast");
             }
@@ -186,7 +186,7 @@ namespace Demon_Bluff_Mods
             {
                 messages.Add("The Lycanthrope is now a Werewolf");
             }
-            if (!isNextToMinion())
+            if (!isNextToMinion(charRef))
             {
                 messages.Add("I am next to a Minion.");
             }
@@ -224,7 +224,7 @@ namespace Demon_Bluff_Mods
             }
             return messages;
         }
-        public Il2CppSystem.Collections.Generic.List<Character> GetNeighbors()
+        public Il2CppSystem.Collections.Generic.List<Character> GetNeighbors(Character charRef)
         {
             Il2CppSystem.Collections.Generic.List<Character> myList = CharactersHelper.GetSortedListWithCharacterFirst(Gameplay.CurrentCharacters, charRef);
             myList.RemoveAt(0);
@@ -265,19 +265,19 @@ namespace Demon_Bluff_Mods
             }
             return isPuppeteerThere && isPuppetThere;
         }
-        public bool isNextToMyFriend()
+        public bool isNextToMyFriend(Character charRef)
         {
-            Il2CppSystem.Collections.Generic.List<Character> neighbors = GetNeighbors();
+            Il2CppSystem.Collections.Generic.List<Character> neighbors = GetNeighbors(charRef);
             return neighbors[0].role is Rambler || neighbors[1].role is Rambler;
         }
-        public bool isNextToOutcast()
+        public bool isNextToOutcast(Character charRef)
         {
-            Il2CppSystem.Collections.Generic.List<Character> neighbors = GetNeighbors();
+            Il2CppSystem.Collections.Generic.List<Character> neighbors = GetNeighbors(charRef);
             return neighbors[0].GetCharacterType() is ECharacterType.Outcast || neighbors[1].GetCharacterType() is ECharacterType.Outcast;
         }
-        public bool isNextToMinion()
+        public bool isNextToMinion(Character charRef)
         {
-            Il2CppSystem.Collections.Generic.List<Character> neighbors = GetNeighbors();
+            Il2CppSystem.Collections.Generic.List<Character> neighbors = GetNeighbors(charRef);
             return neighbors[0].GetCharacterType() is ECharacterType.Minion || neighbors[1].GetCharacterType() is ECharacterType.Minion;
         }
         public bool DidLycanthropeTransform()

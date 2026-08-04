@@ -7,17 +7,17 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
-public class Bootlegger : Minion
+public class Bootlegger : MafiaMember
 {
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.AfterRoundStart)
+        if (trigger == ETriggerPhase.Start)
         {
+
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);

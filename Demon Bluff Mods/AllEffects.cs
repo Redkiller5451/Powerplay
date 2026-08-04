@@ -39,6 +39,7 @@ namespace Demon_Bluff_Mods
     public static class StarspawnCheck
     {
         public static ECharacterStatus starspawnCheck = (ECharacterStatus)197;
+
     }
     public static class Starved
     {
@@ -57,6 +58,25 @@ namespace Demon_Bluff_Mods
 
             }
         }
+    }
+    public static class NecroWielder
+    {
+        public static ECharacterStatus Necronomicon = (ECharacterStatus)198;
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        public static class NecroStat
+        {
+            public static void Postfix(Character __instance)
+            {
+                if (__instance.statuses.Contains(NecroWielder.Necronomicon))
+                {
+                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#DD02E0><size=18>\n<Book Holder></color></size>";
+                }
+            }
+        }
+    }
+    public static class Hexed
+    {
+        public static ECharacterStatus Hex = (ECharacterStatus)199;
     }
     public static class Immune
     {
@@ -109,6 +129,62 @@ namespace Demon_Bluff_Mods
                 if (__instance.statuses.Contains(Jinxed.jinxed))
                 {
                     __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#AA41BF><size=18>\n<Jinxed></color></size>";
+                }
+            }
+        }
+    }
+    public static class Poisoned
+    {
+        public static ECharacterStatus poisoned = (ECharacterStatus)231;
+        [HarmonyLib.HarmonyPatch(typeof(Character), nameof(Character.Kill))]
+        public class PoisonedAction
+        {
+            static void Postfix(Character __instance)
+            {
+                if (__instance != null)
+                {
+                    if (__instance.statuses.statuses.Contains(Poisoned.poisoned))
+                    {
+                        Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Gameplay.CurrentCharacters;
+                        unrevealedCharacters = Characters.Instance.FilterAlignmentCharacters(unrevealedCharacters, EAlignment.Good);
+                        Character targetChar = unrevealedCharacters[UnityEngine.Random.RandomRangeInt(0, unrevealedCharacters.Count)];
+                        targetChar.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, __instance);
+                        targetChar.statuses.AddStatus(ECharacterStatus.KilledByEvil, __instance);
+                        targetChar.KillByDemon(__instance);
+                    }
+                }
+
+            }
+        }
+        [HarmonyLib.HarmonyPatch(typeof(Character), nameof(Character.KillByDemon))]
+        public class PoisonedAction2
+        {
+            static void Postfix(Character __instance)
+            {
+                if (__instance != null)
+                {
+                    if (__instance.statuses.statuses.Contains(Poisoned.poisoned))
+                    {
+                        Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Gameplay.CurrentCharacters;
+                        unrevealedCharacters = Characters.Instance.FilterAlignmentCharacters(unrevealedCharacters, EAlignment.Good);
+                        Character targetChar = unrevealedCharacters[UnityEngine.Random.RandomRangeInt(0, unrevealedCharacters.Count)];
+                        targetChar.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, __instance);
+                        targetChar.statuses.AddStatus(ECharacterStatus.KilledByEvil, __instance);
+                        targetChar.KillByDemon(__instance);
+                    }
+                }
+
+            }
+        }
+        //Taken from Snake Charmer, Wingidon
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        public static class poisonedStat
+        {
+            public static void Postfix(Character __instance)
+            {
+                if (__instance.statuses.Contains(Poisoned.poisoned))
+                {
+                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#AA41BF><size=18>\n<Poisoned></color></size>";
                 }
             }
         }
@@ -277,9 +353,9 @@ namespace Demon_Bluff_Mods
         [HarmonyPatch(typeof(Character), nameof(Character.Act))]
         public static class BecomeJailed
         {
-            public static bool Prefix(Character __instance)
+            public static bool Prefix(Character __instance, ETriggerPhase trigger)
             {
-                if (__instance.statuses.Contains(jailed))
+                if (__instance.statuses.Contains(jailed) && (trigger == ETriggerPhase.Night || trigger == ETriggerPhase.AfterRoundStart || trigger == ETriggerPhase.Start))
                 {
                     return false;
                 }
@@ -287,7 +363,7 @@ namespace Demon_Bluff_Mods
             }
         }
     }
-    
+
     public static class Rbed
     {
         public static ECharacterStatus roleblocked = (ECharacterStatus)291;
@@ -297,18 +373,22 @@ namespace Demon_Bluff_Mods
         {
             public static bool Prefix(Character __instance, ETriggerPhase trigger)
             {
+                if (__instance.role == null)
+                {
+                    return true;
+                }
                 if (__instance.statuses.Contains(roleblocked) && __instance.dataRef.picking)
                 {
                     if (trigger == ETriggerPhase.Day)
                     {
-                        __instance.role.onActed?.Invoke(new ActedInfo("I have been Roleblocked"));
+                        __instance.ShowActed(new ActedInfo("I have been Roleblocked"),trigger);
                     }
                     return false;
                 }
 
                 if (__instance.statuses.Contains(silentRB) && (trigger == ETriggerPhase.AfterRoundStart || trigger == ETriggerPhase.Start))
                 {
-                    
+
                     return false;
                 }
                 return true;
