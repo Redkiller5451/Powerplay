@@ -43,6 +43,11 @@ public class Court : Demon
         Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
         Il2CppSystem.Collections.Generic.List<Character> list2 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
         Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+            Il2CppSystem.Collections.Generic.List<Character> list4 = Characters.Instance.FilterAlignmentCharacters(list1, WeatherAlignement.Weather);
+            foreach (Character character in list4)
+            {
+                list3.Add(character);
+            }
             CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
             var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
             if (loadedCharList != null)

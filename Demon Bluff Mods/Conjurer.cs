@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Demon_Bluff_Mods
 {
     [RegisterTypeInIl2Cpp]
-    public class Conjurer: Minion
+    public class Conjurer: CovenFollower
     {
         public Conjurer() : base(ClassInjector.DerivedConstructorPointer<Conjurer>())
         {
@@ -28,9 +28,13 @@ namespace Demon_Bluff_Mods
         //Code taken from Circus, as Slinger is very similar to Vizier
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
-            if (trigger == ETriggerPhase.AfterRoundStart)
+            if (trigger == ETriggerPhase.Start)
             {
                 object delay = MelonCoroutines.Start(KillCharacter(charRef));
+            }
+            if (trigger == ETriggerPhase.Night && IsBookHolder(charRef))
+            {
+                KillHidden(charRef);
             }
         }
         public System.Collections.IEnumerator KillCharacter(Character charRef)
@@ -44,7 +48,9 @@ namespace Demon_Bluff_Mods
                 targetChar.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
                 targetChar.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 targetChar.KillByDemon(charRef);
+                charRef.statuses.statuses.Add(Rbed.silentRB);
             }
+            
         }
     }
 }

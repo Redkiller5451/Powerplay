@@ -39,7 +39,7 @@ namespace Demon_Bluff_Mods
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                if (charRef.statuses.Contains(ECharacterStatus.Corrupted))
+                if (charRef.statuses.Contains(ECharacterStatus.Corrupted) || charRef.alignment == EAlignment.Evil)
                 {
                     list1 = Characters.Instance.FilterOutStatus(list1, Protected.protect);
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);

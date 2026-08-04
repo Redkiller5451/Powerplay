@@ -82,8 +82,10 @@ namespace Demon_Bluff_Mods
             blacklistMinionIDs.Add("EvilTwin_POW"); // Not copying Evil Twin its dumb
             blacklistMinionIDs.Add("GoodTwin_POW"); // Not copying Good Twin its dumb
             blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
-            blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with.
+            blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with. 
             blacklistMinionIDs.Add("Wretch_Evil_91222191"); // That's the wrong Wretch.
+            blacklistMinionIDs.Add("WING_Dupery_Fall Guy MinionRegister"); // Should never appear ever
+            blacklistMinionIDs.Add("Covenite_POW"); // The Covenite should never spawn
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
             foreach (Character character in list1)
@@ -106,6 +108,7 @@ namespace Demon_Bluff_Mods
             if (temp is Foggy)
             {
                 DeckView.AddToObscuredDeckView(chosenMinion);
+                charRef.Act(ETriggerPhase.Start);
             }
         }
         private static bool inPlayMinion(string id)
@@ -278,6 +281,7 @@ namespace Demon_Bluff_Mods
             blacklistMinionIDs.Add("Amne4_POW"); // Fourth Amne
             blacklistMinionIDs.Add("Amne5_POW"); // Fifth Amne
             blacklistMinionIDs.Add("Amne6_POW"); // Sixth Amne
+            blacklistMinionIDs.Add("Outlier_POW"); // The outlier doesnt spawn.
             for (int j = 0; j < allDatas.Length; j++)
             {
                 CharacterData d = allDatas[j];
