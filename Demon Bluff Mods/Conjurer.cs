@@ -39,7 +39,7 @@ namespace Demon_Bluff_Mods
         }
         public System.Collections.IEnumerator KillCharacter(Character charRef)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
             unrevealedCharacters = Characters.Instance.FilterAlignmentCharacters(unrevealedCharacters, EAlignment.Good);
             if (unrevealedCharacters.Count > 0)

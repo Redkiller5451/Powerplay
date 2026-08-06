@@ -203,11 +203,11 @@ namespace Demon_Bluff_Mods
                 {
                     if (__instance.alignment == EAlignment.Good)
                     {
-                        __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#41BF69><size=18>\n<Swapped(Good)></color></size>";
+                        __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#41BF69><size=12>\nSwapped(Good)</color></size>";
                     }
                     else
                     {
-                        __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#D62222><size=18>\n<Swapped(Evil)></color></size>";
+                        __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#D62222><size=12>\nSwapped(Evil)</color></size>";
                     }
                 }
             }
