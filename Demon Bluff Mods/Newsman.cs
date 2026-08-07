@@ -103,11 +103,14 @@ public class Newsman : Role
     {
         string info = "";
         if (howFar == 0)
-            info = "There are no Mad characters";
+            info = "There are no mad characters";
         else if (howFar == 1)
-            info = "I am 1 card away from a Mad character";
+            info = "I am 1 card away from a mad character";
         else
-            info = $"I am {howFar} cards away from a Mad character";
+        {
+            info = $"I am {howFar}";
+            info += " cards away from a mad character";
+        }
 
         return info;
     }

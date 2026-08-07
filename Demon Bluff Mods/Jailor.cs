@@ -66,7 +66,7 @@ public class Jailor : Role
             {
                 info += character.dataRef.characterName + " ";
             }
-            onActed?.Invoke(new ActedInfo($"I've Jailed the Demon, {info}"));
+            onActed?.Invoke(new ActedInfo($"I've jailed the Demon, {info}"));
         }
        
     }

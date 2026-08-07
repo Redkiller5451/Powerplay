@@ -87,7 +87,12 @@ public class SnakeCharmer : Role
         return null;
     }
     private Character PrioritizeCertainEvils(Character charRef) {
-        Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+        Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
+        Il2CppSystem.Collections.Generic.List<Character> list1 = new();
+        foreach (Character c in currentChars)
+        {
+            list1.Add(c);
+        }
         list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Evil);
         list1.Remove(charRef);
         Il2CppSystem.Collections.Generic.List<Character> prioritizedEvils = new();

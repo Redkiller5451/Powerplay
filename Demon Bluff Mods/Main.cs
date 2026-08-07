@@ -1,15 +1,17 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Demon_Bluff_Mods;
 using HarmonyLib;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using Il2Cpp;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppTMPro;
 using MelonLoader;
 using MelonLoader.Utils;
 using Microsoft.Win32.SafeHandles;
-using UnityEngine;
-[assembly: MelonInfo(typeof(Demon_Bluff_Mods.Main), "Demon Bluff Mods", "1.6.1", "Redkiller")]
+[assembly: MelonInfo(typeof(Demon_Bluff_Mods.Main), "Demon Bluff Mods", "1.9.2", "Redkiller")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
 namespace Demon_Bluff_Mods;
@@ -25,8 +27,8 @@ public class Main : MelonMod
         UniversalUtility.AddEnum<ECharacterType>("Mafia Leader", (EAlignment)(155));
         UniversalUtility.AddEnum<ECharacterType>("Mafia Member", (EAlignment)(160));
         UniversalUtility.AddEnum<EAlignment>("Covenant", (EAlignment)(160));
-        UniversalUtility.AddEnum<ECharacterType>("Coven Preacher", (EAlignment)(165));
-        UniversalUtility.AddEnum<ECharacterType>("Coven Follower", (EAlignment)(170));
+        UniversalUtility.AddEnum<ECharacterType>("Covenant Preacher", (EAlignment)(165));
+        UniversalUtility.AddEnum<ECharacterType>("Covenant Follower", (EAlignment)(170));
         UniversalUtility.AddEnum<EAlignment>("Weather", (EAlignment)(40));
         UniversalUtility.AddEnum<ECharacterType>("Weather", (EAlignment)(50));
         try
@@ -851,7 +853,7 @@ public class Main : MelonMod
         indust.characterName = "Industrialist";
         indust.description = $"I make a Good Characater {formattedKeyText("Mad")}. Learn one {formattedKeyText("Mad")} character.";
         indust.flavorText = "\"If you'd be like that guy right there.\n Maybe you'd get hired here!\"";
-        indust.hints = "A Mad character registers as another in-play character.";
+        indust.hints = "";
         indust.ifLies = $"I say a Good character is {formattedKeyText("Mad")} when they aren't.";
         indust.notes = "";
         indust.picking = false;
@@ -895,10 +897,10 @@ public class Main : MelonMod
         vanished.role = new Vanished();
         vanished.name = "Vanished";
         vanished.characterName = "Vanished";
-        vanished.description = $"I cast {formattedKeyText("Unknown Obstacle")} on myself.";
+        vanished.description = $"I cast {formattedKeyText("Unknown Obstacle")} on myself.\n I silence my closest Evil neighbor.";
         vanished.flavorText = "\"Out of sight, out of mind is his motto.\"";
-        vanished.hints = $"Unknown Obstacle means that noone can pick that card. You also cannot reveal them.";
-        vanished.ifLies = $"I still cast {formattedKeyText("Unknown Obstacle")}.";
+        vanished.hints = $"";
+        vanished.ifLies = $"I still cast {formattedKeyText("Unknown Obstacle")}.\n I instead silence my closest Good neighbor.";
         vanished.notes = "";
         vanished.picking = false;
         vanished.startingAlignment = EAlignment.Good;
@@ -920,7 +922,7 @@ public class Main : MelonMod
         tav.characterName = "Winemaker";
         tav.description = $"I {formattedKeyText("Roleblock")} a random Good card. Learn a {formattedKeyText("Roleblocked")} card.";
         tav.flavorText = "\"Likes to celebrate.\nKnows the Drunk a bit too well.\"";
-        tav.hints = "Roleblock means a card cannot act if it's an On Pick card.";
+        tav.hints = "";
         tav.ifLies = $"Learn a random card. I don't  {formattedKeyText("Roleblock")}.";
         tav.notes = "";
         tav.picking = false;
@@ -941,7 +943,7 @@ public class Main : MelonMod
         goon.role = new Goon();
         goon.name = "Mobster";
         goon.characterName = "Mobster";
-        goon.description = $"I change  {formattedKeyText("Alignment")} based off who picked me";
+        goon.description = $"I change {formattedKeyText("Alignment")} based off who picked me";
         goon.flavorText = "\"I work for anyone, anything, anywhere\"";
         goon.hints = "";
         goon.ifLies = "";
@@ -960,11 +962,35 @@ public class Main : MelonMod
         goon.additionalFlavorTexts[0] = goon.flavorText;
         goon.gender = EGender.Male;
 
+        Il2Cpp.CharacterData doom = new Il2Cpp.CharacterData();
+        doom.role = new Doomsayer();
+        doom.name = "Doomsayer";
+        doom.characterName = "Doomsayer";
+        doom.description = $"<b>On Pick:</b>\n I kill a villager and a card opposing my {formattedKeyText("Alignment")}." +
+            $"\n I deal 3 {formattedKeyText("Damage")} per Good card killed.";
+        doom.flavorText = "\"He's predicted too many catastrophes. \nProbably the cause of said catastrophes.\"";
+        doom.hints = customHint("Alignment Hint", "Neutral");
+        doom.ifLies = "";
+        doom.notes = "";
+        doom.picking = true;
+        doom.startingAlignment = NeutralAlignement.Neutral;
+        doom.type = NeutralType.Neutral;
+        doom.abilityUsage = EAbilityUsage.Once;
+        doom.bluffable = false;
+        doom.characterId = "Doomsayer_POW";
+        doom.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        doom.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        doom.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        doom.color = new Color(0.8510f, 0.4549f, 0.0f);
+        doom.additionalFlavorTexts = new Il2CppStringArray(1);
+        doom.additionalFlavorTexts[0] = doom.flavorText;
+        doom.gender = EGender.Male;
+
         Il2Cpp.CharacterData pirate = new Il2Cpp.CharacterData();
         pirate.role = new Pirate();
         pirate.name = "Pirate";
         pirate.characterName = "Pirate";
-        pirate.description = $"I {formattedKeyText("Duel")} a card. I die if they are of the same  {formattedKeyText("Alignment")}, they die if they are of a different  {formattedKeyText("Alignment")}";
+        pirate.description = $"I duel a card. I die if they are of the same  {formattedKeyText("Alignment")}, they die if they are of a different  {formattedKeyText("Alignment")}";
         pirate.flavorText = "\"You've got a fine coin there!\n Mind if I take it?\"";
         pirate.hints = customHint("Alignment Hint","Neutral");
         pirate.ifLies = "";
@@ -1010,9 +1036,9 @@ public class Main : MelonMod
         godfather.role = new Godfather();
         godfather.name = "Advisor";
         godfather.characterName = "Advisor";
-        godfather.description = $"I {formattedKeyText("Swap")} someones {formattedKeyText("Alignment")} to my own.";
+        godfather.description = $"I swap someones {formattedKeyText("Alignment")} to my own.";
         godfather.flavorText = "\"Look man... you ain't gonna survive with em.\nMy group though? Assured success!\"";
-        godfather.hints = customHint("Alignment Hint", "Neutral") + $"\n I can only change Minions or Villagers.\n {formattedKeyText("Swapped")} Villagers lie and {formattedKeyText("Swapped")} Minions do not lie.";
+        godfather.hints = customHint("Alignment Hint", "Neutral") + $"\n I can only change Minions or Villagers.\n Swapped Villagers lie and swapped Minions do not lie.";
         godfather.ifLies = "";
         godfather.notes = "";
         godfather.picking = false;
@@ -1057,7 +1083,7 @@ public class Main : MelonMod
         hangman.role = new Hangman();
         hangman.name = "Hangman";
         hangman.characterName = "Hangman";
-        hangman.description = $"I point to my {formattedKeyText("Hang Target")}, and call them Evil\n If I am Good, I am saying truth. \n If I am Evil, I lie.\n Executing the person I point to when I lie deals extra {formattedKeyText("Damage")}.";
+        hangman.description = $"I point to my Hang Target, and call them Evil\n If I am Good, I am saying truth. \n If I am Evil, I lie.\n Executing the person I point to when I lie deals extra {formattedKeyText("Damage")}.";
         hangman.flavorText = "\"Is always convinced someone is Evil. \n Is sometimes correct \"";
         hangman.hints = customHint("Alignment Hint", "Neutral");
         hangman.ifLies = "";
@@ -1080,7 +1106,7 @@ public class Main : MelonMod
         scapegoat.role = new Scapegoat();
         scapegoat.name = "Scapegoat";
         scapegoat.characterName = "Scapegoat";
-        scapegoat.description = $"One character is my {formattedKeyText("Sacrifice")}, if you kill them I die instead, and you take 5 {formattedKeyText("Damage")} regardless of my {formattedKeyText("Alignment")}.";
+        scapegoat.description = $"One character is my Sacrifice, if you kill them I die instead, and you take 5 {formattedKeyText("Damage")} regardless of my {formattedKeyText("Alignment")}.";
         scapegoat.flavorText = "\"DO NOT KILL THEM!!!!\"";
         scapegoat.hints = customHint("Alignment Hint","Neutral");
         scapegoat.ifLies = "";
@@ -1172,7 +1198,7 @@ public class Main : MelonMod
         traveler.role = new Traveler();
         traveler.name = "Traveler";
         traveler.characterName = "Traveler";
-        traveler.description = $"One character becomes a {roleColour("Neutral")}Neutral</color>. I sit next to a {roleColour("Neutral")}Neutral</color>. \n I lie and disguise.";
+        traveler.description = $"One character becomes a {formattedKeyText("Neutral")}. I sit next to a {formattedKeyText("Neutral")}. \n I lie and disguise.";
         traveler.flavorText = "\"He likes bringing his friends.\n His friends arent trustworthy\"";
         traveler.hints = "";
         traveler.ifLies = "";
@@ -1221,7 +1247,7 @@ public class Main : MelonMod
         cerenovus.characterName = "Manipulator";
         cerenovus.description = $"One Good card is {formattedKeyText("Mad")}. \n I lie and disguise.";
         cerenovus.flavorText = "\"You aren't really accepted here. \nBelieve me, I have heard stuff.\"";
-        cerenovus.hints = $"A Mad character registers as another in-play character of a different {formattedKeyText("Type")}.";
+        cerenovus.hints = $"";
         cerenovus.ifLies = "";
         cerenovus.notes = "";
         cerenovus.picking = false;
@@ -1452,7 +1478,7 @@ public class Main : MelonMod
         vortox.role = new Vortox();
         vortox.name = "Vortox";
         vortox.characterName = "Vortox";
-        vortox.description = $"I cast a random {roleColour("Weather")}Weather</color>.\nI lie and disguise.";
+        vortox.description = $"I cast a random {formattedKeyText("Weather")}.\nI lie and disguise.";
         vortox.flavorText = "\"WOOSH WOOSH WOOSH WOOSH\"";
         vortox.hints = "";
         vortox.ifLies = "";
@@ -1696,7 +1722,7 @@ public class Main : MelonMod
         gangster.role = new Gangster();
         gangster.name = "Gangster";
         gangster.characterName = "Gangster";
-        gangster.description = $"<b>At Night</b>:\n if I am adjacent to only one {roleColour("Mafia")}Mafia</color>, I kill my non-{roleColour("Mafia")}Mafia</color>Neighbor, dealing 3 {formattedKeyText("Damage")}.";
+        gangster.description = $"<b>At Night</b>:\n if I am adjacent to only one {formattedKeyText("Mafia")}, I kill my non-{formattedKeyText("Mafia")} Neighbor, dealing 3 {formattedKeyText("Damage")}.";
         gangster.flavorText = "\"I'll take care of it. \n No problem!\"";
         gangster.hints = customHint("Alignment Hint", "Mafia Member"); ;
         gangster.ifLies = "";
@@ -1761,7 +1787,7 @@ public class Main : MelonMod
         bootlegger.characterName = "Bootlegger";
         bootlegger.description = $"<b>Game Start</b>:\nTwo cards are {formattedKeyText("Roleblocked")}. \nI lie and disguise.";
         bootlegger.flavorText = "\"Makes amazing drinks. \n The Winemaker is jealous of her.\"";
-        bootlegger.hints = customHint("Alignment Hint", "Mafia Member") + $"\nI prioritize {formattedKeyText("Roleblocking")} on-pick cards. \nRoleblock means a card cannot act if it's an On Pick card.";
+        bootlegger.hints = customHint("Alignment Hint", "Mafia Member") + $"\nI prioritize {formattedKeyText("Roleblocking")} on-pick cards.";
         bootlegger.ifLies = "";
         bootlegger.notes = "";
         bootlegger.picking = false;
@@ -1961,7 +1987,7 @@ public class Main : MelonMod
         pois2.role = new Poisoner2();
         pois2.name = "Powder Maker";
         pois2.characterName = "Powder Maker";
-        pois2.description = $"<b>Game Start</b>:\nI {formattedKeyText("Badly Poison")} a card. If you execute the {formattedKeyText("Badly Poisoned")} card another dies.\nI lie and disguise.";
+        pois2.description = $"<b>Game Start</b>:\nI {formattedKeyText("Badly Poison")} a card.\nI lie and disguise.";
         pois2.flavorText = "\"Take it! It's medicine! \n I promise!\"";
         pois2.hints = customHint("Alignment Hint", "Covenant Follower");
         pois2.ifLies = "";
@@ -2025,7 +2051,7 @@ public class Main : MelonMod
         voodooMaster.role = new VoodooMaster();
         voodooMaster.name = "Voodoo Master";
         voodooMaster.characterName = "Voodoo Master";
-        voodooMaster.description = $"<b>Game Start</b>:\nI {formattedKeyText("Silence")} a Good card.\nI lie and disguise.";
+        voodooMaster.description = $"<b>Game Start</b>:\nI silence a Good card.\nI lie and disguise.";
         voodooMaster.flavorText = "\"Don't you love shaking a sinner's hand?\"";
         voodooMaster.hints = customHint("Alignment Hint", "Covenant Follower");
         voodooMaster.ifLies = "";
@@ -2429,8 +2455,8 @@ public class Main : MelonMod
         gfScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         gfScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(gfScript.startingMinions, "Swarm_Good_WING");
-        JinxCharacter(gfScript.startingMinions, "Swarm_Good_WING");
         JinxCharacter(gfScript.startingTownsfolks, "Oracle_07039445");
+        JinxCharacter(gfScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount gfCounter1 = setCharacterCount(6, 4, 2, 1);
         CharactersCount gfCounter2 = setCharacterCount(5, 2, 2, 1);
         CharactersCount gfCounter3 = setCharacterCount(5, 1, 2, 1);
@@ -2457,6 +2483,7 @@ public class Main : MelonMod
         mafScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(mafScript.startingMinions, "Swarm_Good_WING");
         JinxCharacter(mafScript.startingTownsfolks, "Oracle_07039445");
+        JinxCharacter(mafScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount mafCounter1 = setCharacterCount(4, 2, 3, 1);
         CharactersCount mafCounter2 = setCharacterCount(5, 3, 2, 1);
         CharactersCount mafCounter3 = setCharacterCount(5, 2, 2, 1);
@@ -2481,6 +2508,7 @@ public class Main : MelonMod
         archScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(archScript.startingMinions, "Swarm_Good_WING");
         JinxCharacter(archScript.startingTownsfolks, "Oracle_07039445");
+        JinxCharacter(archScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount archCounter1 = setCharacterCount(6, 3, 2, 1);
         CharactersCount archCounter2 = setCharacterCount(5, 4, 2, 1);
         CharactersCount archCounter3 = setCharacterCount(5, 3, 2, 1);
@@ -2507,6 +2535,7 @@ public class Main : MelonMod
         hexScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(hexScript.startingMinions, "Swarm_Good_WING");
         JinxCharacter(hexScript.startingTownsfolks, "Oracle_07039445");
+        JinxCharacter(hexScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount hexCounter1 = setCharacterCount(2, 3, 3, 1);
         CharactersCount hexCounter2 = setCharacterCount(4, 1, 4, 1);
         CharactersCount hexCounter3 = setCharacterCount(3, 2, 4, 1);
@@ -2518,7 +2547,7 @@ public class Main : MelonMod
         HexScriptData.scriptInfo = hexScript;
 
        AscensionsData advancedAscension = ProjectContext.Instance.gameData.advancedAscension;
-       /*addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
+       addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
         addDemon(advancedAscension, war, "Baa_Difficult", "War_1", warScriptData, configCategory.GetEntry<int>("War_Weight").Value);
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData, configCategory.GetEntry<int>("Famine_Weight").Value);
        addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData, configCategory.GetEntry<int>("Pestilence_Weight").Value);
@@ -2531,13 +2560,13 @@ public class Main : MelonMod
         {
             addDemon(advancedAscension, gf2, "Baa_Difficult", "Godfather_1", GodfatherScriptData, configCategory.GetEntry<int>("Godfather_Weight").Value);
             addDemon(advancedAscension, mafio, "Baa_Difficult", "Mafioso_1", MafiosoScriptData, configCategory.GetEntry<int>("Mafioso_Weight").Value);
-        }*/
+        }
         if (configCategory.GetEntry<bool>("AllowCovenant").Value)
         {
           addDemon(advancedAscension, arch, "Baa_Difficult", "Archmage_1", ArchScriptData, configCategory.GetEntry<int>("Archmage_Weight").Value);
             addDemon(advancedAscension, hm, "Baa_Difficult", "HexMaster_1", HexScriptData, configCategory.GetEntry<int>("HexMaster_Weight").Value);
        } 
-        //   addDemon(advancedAscension, god, "Baa_Difficult", "God_1", //godScriptData);
+          // addDemon(advancedAscension, god, "Baa_Difficult", "God_1", //godScriptData);
 
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
         {
@@ -2558,7 +2587,7 @@ public class Main : MelonMod
              addRole(script.startingTownsfolks, coroner);
 
             addRole(script.startingOutsiders, veteran);
-            addRole(script.startingOutsiders, tav);
+           addRole(script.startingOutsiders, tav);
            addRole(script.startingOutsiders, vanished);
             addRole(script.startingOutsiders, amnesiac);
             addRole(script.startingOutsiders, indust);
@@ -2566,7 +2595,8 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, snakeCharmer);
 
             addRole(script.startingOutsiders, jester);
-           addRole(script.startingOutsiders, scapegoat);
+            addRole(script.startingOutsiders, doom);
+            addRole(script.startingOutsiders, scapegoat);
             addRole(script.startingOutsiders, apprentice);
             addRole(script.startingOutsiders, pirate);
             addRole(script.startingOutsiders, godfather);
@@ -2656,6 +2686,7 @@ public class Main : MelonMod
         list.Add(data);
     }
     public Il2Cpp.CharacterData[] allDatas = System.Array.Empty<Il2Cpp.CharacterData>();
+    private TextMeshProUGUI gameTextComponent = null;
     public override void OnUpdate()
     {
         if (allDatas.Length == 0)
@@ -2689,7 +2720,7 @@ public class Main : MelonMod
             }
         }
     }
-     public void OnFirstUpdate()
+    public void OnFirstUpdate()
     {
         
         Transform chars = GameObject.Find("Game/Gameplay/Content/Canvas/Panel/Characters").transform;
@@ -2847,30 +2878,6 @@ public class Main : MelonMod
             }
         }
     }
-    public void addAllAny(AscensionsData advancedAscension, string oldScriptName, string newScriptName, CustomScriptData w_NewScript)
-    {
-        foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
-        {
-            if (scriptData.name == oldScriptName)
-            {
-                CustomScriptData newScriptData = GameObject.Instantiate(scriptData);
-                newScriptData.name = newScriptName;
-                ScriptInfo newScript = new ScriptInfo();
-                ScriptInfo script = w_NewScript.scriptInfo;
-                newScriptData.scriptInfo = newScript;
-                newScript.startingTownsfolks = script.startingTownsfolks;
-                newScript.startingOutsiders = script.startingOutsiders;
-                newScript.startingMinions = script.startingMinions;
-                newScript.startingDemons = script.startingDemons;
-                newScript.characterCounts = w_NewScript.scriptInfo.characterCounts;
-                //newScript.startingDemons = new Il2CppSystem.Collections.Generic.List<CharacterData>();
-                //newScript.startingDemons.Add(data);
-                var newPSD = advancedAscension.possibleScriptsData.Append(newScriptData);
-                advancedAscension.possibleScriptsData = newPSD.ToArray();
-                return;
-            }
-        }
-    }
 
     public AddedCharacterTypes MakeAddedCharacters(int v, int o, int m, int d)
     {
@@ -3014,16 +3021,12 @@ public class Main : MelonMod
         }
         return characters;
     }
+   
     string formattedKeyText(string target)
     {
         switch (target)
         {
             // Keywords
-            case "Silence": return "<color=#B0ACAC>Silence</color>";
-            case "Silenced": return "<color=#B0ACAC>Silenced</color>";
-            case "Duel": return "<color=#E0FFAB>Duel</color>";
-            case "Dueled": return "<color=#E0FFAB>Duel</color>";
-            case "Dueling": return "<color=#E0FFAB>Duel</color>";
             case "Roleblock": return "<color=#56A3FC>Roleblock</color>";
             case "Roleblocked": return "<color=#56A3FC>Roleblocked</color>";
             case "Roleblocking": return "<color=#56A3FC>Roleblocking</color>";
@@ -3032,10 +3035,6 @@ public class Main : MelonMod
             case "Jinx": return "<color=#AA41BF>Jinx</color>";
             case "Jinxed": return "<color=#AA41BF>Jinxed</color>";
             case "Mad": return "<color=#FF8000>Mad</color>";
-            case "Sacrifice": return "<color=#F74D4D>Sacrifice</color>";
-            case "Hang Target": return "<color=#616161>Hang Target</color>";
-            case "Swap": return "<color=#8F8F8F>Swap</color>";
-            case "Swapped": return "<color=#8F8F8F>Swapped</color>";
             case "Protect": return "<color=#69D172>Protect</color>";
             case "Protected": return "<color=#69D172>Protected</color>";
             case "Hex": return "<color=#7E3A94>Hex</color>";
@@ -3125,6 +3124,12 @@ public class Main : MelonMod
             case "NeutralColour": return "<color=#8FA7B3>"; // Neutral (Power Play)
             case "CovenantColour": return "<color=#6B275D>";
             case "MafiaColour": return "<color=#C20051>";
+
+            // Colours calling for specific types
+            case "Weather": return "<color=#FF7AE0>Weather</color>"; // Weather (Power Play)
+            case "Neutral": return "<color=#8FA7B3>Neutral</color>"; // Neutral (Power Play)
+            case "Covenant": return "<color=#6B275D>Covenant</color>";
+            case "Mafia": return "<color=#C20051>Mafia</color>";
         }
         return "Formatted key text invalid, please report this to Wingidon and not Redkiller fr fr";
     }
@@ -3147,7 +3152,7 @@ public class Main : MelonMod
             }
             if (parameter == "Mafia Leader")
             {
-                hint = $"I am a leader of the Mafia. \nI am Evil. \nYou can see me in the Deckview.\n If I am in play, all Minions turn into {roleColour("Mafia")}Mafia</color> Members during <b>Game Start</b>.";
+                hint = $"I am a leader of the Mafia. \nI am Evil. \nYou can see me in the Deckview.\n If I am in play, all Minions turn into {formattedKeyText("Mafia")} Members during <b>Game Start</b>.";
             }
             if (parameter == "Covenant Follower")
             {
@@ -3155,7 +3160,7 @@ public class Main : MelonMod
             }
             if (parameter == "Covenant Preacher")
             {
-                hint = $"I am a preacher of the Covenant. \nI am Evil. \nI pass the {formattedKeyText("Necronomicon")} to one of the followers.\n If I am in play, all Minions turn into {roleColour("Covenant")}Covenant</color> Followers during <b>Game Start</b>.";
+                hint = $"I am a preacher of the Covenant. \nI am Evil. \nI pass the {formattedKeyText("Necronomicon")} to one of the followers.\n If I am in play, all Minions turn into {formattedKeyText("Covenant")} Followers during <b>Game Start</b>.";
             }
         }
         if (type == "Ability Refresh Hint")

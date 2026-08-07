@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using HarmonyLib;
+using Il2CppSoftMasking.Samples;
 
 
 namespace Demon_Bluff_Mods

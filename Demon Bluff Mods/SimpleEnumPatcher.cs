@@ -83,7 +83,6 @@ namespace Demon_Bluff_Mods
         {
             if (enumType == null)
                 return;
-            MelonLogger.Msg($"[Powerplay] Enumtype name = {enumType.FullName}");
             foreach (var (registeredEnumType, enumValueList) in enumData)
             {
                 var comparison = ("Il2Cpp." + registeredEnumType.FullName) != enumType.FullName;

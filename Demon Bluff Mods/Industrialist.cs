@@ -41,7 +41,7 @@ public class Industrialist : Role
                 onActed?.Invoke(new ActedInfo($"Nobody is Mad!", null));
             }
             else
-                onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is Mad!", null));
+                onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is mad!", null));
         }
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -50,7 +50,7 @@ public class Industrialist : Role
         {
             Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
             allChars = Characters.Instance.FilterAlignmentCharacters(allChars, EAlignment.Good);
-            onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is Mad!", null));
+            onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is mad!", null));
         }
     }
     public Industrialist() : base(ClassInjector.DerivedConstructorPointer<Industrialist>())

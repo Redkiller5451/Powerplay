@@ -93,7 +93,7 @@ namespace Demon_Bluff_Mods
             Il2CppSystem.Collections.Generic.List<Character> list2 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
             if (list2.Count == 0 )
             {
-                messages.Add("There is no minions");
+                messages.Add("There are no minions");
             }
             if (Characters.Instance.FilterCharacterContainsStatus(list1, ECharacterStatus.Silenced).Count > 0)
             {
@@ -137,7 +137,7 @@ namespace Demon_Bluff_Mods
             }
             if (ThereIsEvilNeutral())
             {
-                messages.Add("There is an Evil Neutral.");
+                messages.Add("There is an Evil neutral.");
             }
             if (isEvilVillager())
             {
@@ -164,7 +164,7 @@ namespace Demon_Bluff_Mods
             Il2CppSystem.Collections.Generic.List<Character> list2 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
             if (list2.Count > 0)
             {
-                messages.Add("There is no minions");
+                messages.Add("There are no minions");
             }
             if (Characters.Instance.FilterCharacterContainsStatus(list1, ECharacterStatus.Silenced).Count == 0)
             {

@@ -15,47 +15,164 @@ namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
 public class Vanished : Role
 {
-    private static Character lastPicker = null;
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
         if(trigger == ETriggerPhase.AfterRoundStart)
         {
             charRef.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
             charRef.statuses.AddStatus(UO.UnknownObstacle, charRef);
+            GetClosestAlignment(charRef).statuses.statuses.Add(ECharacterStatus.Silenced);
         }
-        if (trigger == ETriggerPhase.OnPicked)
+    }
+    public Character GetClosestAlignment(Character charRef)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
+        System.Collections.Generic.List<Character> translatingCurrentCharacters = new();
+        foreach (Character c in allChars)
         {
-            if (charRef.state == ECharacterState.Dead) return;
-            if (lastPicker != null)
+            translatingCurrentCharacters.Add(c);
+        }
+        System.Collections.Generic.List <Character> clockwise = new(translatingCurrentCharacters);
+        System.Collections.Generic.List<Character> counterclockwise = new(translatingCurrentCharacters);
+
+        foreach (Character ch in Gameplay.CurrentCharacters)
+        {
+            counterclockwise.Remove(ch);
+            if (charRef == ch)
             {
-                if(lastPicker.alignment == EAlignment.Good)
+                counterclockwise.Remove(ch);
+                break;
+            }
+        }
+        foreach (Character ch in Gameplay.CurrentCharacters)
+        {
+            if (charRef == ch)
+                break;
+
+            counterclockwise.Add(ch);
+        }
+        clockwise = new(counterclockwise);
+        clockwise.Reverse();
+
+        int clockwiseNumber = 0;
+        int counterClockwiseNumber = 0;
+
+        foreach (Character c in counterclockwise)
+        {
+            counterClockwiseNumber++;
+            if (c.GetRegisterAlignment() == EAlignment.Evil)
+                break;
+        }
+        foreach (Character c in clockwise)
+        {
+            clockwiseNumber++;
+            if (c.GetRegisterAlignment() == EAlignment.Evil)
+                break;
+        }
+        Character silenced = null;
+        if(clockwiseNumber >= counterClockwiseNumber) { 
+            foreach (Character character in clockwise)
+            {
+                if (character.alignment == EAlignment.Evil)
                 {
-                    lastPicker.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
-                    lastPicker.statuses.AddStatus(UO.UnknownObstacle, charRef);
+                 silenced = character;
+                    break;
                 }
             }
         }
+        else
+        {
+            foreach (Character character in counterclockwise)
+            {
+                if (character.alignment == EAlignment.Evil)
+                {
+                    silenced = character;
+                    break;
+                }
+            }
+        }
+        return silenced;
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {       if (trigger == ETriggerPhase.AfterRoundStart)
         {
             charRef.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
             charRef.statuses.AddStatus(UO.UnknownObstacle, charRef);
-        }
-        if (lastPicker != null)
-        {
-            if (lastPicker.alignment == EAlignment.Evil)
-            {
-                lastPicker.statuses.AddStatus(ECharacterStatus.Silenced, charRef);
-                lastPicker.statuses.AddStatus(UO.UnknownObstacle, charRef);
-            }
+            GetClosestAlignmentBluff(charRef).statuses.statuses.Add(ECharacterStatus.Silenced);
         }
 
     }
-    public static void SetLastPicker(Character picker)
+    public Character GetClosestAlignmentBluff(Character charRef)
     {
-        lastPicker = picker;
+        Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
+        System.Collections.Generic.List<Character> translatingCurrentCharacters = new();
+        foreach (Character c in allChars)
+        {
+            translatingCurrentCharacters.Add(c);
+        }
+        System.Collections.Generic.List<Character> clockwise = new(translatingCurrentCharacters);
+        System.Collections.Generic.List<Character> counterclockwise = new(translatingCurrentCharacters);
+
+        foreach (Character ch in Gameplay.CurrentCharacters)
+        {
+            counterclockwise.Remove(ch);
+            if (charRef == ch)
+            {
+                counterclockwise.Remove(ch);
+                break;
+            }
+        }
+        foreach (Character ch in Gameplay.CurrentCharacters)
+        {
+            if (charRef == ch)
+                break;
+
+            counterclockwise.Add(ch);
+        }
+        clockwise = new(counterclockwise);
+        clockwise.Reverse();
+
+        int clockwiseNumber = 0;
+        int counterClockwiseNumber = 0;
+
+        foreach (Character c in counterclockwise)
+        {
+            counterClockwiseNumber++;
+            if (c.GetRegisterAlignment() == EAlignment.Good)
+                break;
+        }
+        foreach (Character c in clockwise)
+        {
+            clockwiseNumber++;
+            if (c.GetRegisterAlignment() == EAlignment.Good)
+                break;
+        }
+        Character silenced = null;
+        if (clockwiseNumber >= counterClockwiseNumber)
+        {
+            foreach (Character character in clockwise)
+            {
+                if (character.alignment == EAlignment.Good)
+                {
+                    silenced = character;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            foreach (Character character in counterclockwise)
+            {
+                if (character.alignment == EAlignment.Good)
+                {
+                    silenced = character;
+                    break;
+                }
+            }
+        }
+        return silenced;
     }
+
     public Vanished() : base(ClassInjector.DerivedConstructorPointer<Vanished>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
