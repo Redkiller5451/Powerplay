@@ -50,6 +50,8 @@ public class Industrialist : Role
         {
             Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
             allChars = Characters.Instance.FilterAlignmentCharacters(allChars, EAlignment.Good);
+            allChars = Characters.Instance.FilterOutStatus(allChars, Mad.mad);
+            allChars = Characters.Instance.FilterOutStatus(allChars, Mad.mad2);
             onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is mad!", null));
         }
     }

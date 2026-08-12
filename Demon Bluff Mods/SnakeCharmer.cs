@@ -79,7 +79,7 @@ public class SnakeCharmer : Role
         }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Flutist_POW")
+            if (allDatas[j].characterId =="Flutist_POW")
             {
                     return (allDatas[j]);
             }
@@ -107,15 +107,15 @@ public class SnakeCharmer : Role
         }
         else
         {
-            list1 = Characters.Instance.FilterCharacterContainsStatus(list1, NecroWielder.Necronomicon);
+            list1 = Characters.Instance.FilterOutStatus(list1, NecroWielder.Necronomicon);
             return list1[UnityEngine.Random.Range(0, list1.Count)];
         }
     }
     private bool prioedEvils(Character character, Character charRef)
     {
         return (character.dataRef.characterId == "Baron_04539999" && IsntBaronSpawned(charRef)) || character.dataRef.characterId == "Mezepheles_09511163"
-            || character.dataRef.characterId == "Puppet_15989619" || character.dataRef.characterId == "Traveler_POW"
-            || character.dataRef.characterId == "Pooka_13445289";
+			|| character.dataRef.characterId == "Puppet_15989619" || character.dataRef.characterId == "Traveler_POW"
+			|| character.dataRef.characterId == "Pooka_13445289";
     }
 
     private bool IsntBaronSpawned(Character charRef)

@@ -182,7 +182,7 @@ public class CovenPreacher : Demon
     {
         Il2CppSystem.Collections.Generic.List<Character> viableCharacters = Gameplay.CurrentCharacters;
         viableCharacters = Characters.Instance.FilterAliveCharacters(viableCharacters);
-        viableCharacters = Characters.Instance.FilterRealCharacterType(viableCharacters, CovType.Follower);
+        viableCharacters = Characters.Instance.FilterRealCharacterType(viableCharacters, ECharacterType.Minion);
         viableCharacters[UnityEngine.Random.Range(0, viableCharacters.Count)].statuses.AddStatus(NecroWielder.Necronomicon, charRef);
     }
 }

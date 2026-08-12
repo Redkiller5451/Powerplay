@@ -70,7 +70,7 @@ public class Vanished : Role
                 break;
         }
         Character silenced = null;
-        if(clockwiseNumber >= counterClockwiseNumber) { 
+        if(clockwiseNumber <= counterClockwiseNumber) { 
             foreach (Character character in clockwise)
             {
                 if (character.alignment == EAlignment.Evil)
@@ -148,7 +148,7 @@ public class Vanished : Role
                 break;
         }
         Character silenced = null;
-        if (clockwiseNumber >= counterClockwiseNumber)
+        if (clockwiseNumber <= counterClockwiseNumber)
         {
             foreach (Character character in clockwise)
             {

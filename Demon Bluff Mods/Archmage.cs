@@ -68,7 +68,7 @@ namespace Demon_Bluff_Mods
         private void SitNextToOutsider(Character charRef)
         {
             Il2CppSystem.Collections.Generic.List<Character> outsiders = Gameplay.CurrentCharacters;
-            outsiders = Characters.Instance.FilterCharacterType(outsiders, CovType.Follower);
+            outsiders = Characters.Instance.FilterCharacterType(outsiders, ECharacterType.Minion);
 
             Character pickedOutsider = outsiders[UnityEngine.Random.Range(0, outsiders.Count)];
             pickedOutsider.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);

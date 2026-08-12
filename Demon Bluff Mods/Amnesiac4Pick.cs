@@ -105,24 +105,29 @@ public class Amnesiac4Pick : Role
     {
         List<ECharacterStatus> invalidStatuses = new List<ECharacterStatus>();
 
-        return status.Equals((ECharacterStatus)901) || status.Equals((ECharacterStatus)902) ||
-            status.Equals((ECharacterStatus)903) || status.Equals((ECharacterStatus)904) ||
-            status.Equals((ECharacterStatus)918918) || status.Equals((ECharacterStatus)82113114) ||
-            status.Equals((ECharacterStatus)1618119) || status.Equals((ECharacterStatus)2051879715) ||
-            status.Equals((ECharacterStatus)2051879522) || status.Equals((ECharacterStatus)2114495619) ||
-            status.Equals((ECharacterStatus)2114495161) || status.Equals((ECharacterStatus)2114495239) ||
-            status.Equals((ECharacterStatus)1201) || status.Equals((ECharacterStatus)1202) ||
-            status.Equals((ECharacterStatus)1203) || status.Equals((ECharacterStatus)1204) ||
-            status.Equals((ECharacterStatus)874) || status.Equals((ECharacterStatus)876) ||
-            status.Equals((ECharacterStatus)879) || status.Equals((ECharacterStatus)882) ||
-            status.Equals((ECharacterStatus)197) ||
-            status.Equals((ECharacterStatus)318251620) || status.Equals(SailorPing.sailorPing) ||
-            status.Equals((ECharacterStatus.HealthyBluff)) || status.Equals((ECharacterStatus.AppearDisguised)) ||
-            status.Equals((ECharacterStatus.AppearHonest)) || status.Equals((ECharacterStatus.AppearLying)) ||
-            status.Equals((ECharacterStatus.AppearTruthfull)) || status.Equals((ECharacterStatus.BrokenAbility)) ||
-            status.Equals((ECharacterStatus.HealthyBluff)) || status.Equals((ECharacterStatus.UnkillableByDemon)) ||
-            status.Equals((ECharacterStatus.WorkingAbility)) || status.Equals((ECharacterStatus.NoDamage)) ||
-            status.Equals((ECharacterStatus.Lying)) || status.Equals((MadVictim.madVictim));
+            invalidStatuses.Add((ECharacterStatus)901) ; invalidStatuses.Add((ECharacterStatus)902) ;
+            invalidStatuses.Add((ECharacterStatus)903) ; invalidStatuses.Add((ECharacterStatus)904) ;
+            invalidStatuses.Add((ECharacterStatus)918918) ; invalidStatuses.Add((ECharacterStatus)82113114) ;
+            invalidStatuses.Add((ECharacterStatus)1618119) ; invalidStatuses.Add((ECharacterStatus)2051879715) ;
+            invalidStatuses.Add((ECharacterStatus)2051879522) ; invalidStatuses.Add((ECharacterStatus)2114495619) ;
+            invalidStatuses.Add((ECharacterStatus)2114495161) ; invalidStatuses.Add((ECharacterStatus)2114495239) ;
+            invalidStatuses.Add((ECharacterStatus)1201) ; invalidStatuses.Add((ECharacterStatus)1202) ;
+            invalidStatuses.Add((ECharacterStatus)1203) ; invalidStatuses.Add((ECharacterStatus)1204) ;
+            invalidStatuses.Add((ECharacterStatus)874) ; invalidStatuses.Add((ECharacterStatus)876) ;
+            invalidStatuses.Add((ECharacterStatus)879) ; invalidStatuses.Add((ECharacterStatus)882) ;
+        invalidStatuses.Add((ECharacterStatus)543);
+        invalidStatuses.Add((ECharacterStatus)197) ; invalidStatuses.Add(Audited.audited);
+        invalidStatuses.Add(HangTarget.hangtarget); invalidStatuses.Add(Sacrifice.sacrifice);
+        invalidStatuses.Add(NecroWielder.Necronomicon); invalidStatuses.Add(StarspawnCheck.starspawnCheck);
+        invalidStatuses.Add(Dueled.dueled);
+        invalidStatuses.Add((ECharacterStatus)318251620) ; invalidStatuses.Add(SailorPing.sailorPing) ;
+            invalidStatuses.Add((ECharacterStatus.HealthyBluff)) ; invalidStatuses.Add((ECharacterStatus.AppearDisguised)) ;
+            invalidStatuses.Add((ECharacterStatus.AppearHonest)) ; invalidStatuses.Add((ECharacterStatus.AppearLying)) ;
+            invalidStatuses.Add((ECharacterStatus.AppearTruthfull)) ; invalidStatuses.Add((ECharacterStatus.BrokenAbility)) ;
+            invalidStatuses.Add((ECharacterStatus.HealthyBluff)) ; invalidStatuses.Add((ECharacterStatus.UnkillableByDemon)) ;
+            invalidStatuses.Add((ECharacterStatus.WorkingAbility)) ; invalidStatuses.Add((ECharacterStatus.NoDamage)) ;
+            invalidStatuses.Add((ECharacterStatus.Lying)) ; invalidStatuses.Add((MadVictim.madVictim));
+        return invalidStatuses.Contains(status);
     }
     public string ConjourInfo(bool status, Character picked)
     {

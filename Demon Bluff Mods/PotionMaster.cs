@@ -35,7 +35,7 @@ namespace Demon_Bluff_Mods
         //Code taken from Circus, as Slinger is very similar to Vizier
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
-            MelonLogger.Msg("PM Triggered Act");
+           
             if (trigger == ETriggerPhase.Start)
             {
                 MelonLogger.Msg("PM Triggered");

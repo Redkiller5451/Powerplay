@@ -71,8 +71,8 @@ public class Doomsayer : Neutrals
                 }               
                 if (list3.Count > 0)
                     {
-                    int randomIndex = UnityEngine.Random.Range(0, list1.Count);
-                    Character random = list1[randomIndex];
+                    int randomIndex = UnityEngine.Random.Range(0, list3.Count);
+                    Character random = list3[randomIndex];
                     list2.Add(random);
                     list3.Remove(random);
                     }

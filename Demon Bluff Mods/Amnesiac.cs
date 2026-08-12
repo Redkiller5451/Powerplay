@@ -3,6 +3,7 @@ using Il2Cpp;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppSystem;
 using MelonLoader;
 using System;
@@ -18,6 +19,7 @@ public class Amnesiac : Role
     public Amnesiac() : base(ClassInjector.DerivedConstructorPointer<Amnesiac>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
+
     }
     public Amnesiac(System.IntPtr ptr) : base(ptr)
     {
@@ -28,83 +30,50 @@ public class Amnesiac : Role
     {
         if (trigger == ETriggerPhase.Day)
         {
-            //NOT MY OWN CODE
-            Il2CppSystem.Collections.Generic.List<CharacterData> possibleTPOWs = new Il2CppSystem.Collections.Generic.List<CharacterData>();
-            Il2CppSystem.Collections.Generic.List<string> possibleTPOWIDs = new Il2CppSystem.Collections.Generic.List<string>();
-            // Possible TPOWs: 
-            possibleTPOWIDs.Add("Amne1_POW"); // First Amne
-            possibleTPOWIDs.Add("Amne2_POW"); // Second Amne
-            possibleTPOWIDs.Add("Amne3_POW"); // Third Amne
-            possibleTPOWIDs.Add("Amne4_POW"); // Fourth Amne
-            possibleTPOWIDs.Add("Amne5_POW"); // Fifth Amne
-            possibleTPOWIDs.Add("Amne6_POW"); // Sixth Amne
-            if (allDatas.Length == 0)
-            {
-                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
-                if (loadedCharList != null)
-                {
-                    allDatas = new CharacterData[loadedCharList.Length];
-                    for (int j = 0; j < loadedCharList.Length; j++)
-                    {
-                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
-                    }
-                }
-            }
-
-            for (int j = 0; j < allDatas.Length; j++)
-            {
-                if (possibleTPOWIDs.Contains(allDatas[j].characterId))
-                {
-                    possibleTPOWs.Add(allDatas[j]);
-                }
-            }
+            
+            Il2CppSystem.Collections.Generic.List<Role> possibleTPOWs = new();
+            //This is such a janky fix but it works so f- it
+            charRef.dataRef.picking = true;
+            
+            possibleTPOWs.Add(new Amnesiac1Pick()); // First Amne
+            possibleTPOWs.Add(new Amnesiac2Pick()); // Second Amne
+            possibleTPOWs.Add(new Amnesiac3Pick()); // Third Amne
+            possibleTPOWs.Add(new Amnesiac4Pick()); // Fourth Amne
+            possibleTPOWs.Add(new Amnesiac5Pick()); // Fifth Amne
+            possibleTPOWs.Add(new Amnesiac6Pick()); // Sixth Amne
             int randomize = UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count);
-            CharacterData chosenTPOW = possibleTPOWs[randomize];
+            Role chosenTPOW = possibleTPOWs[randomize];
 
-            MelonLogger.Msg($"[LOG] Amnesiac chose ability {chosenTPOW.characterId}");
-            charRef.Init(chosenTPOW);
-                   }
-    }
-     public override void BluffAct(ETriggerPhase trigger, Character charRef)
-    {
-        if (trigger == ETriggerPhase.Day)
-             allDatas = Il2CppSystem.Array.Empty<CharacterData>();
-        {
-            //NOT MY OWN CODE
-            Il2CppSystem.Collections.Generic.List<CharacterData> possibleTPOWs = new Il2CppSystem.Collections.Generic.List<CharacterData>();
-            Il2CppSystem.Collections.Generic.List<string> possibleTPOWIDs = new Il2CppSystem.Collections.Generic.List<string>();
-            // Possible TPOWs: 
-            possibleTPOWIDs.Add("Amne1_POW"); // First Amne
-            possibleTPOWIDs.Add("Amne2_POW"); // Second Amne
-            possibleTPOWIDs.Add("Amne3_POW"); // Third Amne
-            possibleTPOWIDs.Add("Amne4_POW"); // Fourth Amne
-            possibleTPOWIDs.Add("Amne5_POW"); // Fifth Amne
-            possibleTPOWIDs.Add("Amne6_POW"); // Sixth Amne
-            if (allDatas.Length == 0)
-            {
-                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
-                if (loadedCharList != null)
-                {
-                    allDatas = new CharacterData[loadedCharList.Length];
-                    for (int j = 0; j < loadedCharList.Length; j++)
-                    {
-                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
-                    }
-                }
-            }
-
-            for (int j = 0; j < allDatas.Length; j++)
-            {
-                if (possibleTPOWIDs.Contains(allDatas[j].characterId))
-                {
-                    possibleTPOWs.Add(allDatas[j]);
-                }
-            }
-
-            CharacterData chosenTPOW = possibleTPOWs[UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count)];
-            charRef.GiveBluff(chosenTPOW);
+            MelonLogger.Msg($"[LOG] Amnesiac chose ability {randomize}");
+            charRef.role = chosenTPOW;
         }
     }
+
+    public override void BluffAct(ETriggerPhase trigger, Character charRef)
+    {
+       
+        if (trigger == ETriggerPhase.Day)
+        {
+
+            MelonLogger.Msg($"[LOG] Fake Amnesiac ping");
+            Il2CppSystem.Collections.Generic.List<Role> possibleTPOWs = new();
+            //This is such a janky fix but it works so f- it
+            charRef.bluff.picking = true;
+
+            possibleTPOWs.Add(new Amnesiac1Pick()); // First Amne
+            possibleTPOWs.Add(new Amnesiac2Pick()); // Second Amne
+            possibleTPOWs.Add(new Amnesiac3Pick()); // Third Amne
+            possibleTPOWs.Add(new Amnesiac4Pick()); // Fourth Amne
+            possibleTPOWs.Add(new Amnesiac5Pick()); // Fifth Amne
+            possibleTPOWs.Add(new Amnesiac6Pick()); // Sixth Amne
+            int randomize = UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count);
+            Role chosenTPOW = possibleTPOWs[randomize];
+
+            MelonLogger.Msg($"[LOG] Fake Amnesiac chose ability {randomize}");
+            charRef.bluffRole = chosenTPOW;
+        }
+    }
+
 }
 //5 on-pick abilities
 //5 non on-pick abilities

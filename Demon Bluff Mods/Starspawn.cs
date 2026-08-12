@@ -42,7 +42,7 @@ public class Starspawn : Demon
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.AfterRoundStart)
+        if (trigger == ETriggerPhase.Start)
         {
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;

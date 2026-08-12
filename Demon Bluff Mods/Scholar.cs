@@ -285,7 +285,7 @@ public class Scholar : Role
 
             }
         }
-        return goodDoubleClaim > evilDoubleClaim;
+        return goodDoubleClaim > evilDoubleClaim && goodDoubleClaim!= 0;
     }
     private bool SkippingLagObviousNotDouble(Character character)
     {
@@ -293,7 +293,7 @@ public class Scholar : Role
     }
     private bool SkippingLagObviousDouble(Character character)
     {
-        return character.dataRef.characterId == "Doppleganger_52694042" || character.dataRef.characterId == "EvilTwin_POW";
+        return character.dataRef.characterId =="Doppleganger_52694042" || character.dataRef.characterId =="EvilTwin_POW";
     }
     private bool IsPunishingEvil()
     {
@@ -308,9 +308,9 @@ public class Scholar : Role
     }
     private bool MatchesPunishingEvil(Character chara)
     {
-        return chara.dataRef.characterId == "Grenadier_POW" || chara.dataRef.characterId == "Balancer_POW" || chara.dataRef.characterId == "EvilTwin_POW"
-             || chara.dataRef.characterId == "Undying_WING" || chara.dataRef.characterId == "Agmeres_WING" || chara.dataRef.characterId == "Praesect_WING"
-             || chara.dataRef.characterId == "Leviathan_WING";
+        return chara.dataRef.characterId =="Grenadier_POW" || chara.dataRef.characterId =="Balancer_POW" || chara.dataRef.characterId =="EvilTwin_POW"
+             || chara.dataRef.characterId =="Undying_WING" || chara.dataRef.characterId =="Agmeres_WING" || chara.dataRef.characterId =="Praesect_WING"
+             || chara.dataRef.characterId =="Leviathan_WING";
     }
     private bool IsDistortingEvil()
     {
@@ -325,8 +325,8 @@ public class Scholar : Role
     }
     private bool MatchesDistortingEvil(Character chara)
     {
-        return chara.dataRef.characterId == "Imp_58992273" || chara.dataRef.characterId == "Mezepheles_09511163"
-            || chara.dataRef.characterId == "Heretic_WING" || chara.dataRef.characterId == "Magnere_WING" || chara.dataRef.characterId == "Kingmaker_scm"; 
+        return chara.dataRef.characterId =="Imp_58992273" || chara.dataRef.characterId =="Mezepheles_09511163"
+            || chara.dataRef.characterId =="Heretic_WING" || chara.dataRef.characterId =="Magnere_WING" || chara.dataRef.characterId =="Kingmaker_scm"; 
     }
     private bool IsMendaverte()
     {
@@ -334,7 +334,7 @@ public class Scholar : Role
         list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Evil);
         foreach (Character character in list1)
         {
-            if (character.dataRef.characterId == "Mendaverte_WING")
+            if (character.dataRef.characterId =="Mendaverte_WING")
                 return true;
         }
         return false;

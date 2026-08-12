@@ -85,7 +85,7 @@ namespace Demon_Bluff_Mods
             int charDataId = 0;
             for (int j = 0; j < allDatas.Length; j++)
             {
-                if (allDatas[j].characterId == "GoodTwin_POW")
+                if (allDatas[j].characterId =="GoodTwin_POW")
                 {
                     charDataId = j;
                     break;

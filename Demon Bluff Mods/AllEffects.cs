@@ -382,7 +382,7 @@ namespace Demon_Bluff_Mods
                 {
                     if (trigger == ETriggerPhase.Day)
                     {
-                        __instance.ShowActed(new ActedInfo("I have been Roleblocked"),trigger);
+                        __instance.ShowActed(new ActedInfo("I have been Intoxicated"),trigger);
                     }
                     return false;
                 }
@@ -403,7 +403,7 @@ namespace Demon_Bluff_Mods
                 if (__instance.statuses.Contains(roleblocked))
                 {
 
-                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#56A3FC><size=15>\n<Roleblocked></color></size>";
+                    __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#56A3FC><size=15>\nIntoxicated</color></size>";
                 }
             }
         }

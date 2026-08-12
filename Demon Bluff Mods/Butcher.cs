@@ -30,7 +30,6 @@ namespace Demon_Bluff_Mods
            
           
         }
-
     }
 }
 [HarmonyPatch]
@@ -87,5 +86,7 @@ public static class ButcherPatch
             list1 = Characters.Instance.FilterAliveCharacters(list1);
             return list1.Count <= 0;
         }
+
+
     }
 }

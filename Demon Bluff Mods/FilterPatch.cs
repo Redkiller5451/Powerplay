@@ -96,4 +96,16 @@ public static class TargetClassExtensions2
 
         return filteredList;
     }
+    public static Il2CppSystem.Collections.Generic.List<Character> FilterBluffingCharacters(this Characters instance, Il2CppSystem.Collections.Generic.List<Character> allChars)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> filteredList = new Il2CppSystem.Collections.Generic.List<Character>();
+        // You can now access public members of the instance
+        foreach (Character character in allChars)
+        {
+            if (character.bluff != null)
+                filteredList.Add(character);
+        }
+
+        return filteredList;
+    }
 }

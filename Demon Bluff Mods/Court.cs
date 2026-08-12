@@ -91,10 +91,9 @@ public class Court : Demon
                            if (c.GetRegisterAs().characterId != allDatas[j].characterId)
                             {
                             c.Init(allDatas[j]);
-                            if (c.statuses.statuses.Contains(Protected.protect)){
-                                c.statuses.statuses.Remove(Protected.protect);
+                            c.statuses.statuses.RemoveRange(0, c.statuses.statuses.Count);
+                            c.statuses.statuses.Remove(Protected.protect);
                             }
-                           }
                     }
                     break;
                     }

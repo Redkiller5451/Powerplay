@@ -86,15 +86,17 @@ namespace Demon_Bluff_Mods
                     }
                 }
                 MelonLogger.Msg($"Checked Protest");
-                if (protestOccured) {
+                if (protestOccured)
+                {
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                     list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
                     Health health = PlayerController.PlayerInfo.health;
                     health.Heal(10);
                     foreach (Character character in list1)
-                    { 
+                    {
                         character.Kill();
                     }
+                
                 }
 
             }

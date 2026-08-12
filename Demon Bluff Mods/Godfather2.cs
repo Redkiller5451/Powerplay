@@ -45,7 +45,7 @@ namespace Demon_Bluff_Mods
                 }
                 for (int j = 0; j < allDatas.Length; j++)
                 {
-                    if (allDatas[j].characterId == "Grunt_POW")
+                    if (allDatas[j].characterId =="Grunt_POW")
                     {
                        
                             dataOfGrunt =allDatas[j];
@@ -72,7 +72,7 @@ namespace Demon_Bluff_Mods
         private void SitNextToOutsider(Character charRef)
         {
             Il2CppSystem.Collections.Generic.List<Character> outsiders = Gameplay.CurrentCharacters;
-            outsiders = Characters.Instance.FilterCharacterType(outsiders, MafiaType.Member);
+            outsiders = Characters.Instance.FilterCharacterType(outsiders, ECharacterType.Minion);
 
             Character pickedOutsider = outsiders[UnityEngine.Random.Range(0, outsiders.Count)];
             pickedOutsider.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);

@@ -96,7 +96,7 @@ public class MafiaLeader : Demon
             }
             for (int j = 0; j < allDatas.Length; j++)
             {
-                if (allDatas[j].characterId == "Jinx_POW")
+                if (allDatas[j].characterId =="Jinx_POW")
                 {
                     MafiaData.Add(allDatas[j]);
                 break;
@@ -104,7 +104,7 @@ public class MafiaLeader : Demon
             }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Enforcer_POW")
+            if (allDatas[j].characterId =="Enforcer_POW")
             {
                 MafiaData.Add(allDatas[j]);
                 break;
@@ -112,7 +112,7 @@ public class MafiaLeader : Demon
         }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Bootlegger_POW")
+            if (allDatas[j].characterId =="Bootlegger_POW")
             {
                 MafiaData.Add(allDatas[j]);
                 break;
@@ -120,7 +120,7 @@ public class MafiaLeader : Demon
         }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Influencer_POW")
+            if (allDatas[j].characterId =="Influencer_POW")
             {
                 MafiaData.Add(allDatas[j]);
                 break;
@@ -128,7 +128,7 @@ public class MafiaLeader : Demon
         }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Forger_POW")
+            if (allDatas[j].characterId =="Forger_POW")
             {
                 MafiaData.Add(allDatas[j]);
                 break;
@@ -136,7 +136,7 @@ public class MafiaLeader : Demon
         }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Gangster_POW")
+            if (allDatas[j].characterId =="Gangster_POW")
             {
                 MafiaData.Add(allDatas[j]);
                 break;
@@ -144,7 +144,7 @@ public class MafiaLeader : Demon
         }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Spokesperson_POW")
+            if (allDatas[j].characterId =="Spokesperson_POW")
             {
                 MafiaData.Add(allDatas[j]);
                 break;
@@ -186,7 +186,7 @@ public class MafiaLeader : Demon
         {
             for (int j = 0; j < allDatas.Length; j++)
             {
-                if (allDatas[j].characterId == "Grunt_POW")
+                if (allDatas[j].characterId =="Grunt_POW")
                 {
                     MafiaData.Add(allDatas[j]);
                     break;
@@ -202,11 +202,7 @@ public class MafiaLeader : Demon
                  MafiaData.RemoveAt(randomIndex);
         }
     }
-    
-    private bool IsAMafiaMember(string charID)
-    {
-        return charID == "Enforcer_POW" || charID == "Jinx_POW" || charID == "Bootlegger_POW";
-    }
+   
     private bool AlreadyInPlay(CharacterData cd)
     {
         Il2CppSystem.Collections.Generic.List<Character> list1 = Gameplay.CurrentCharacters;

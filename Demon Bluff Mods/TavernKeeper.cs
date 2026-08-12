@@ -32,10 +32,10 @@ public class TavernKeeper : Role
             Il2CppSystem.Collections.Generic.List<Character> allChars2 = Characters.Instance.FilterCharacterContainsStatus(allChars, Rbed.roleblocked);
             if (allChars2.Count == 0)
             {
-                onActed?.Invoke(new ActedInfo($"I roleblocked noone!", null));
+                onActed?.Invoke(new ActedInfo($"I intoxicated noone!", null));
             }
             else
-                onActed?.Invoke(new ActedInfo($"#{allChars2[UnityEngine.Random.Range(0, allChars2.Count)].id} is roleblocked!", null));
+                onActed?.Invoke(new ActedInfo($"#{allChars2[UnityEngine.Random.Range(0, allChars2.Count)].id} is intoxicated!", null));
         }
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -44,7 +44,7 @@ public class TavernKeeper : Role
         {
             Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
             allChars = Characters.Instance.FilterAlignmentCharacters(allChars, EAlignment.Good);
-            onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is roleblocked!", null));
+            onActed?.Invoke(new ActedInfo($"#{allChars[UnityEngine.Random.Range(0, allChars.Count)].id} is intoxicated!", null));
         }
     }
     public TavernKeeper() : base(ClassInjector.DerivedConstructorPointer<TavernKeeper>())

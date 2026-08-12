@@ -75,7 +75,7 @@ public class Apprentice : Neutrals
         list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
         foreach (Character c in list1)
         {
-            if (c.dataRef.characterId == id)
+            if (c.dataRef.characterId == (id))
                 return true;
 
         }

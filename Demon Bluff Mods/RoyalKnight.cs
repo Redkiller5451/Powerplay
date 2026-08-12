@@ -330,7 +330,7 @@ using UnityEngine;
         }
         for (int j = 0; j < allDatas.Length; j++)
         {
-            if (allDatas[j].characterId == "Executive_POW")
+            if (allDatas[j].characterId =="Executive_POW")
             {
                 if (random.GetRegisterAs().characterId != allDatas[j].characterId)
                 {

@@ -23,12 +23,6 @@ public class Main : MelonMod
         
         UniversalUtility.AddEnum<EAlignment>("Neutral", (EAlignment)(150));
         UniversalUtility.AddEnum<ECharacterType>("Neutral", (EAlignment)(150));
-        UniversalUtility.AddEnum<EAlignment>("Mafia", (EAlignment)(155));
-        UniversalUtility.AddEnum<ECharacterType>("Mafia Leader", (EAlignment)(155));
-        UniversalUtility.AddEnum<ECharacterType>("Mafia Member", (EAlignment)(160));
-        UniversalUtility.AddEnum<EAlignment>("Covenant", (EAlignment)(160));
-        UniversalUtility.AddEnum<ECharacterType>("Covenant Preacher", (EAlignment)(165));
-        UniversalUtility.AddEnum<ECharacterType>("Covenant Follower", (EAlignment)(170));
         UniversalUtility.AddEnum<EAlignment>("Weather", (EAlignment)(40));
         UniversalUtility.AddEnum<ECharacterType>("Weather", (EAlignment)(50));
         try
@@ -147,6 +141,7 @@ public class Main : MelonMod
         configCategory.CreateEntry("Court_Weight", 3, description: "How likely Court will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
         configCategory.CreateEntry("Auditor_Weight", 3, description: "How likely Auditor will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
         configCategory.CreateEntry("Starspawn_Weight", 3, description: "How likely Starspawn will be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
+        configCategory.CreateEntry("FallenProphet_Weight", 1, description: "How likely Fallen Prophet will be in-play.");
         configCategory.SetFilePath(Path.Combine(MelonEnvironment.UserDataDirectory, "PowerplayConfig.cfg"));
         configCategory.SaveToFile();
 
@@ -311,6 +306,29 @@ public class Main : MelonMod
         lookout.additionalFlavorTexts[0] = lookout.flavorText;
         lookout.gender = EGender.Male;
 
+        Il2Cpp.CharacterData seer = new Il2Cpp.CharacterData();
+        seer.role = new Prognosticator();
+        seer.name = "Prognosticator";
+        seer.characterName = "Prognosticator";
+        seer.description = "<b>On Pick:</b>\n: Choose a card. Learn how long their chain of same Alignment is.";
+        seer.flavorText = "\"Can easily discern friend from foe.\nJust look at who is partying with who!\"";
+        seer.hints = "";
+        seer.ifLies = "Learn a random number instead.";
+        seer.notes = "";
+        seer.picking = true;
+        seer.startingAlignment = EAlignment.Good;
+        seer.type = ECharacterType.Villager;
+        seer.abilityUsage = EAbilityUsage.Once;
+        seer.bluffable = true;
+        seer.characterId = "Prognosticator_POW";
+        seer.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        seer.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        seer.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        seer.color = new Color(1f, 0.935f, 0.7302f);
+        seer.additionalFlavorTexts = new Il2CppStringArray(1);
+        seer.additionalFlavorTexts[0] = seer.flavorText;
+        seer.gender = EGender.Male;
+
         Il2Cpp.CharacterData knowItAll = new Il2Cpp.CharacterData();
         knowItAll.role = new KnowItAll();
         knowItAll.name = "Know-it-All";
@@ -357,6 +375,100 @@ public class Main : MelonMod
         scholar.additionalFlavorTexts[0] = scholar.flavorText;
         scholar.gender = EGender.Female;
 
+        Il2Cpp.CharacterData psy = new Il2Cpp.CharacterData();
+        psy.role = new Psychic();
+        psy.name = "Wise Elder";
+        psy.characterName = "Wise Elder";
+        psy.description = "<b>At Night:</b>\n On odd nights: Learn two characters. AT LEAST one is good. \n On even nights: Learn 3 characters. AT LEAST one is evil.";
+        psy.flavorText = "\"It is said that she can see everyone's true intentions.\nShe simply snoops around when they aren't looking.\"";
+        psy.hints = "";
+        psy.ifLies = "On odd nights you learn two evils. \n On even nights you learn 3 good.";
+        psy.notes = "";
+        psy.picking = false;
+        psy.startingAlignment = EAlignment.Good;
+        psy.type = ECharacterType.Villager;
+        psy.abilityUsage = EAbilityUsage.Once;
+        psy.bluffable = true;
+        psy.characterId = "WiseElder_POW";
+        psy.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        psy.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        psy.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        psy.color = new Color(1f, 0.935f, 0.7302f);
+        nightPhase.nightCharactersOrder.Add(psy);
+        psy.additionalFlavorTexts = new Il2CppStringArray(1);
+        psy.additionalFlavorTexts[0] = psy.flavorText;
+        psy.gender = EGender.Female;
+
+        Il2Cpp.CharacterData tracker = new Il2Cpp.CharacterData();
+        tracker.role = new Huntress();
+        tracker.name = "Huntress";
+        tracker.characterName = "Huntress";
+        tracker.description = "Learn an Evil that affected a Good card.\nI can't track kills.";
+        tracker.flavorText = "\"The Hunter and her have a secret thing. \nThe entire town knows.\"";
+        tracker.hints = "";
+        tracker.ifLies = "I point to a good card.";
+        tracker.notes = "";
+        tracker.picking = false;
+        tracker.startingAlignment = EAlignment.Good;
+        tracker.type = ECharacterType.Villager;
+        tracker.abilityUsage = EAbilityUsage.Once;
+        tracker.bluffable = true;
+        tracker.characterId = "Huntress_POW";
+        tracker.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        tracker.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        tracker.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        tracker.color = new Color(1f, 0.935f, 0.7302f);
+        tracker.additionalFlavorTexts = new Il2CppStringArray(1);
+        tracker.additionalFlavorTexts[0] = tracker.flavorText;
+        tracker.gender = EGender.Female;
+
+        Il2Cpp.CharacterData spy = new Il2Cpp.CharacterData();
+        spy.role = new Tapper();
+        spy.name = "Tapper";
+        spy.characterName = "Tapper";
+        spy.description = "<b>On Pick:</b>\n Pick a character. Learn what statuses effect them and their neighbors.";
+        spy.flavorText = "\"Has placed a tap on every home. \nOften just sees the Scout.\"";
+        spy.hints = "";
+        spy.ifLies = "At least one of my statuses are wrong, or I state no statuses when there are some.";
+        spy.notes = "";
+        spy.picking = true;
+        spy.startingAlignment = EAlignment.Good;
+        spy.type = ECharacterType.Villager;
+        spy.abilityUsage = EAbilityUsage.Once;
+        spy.bluffable = true;
+        spy.characterId = "Tapper_POW";
+        spy.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        spy.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        spy.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        spy.color = new Color(1f, 0.935f, 0.7302f);
+        spy.additionalFlavorTexts = new Il2CppStringArray(1);
+        spy.additionalFlavorTexts[0] = spy.flavorText;
+        spy.gender = EGender.Male;
+
+        Il2Cpp.CharacterData sher = new Il2Cpp.CharacterData();
+        sher.role = new Sheriff();
+        sher.name = "Constable";
+        sher.characterName = "Constable";
+        sher.description = "<b>At Night:</b>\n I search a character's house. If they are evil, learn they seem suspicious. If they are good, learn they are innocent.";
+        sher.flavorText = "\"Is given higher authority to search for demons. \nMostly searches for drama.\"";
+        sher.hints = "If truthful: \n If I visit and Outcast Killing, Minion Killing, or Demon Killing, I will die.";
+        sher.ifLies = "Learn the opposite suspicion.";
+        sher.notes = "";
+        sher.picking = false;
+        sher.startingAlignment = EAlignment.Good;
+        sher.type = ECharacterType.Villager;
+        sher.abilityUsage = EAbilityUsage.Once;
+        sher.bluffable = true;
+        sher.characterId = "Constable_POW";
+        sher.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        sher.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        sher.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        sher.color = new Color(1f, 0.935f, 0.7302f);
+        nightPhase.nightCharactersOrder.Add(sher);
+        sher.additionalFlavorTexts = new Il2CppStringArray(1);
+        sher.additionalFlavorTexts[0] = sher.flavorText;
+        sher.gender = EGender.Male;
+
         Il2Cpp.CharacterData newsman = new Il2Cpp.CharacterData();
         newsman.role = new Newsman();
         newsman.name = "Newsman";
@@ -379,6 +491,29 @@ public class Main : MelonMod
         newsman.additionalFlavorTexts = new Il2CppStringArray(1);
         newsman.additionalFlavorTexts[0] = knowItAll.flavorText;
         newsman.gender = EGender.Male;
+
+        Il2Cpp.CharacterData admi = new Il2Cpp.CharacterData();
+        admi.role = new Admirer();
+        admi.name = "Lovestruck";
+        admi.characterName = "Lovestruck";
+        admi.description = $"Learn an unrevealed {formattedKeyText("Subtype")}. \n If no more valid cards can be revealed, learn it. ";
+        admi.flavorText = "\"She's waiting for her shooting star. \n \"Comme une étoile filante!\" she says!\"";
+        admi.hints = "If I say that I cannot love, I am always lying.";
+        admi.ifLies = "Learn a bluffing card.";
+        admi.notes = "";
+        admi.picking = false;
+        admi.startingAlignment = EAlignment.Good;
+        admi.type = ECharacterType.Villager;
+        admi.abilityUsage = EAbilityUsage.Once;
+        admi.bluffable = true;
+        admi.characterId = "Lovestruck_POW";
+        admi.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        admi.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        admi.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        admi.color = new Color(1f, 0.935f, 0.7302f);
+        admi.additionalFlavorTexts = new Il2CppStringArray(1);
+        admi.additionalFlavorTexts[0] = admi.flavorText;
+        admi.gender = EGender.Female;
 
         Il2Cpp.CharacterData fisherman = new Il2Cpp.CharacterData();
         fisherman.role = new Fisherman();
@@ -448,6 +583,75 @@ public class Main : MelonMod
         teaLady.additionalFlavorTexts = new Il2CppStringArray(1);
         teaLady.additionalFlavorTexts[0] = teaLady.flavorText;
         teaLady.gender = EGender.Female;
+
+        Il2Cpp.CharacterData dep = new Il2Cpp.CharacterData();
+        dep.role = new Deputy();
+        dep.name = "Deputy";
+        dep.characterName = "Deputy";
+        dep.description = $"I shoot a card. I miss if they are good and kill if they are evil.";
+        dep.flavorText = "\"Is given way too much power. \n Somehow she never abuses it.\"";
+        dep.hints = "";
+        dep.ifLies = $"I claim I missed on an evil.";
+        dep.notes = "";
+        dep.picking = false;
+        dep.startingAlignment = EAlignment.Good;
+        dep.type = ECharacterType.Villager;
+        dep.abilityUsage = EAbilityUsage.Once;
+        dep.bluffable = true;
+        dep.characterId = "Deputy_POW";
+        dep.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        dep.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        dep.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        dep.color = new Color(1f, 0.935f, 0.7302f);
+        dep.additionalFlavorTexts = new Il2CppStringArray(1);
+        dep.additionalFlavorTexts[0] = dep.flavorText;
+        dep.gender = EGender.Female;
+
+        Il2Cpp.CharacterData invest = new Il2Cpp.CharacterData();
+        invest.role = new Operative();
+        invest.name = "Operative";
+        invest.characterName = "Operative";
+        invest.description = $"<b>On Pick:</b>\n Choose a card. Learn if they have committed one of 4 crimes.";
+        invest.flavorText = "\"Night one: The Mayor is Murder/Tress\"";
+        invest.hints = $"Crimes:\nMurder: Is a killing {formattedKeyText("Subtype")}. \nTresspassing: Evil bluffing on-pick character. \nFraud: Disguised character. \nPerjury: Character is lying.";
+        invest.ifLies = $"One and only one of my stated crimes are false.";
+        invest.notes = "";
+        invest.picking = true;
+        invest.startingAlignment = EAlignment.Good;
+        invest.type = ECharacterType.Villager;
+        invest.abilityUsage = EAbilityUsage.Once;
+        invest.bluffable = true;
+        invest.characterId = "Operative_POW";
+        invest.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        invest.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        invest.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        invest.color = new Color(1f, 0.935f, 0.7302f);
+        invest.additionalFlavorTexts = new Il2CppStringArray(1);
+        invest.additionalFlavorTexts[0] = invest.flavorText;
+        invest.gender = EGender.Female;
+
+        Il2Cpp.CharacterData parent = new Il2Cpp.CharacterData();
+        parent.role = new Parent();
+        parent.name = "Parent";
+        parent.characterName = "Parent";
+        parent.description = $"Learn what role my child is. I am unbluffable. I turn Evil if my child is Evil.";
+        parent.flavorText = "\"Will do anything to protect their kid. \n Even if it means destroying the world.\"";
+        parent.hints = "";
+        parent.ifLies = "If I can, learn what bluff my child is.";
+        parent.notes = "";
+        parent.picking = false;
+        parent.startingAlignment = EAlignment.Good;
+        parent.type = ECharacterType.Villager;
+        parent.abilityUsage = EAbilityUsage.Once;
+        parent.bluffable = false;
+        parent.characterId = "Parent_POW";
+        parent.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        parent.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        parent.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        parent.color = new Color(1f, 0.935f, 0.7302f);
+        parent.additionalFlavorTexts = new Il2CppStringArray(1);
+        parent.additionalFlavorTexts[0] = parent.flavorText;
+        parent.gender = EGender.They;
 
         Il2Cpp.CharacterData prosecutor = new Il2Cpp.CharacterData();
         prosecutor.role = new Prosecutor();
@@ -703,150 +907,6 @@ public class Main : MelonMod
         amnesiac.additionalFlavorTexts[0] = amnesiac.flavorText;
         amnesiac.gender = EGender.Male;
 
-        Il2Cpp.CharacterData amnesiacPick1 = new Il2Cpp.CharacterData();
-        amnesiacPick1.role = new Amnesiac1Pick();
-        amnesiacPick1.name = "Amnesiac";
-        amnesiacPick1.characterName = "Amnesiac";
-        amnesiacPick1.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
-        amnesiacPick1.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
-        amnesiacPick1.hints = "";
-        amnesiacPick1.ifLies = "Says a random number of the opposite of the statement";
-        amnesiacPick1.notes = "";
-        amnesiacPick1.picking = true;
-        amnesiacPick1.startingAlignment = EAlignment.Good;
-        amnesiacPick1.type = ECharacterType.Outcast;
-        amnesiacPick1.abilityUsage = EAbilityUsage.Once;
-        amnesiacPick1.bluffable = false;
-        amnesiacPick1.characterId = "Amne1_POW";
-        amnesiacPick1.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        amnesiacPick1.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
-        amnesiacPick1.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        amnesiacPick1.color = new Color(0.9659f, 1f, 0.4472f);
-        amnesiacPick1.additionalFlavorTexts = new Il2CppStringArray(1);
-        amnesiacPick1.additionalFlavorTexts[0] = amnesiacPick1.flavorText;
-        amnesiacPick1.gender = EGender.Male;
-
-        Il2Cpp.CharacterData amnesiacPick2 = new Il2Cpp.CharacterData();
-        amnesiacPick2.role = new Amnesiac2Pick();
-        amnesiacPick2.name = "Amnesiac";
-        amnesiacPick2.characterName = "Amnesiac";
-        amnesiacPick2.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me \n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
-        amnesiacPick2.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
-        amnesiacPick2.hints = "";
-        amnesiacPick2.ifLies = "Says a random number of the opposite of the statement";
-        amnesiacPick2.notes = "";
-        amnesiacPick2.picking = true;
-        amnesiacPick2.startingAlignment = EAlignment.Good;
-        amnesiacPick2.type = ECharacterType.Outcast;
-        amnesiacPick2.abilityUsage = EAbilityUsage.Once;
-        amnesiacPick2.bluffable = false;
-        amnesiacPick2.characterId = "Amne2_POW";
-        amnesiacPick2.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        amnesiacPick2.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
-        amnesiacPick2.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        amnesiacPick2.color = new Color(0.9659f, 1f, 0.4472f);
-        amnesiacPick2.additionalFlavorTexts = new Il2CppStringArray(1);
-        amnesiacPick2.additionalFlavorTexts[0] = amnesiacPick2.flavorText;
-        amnesiacPick2.gender = EGender.Male;
-
-        Il2Cpp.CharacterData amnesiacPick3 = new Il2Cpp.CharacterData();
-        amnesiacPick3.role = new Amnesiac3Pick();
-        amnesiacPick3.name = "Amnesiac";
-        amnesiacPick3.characterName = "Amnesiac";
-        amnesiacPick3.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
-        amnesiacPick3.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
-        amnesiacPick3.hints = "";
-        amnesiacPick3.ifLies = "Says a random number of the opposite of the statement";
-        amnesiacPick3.notes = "";
-        amnesiacPick3.picking = true;
-        amnesiacPick3.startingAlignment = EAlignment.Good;
-        amnesiacPick3.type = ECharacterType.Outcast;
-        amnesiacPick3.abilityUsage = EAbilityUsage.Once;
-        amnesiacPick3.bluffable = false;
-        amnesiacPick3.characterId = "Amne3_POW";
-        amnesiacPick3.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        amnesiacPick3.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
-        amnesiacPick3.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        amnesiacPick3.color = new Color(0.9659f, 1f, 0.4472f);
-        amnesiacPick3.additionalFlavorTexts = new Il2CppStringArray(1);
-        amnesiacPick3.additionalFlavorTexts[0] = amnesiacPick3.flavorText;
-        amnesiacPick3.gender = EGender.Male;
-
-        Il2Cpp.CharacterData amnesiacPick4 = new Il2Cpp.CharacterData();
-        amnesiacPick4.role = new Amnesiac4Pick();
-        amnesiacPick4.name = "Amnesiac";
-        amnesiacPick4.characterName = "Amnesiac";
-        amnesiacPick4.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
-        amnesiacPick4.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
-        amnesiacPick4.hints = "";
-        amnesiacPick4.ifLies = "Says a random number of the opposite of the statement";
-        amnesiacPick4.notes = "";
-        amnesiacPick4.picking = true;
-        amnesiacPick4.startingAlignment = EAlignment.Good;
-        amnesiacPick4.type = ECharacterType.Outcast;
-        amnesiacPick4.abilityUsage = EAbilityUsage.Once;
-        amnesiacPick4.bluffable = false;
-        amnesiacPick4.characterId = "Amne4_POW";
-        amnesiacPick4.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        amnesiacPick4.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
-        amnesiacPick4.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        amnesiacPick4.color = new Color(0.9659f, 1f, 0.4472f);
-        amnesiacPick4.additionalFlavorTexts = new Il2CppStringArray(1);
-        amnesiacPick4.additionalFlavorTexts[0] = amnesiacPick4.flavorText;
-        amnesiacPick4.gender = EGender.Male;
-
-        Il2Cpp.CharacterData amnesiacPick5 = new Il2Cpp.CharacterData();
-        amnesiacPick5.role = new Amnesiac5Pick();
-        amnesiacPick5.name = "Amnesiac";
-        amnesiacPick5.characterName = "Amnesiac";
-        amnesiacPick5.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
-        amnesiacPick5.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
-        amnesiacPick5.hints = "";
-        amnesiacPick5.ifLies = "Says a random number of the opposite of the statement";
-        amnesiacPick5.notes = "";
-        amnesiacPick5.picking = true;
-        amnesiacPick5.startingAlignment = EAlignment.Good;
-        amnesiacPick5.type = ECharacterType.Outcast;
-        amnesiacPick5.abilityUsage = EAbilityUsage.Once;
-        amnesiacPick5.bluffable = false;
-        amnesiacPick5.characterId = "Amne5_POW";
-        amnesiacPick5.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        amnesiacPick5.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
-        amnesiacPick5.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        amnesiacPick5.color = new Color(0.9659f, 1f, 0.4472f);
-        amnesiacPick5.additionalFlavorTexts = new Il2CppStringArray(1);
-        amnesiacPick5.additionalFlavorTexts[0] = amnesiacPick5.flavorText;
-        amnesiacPick5.gender = EGender.Male;
-
-        Il2Cpp.CharacterData amnesiacPick6 = new Il2Cpp.CharacterData();
-        amnesiacPick6.role = new Amnesiac6Pick();
-        amnesiacPick6.name = "Amnesiac";
-        amnesiacPick6.characterName = "Amnesiac";
-        amnesiacPick6.description = "I can get one of 6 abilities, you don't learn which:\nNumbers:\nHow many evil neighbors \nHow close another card of the same character type is to the picked one" +
-            "\nThe amount of non-villagers between me and the picked card, clockwise from them to me\n\nYes or no:\nDo they have a status?\nAm I closer to the Demon?\nIf we share an alignement.";
-        amnesiacPick6.flavorText = "\"See I would come up with something.\nBut I forgot.\"";
-        amnesiacPick6.hints = "";
-        amnesiacPick6.ifLies = "Says a random number of the opposite of the statement";
-        amnesiacPick6.notes = "";
-        amnesiacPick6.picking = true;
-        amnesiacPick6.startingAlignment = EAlignment.Good;
-        amnesiacPick6.type = ECharacterType.Outcast;
-        amnesiacPick6.abilityUsage = EAbilityUsage.Once;
-        amnesiacPick6.bluffable = false;
-        amnesiacPick6.characterId = "Amne6_POW";
-        amnesiacPick6.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
-        amnesiacPick6.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
-        amnesiacPick6.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
-        amnesiacPick6.color = new Color(0.9659f, 1f, 0.4472f);
-        amnesiacPick6.additionalFlavorTexts = new Il2CppStringArray(1);
-        amnesiacPick6.additionalFlavorTexts[0] = amnesiacPick6.flavorText;
-        amnesiacPick6.gender = EGender.Male;
-
         Il2Cpp.CharacterData indust = new Il2Cpp.CharacterData();
         indust.role = new Industrialist();
         indust.name = "Industrialist";
@@ -874,7 +934,7 @@ public class Main : MelonMod
         veteran.role = new Veteran();
         veteran.name = "Veteran";
         veteran.characterName = "Veteran";
-        veteran.description = "I kill any Good players that pick me\n I deal 2 damage to you. \nI disguise.";
+        veteran.description = "I kill any Good players that pick me\nI deal 2 damage to you. \nI disguise.";
         veteran.flavorText = "\"Tries to bait the Demon\nOnly Villagers fall for the bait.\"";
         veteran.hints = "";
         veteran.ifLies = "";
@@ -920,10 +980,10 @@ public class Main : MelonMod
         tav.role = new TavernKeeper();
         tav.name = "Winemaker";
         tav.characterName = "Winemaker";
-        tav.description = $"I {formattedKeyText("Roleblock")} a random Good card. Learn a {formattedKeyText("Roleblocked")} card.";
+        tav.description = $"I {formattedKeyText("Intoxicate")} a random Good card. Learn a {formattedKeyText("Intoxicated")} card.";
         tav.flavorText = "\"Likes to celebrate.\nKnows the Drunk a bit too well.\"";
         tav.hints = "";
-        tav.ifLies = $"Learn a random card. I don't  {formattedKeyText("Roleblock")}.";
+        tav.ifLies = $"Learn a random card. I don't {formattedKeyText("Intoxicate")}.";
         tav.notes = "";
         tav.picking = false;
         tav.startingAlignment = EAlignment.Good;
@@ -961,6 +1021,8 @@ public class Main : MelonMod
         goon.additionalFlavorTexts = new Il2CppStringArray(1);
         goon.additionalFlavorTexts[0] = goon.flavorText;
         goon.gender = EGender.Male;
+
+        
 
         Il2Cpp.CharacterData doom = new Il2Cpp.CharacterData();
         doom.role = new Doomsayer();
@@ -1604,15 +1666,10 @@ public class Main : MelonMod
         grunt.notes = "";
         grunt.picking = false;
         if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            grunt.startingAlignment = EAlignment.Evil;
-            grunt.type = MafiaType.Member;
-        }
-        else
-        {
-            grunt.startingAlignment = EAlignment.Evil;
-            grunt.type = ECharacterType.Minion;
-        }
+       
+         grunt.startingAlignment = EAlignment.Evil;
+        grunt.type = ECharacterType.Minion;
+       
         grunt.abilityUsage = EAbilityUsage.Once;
         grunt.bluffable = false;
         grunt.characterId = "Grunt_POW";
@@ -1635,16 +1692,9 @@ public class Main : MelonMod
         jinx.notes = "";
         jinx.picking = false;
         
-        if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            jinx.startingAlignment = EAlignment.Evil;
-            jinx.type = MafiaType.Member;
-        }
-        else
-        {
             jinx.startingAlignment = EAlignment.Evil;
             jinx.type = ECharacterType.Minion;
-        }
+       
             jinx.abilityUsage = EAbilityUsage.Once;
         jinx.bluffable = false;
         jinx.characterId = "Jinx_POW";
@@ -1661,21 +1711,15 @@ public class Main : MelonMod
         enforcer.name = "Enforcer";
         enforcer.characterName = "Enforcer";
         enforcer.description = $"<b>Game Start</b>:\nI cast {formattedKeyText("Unknown Obstacle")} on a random card.";
-        enforcer.flavorText = "\"The Bishop? Ah that guy? \n Don't try it. They won't talk.\"";
+        enforcer.flavorText = "\"The Bishop? Ah that guy? \n Don't try it. She won't talk.\"";
         enforcer.hints = customHint("Alignment Hint", "Mafia Member"); ;
         enforcer.ifLies = "";
         enforcer.notes = "";
         enforcer.picking = false;
-        if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            enforcer.startingAlignment = EAlignment.Evil;
-            enforcer.type = MafiaType.Member;
-        }
-        else
-        {
+       
             enforcer.startingAlignment = EAlignment.Evil;
             enforcer.type = ECharacterType.Minion;
-        }
+       
         enforcer.abilityUsage = EAbilityUsage.Once;
         enforcer.bluffable = false;
         enforcer.characterId = "Enforcer_POW";
@@ -1697,16 +1741,9 @@ public class Main : MelonMod
         forger.ifLies = "";
         forger.notes = "";
         forger.picking = false;
-        if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            forger.startingAlignment = EAlignment.Evil;
-            forger.type = MafiaType.Member;
-        }
-        else
-        {
             forger.startingAlignment = EAlignment.Evil;
             forger.type = ECharacterType.Minion;
-        }
+        
         forger.abilityUsage = EAbilityUsage.Once;
         forger.bluffable = false;
         forger.characterId = "Forger_POW";
@@ -1728,16 +1765,10 @@ public class Main : MelonMod
         gangster.ifLies = "";
         gangster.notes = "";
         gangster.picking = false;
-        if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            gangster.startingAlignment = EAlignment.Evil;
-            gangster.type = MafiaType.Member;
-        }
-        else
-        {
+
             gangster.startingAlignment = EAlignment.Evil;
             gangster.type = ECharacterType.Minion;
-        }
+        
         gangster.abilityUsage = EAbilityUsage.Once;
         gangster.bluffable = false;
         gangster.characterId = "Gangster_POW";
@@ -1760,16 +1791,10 @@ public class Main : MelonMod
         cons.ifLies = "";
         cons.notes = "";
         cons.picking = false;
-        if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            cons.startingAlignment = EAlignment.Evil;
-            cons.type = MafiaType.Member;
-        }
-        else
-        {
+     
             cons.startingAlignment = EAlignment.Evil;
             cons.type = ECharacterType.Minion;
-        }
+        
         cons.abilityUsage = EAbilityUsage.Once;
         cons.bluffable = false;
         cons.characterId = "Influencer_POW";
@@ -1785,22 +1810,16 @@ public class Main : MelonMod
         bootlegger.role = new Bootlegger();
         bootlegger.name = "Bootlegger";
         bootlegger.characterName = "Bootlegger";
-        bootlegger.description = $"<b>Game Start</b>:\nTwo cards are {formattedKeyText("Roleblocked")}. \nI lie and disguise.";
+        bootlegger.description = $"<b>Game Start</b>:\nTwo cards are {formattedKeyText("Intoxicated")}. \nI lie and disguise.";
         bootlegger.flavorText = "\"Makes amazing drinks. \n The Winemaker is jealous of her.\"";
-        bootlegger.hints = customHint("Alignment Hint", "Mafia Member") + $"\nI prioritize {formattedKeyText("Roleblocking")} on-pick cards.";
+        bootlegger.hints = customHint("Alignment Hint", "Mafia Member") + $"\nI prioritize {formattedKeyText("Intoxicating")} on-pick cards.";
         bootlegger.ifLies = "";
         bootlegger.notes = "";
         bootlegger.picking = false;
-        if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            bootlegger.startingAlignment = EAlignment.Evil;
-            bootlegger.type = MafiaType.Member;
-        }
-        else
-        {
+ 
             bootlegger.startingAlignment = EAlignment.Evil;
             bootlegger.type = ECharacterType.Minion;
-        }
+        
         bootlegger.abilityUsage = EAbilityUsage.Once;
         bootlegger.bluffable = false;
         bootlegger.characterId = "Bootlegger_POW";
@@ -1822,16 +1841,10 @@ public class Main : MelonMod
         spoke.ifLies = "";
         spoke.notes = "";
         spoke.picking = false;
-        if (configCategory.GetEntry<bool>("AllowMafia").Value)
-        {
-            spoke.startingAlignment = EAlignment.Evil;
-            spoke.type = MafiaType.Member;
-        }
-        else
-        {
+
             spoke.startingAlignment = EAlignment.Evil;
             spoke.type = ECharacterType.Minion;
-        }
+        
         spoke.abilityUsage = EAbilityUsage.Once;
         spoke.bluffable = false;
         spoke.characterId = "Spokesperson_POW";
@@ -1855,7 +1868,7 @@ public class Main : MelonMod
         gf2.notes = "";
         gf2.picking = false;
         gf2.startingAlignment = EAlignment.Evil;
-        gf2.type = MafiaType.Leader;
+        gf2.type = ECharacterType.Demon;
         gf2.abilityUsage = Il2Cpp.EAbilityUsage.Once;
         gf2.bluffable = false;
         gf2.characterId = "Godfather2_POW";
@@ -1866,7 +1879,7 @@ public class Main : MelonMod
         gf2.additionalFlavorTexts = new Il2CppStringArray(1);
         gf2.additionalFlavorTexts[0] = gf2.flavorText;
         gf2.gender = EGender.Male;
-
+        
         Il2Cpp.CharacterData mafio = new Il2Cpp.CharacterData();
         mafio.role = new Mafioso();
         mafio.name = "Mafioso";
@@ -1878,7 +1891,7 @@ public class Main : MelonMod
         mafio.notes = "";
         mafio.picking = false;
         mafio.startingAlignment = EAlignment.Evil;
-        mafio.type = MafiaType.Leader;
+        mafio.type = ECharacterType.Demon;
         mafio.abilityUsage = Il2Cpp.EAbilityUsage.Once;
         mafio.bluffable = false;
         mafio.characterId = "Mafioso_POW";
@@ -1905,7 +1918,7 @@ public class Main : MelonMod
         cultM.picking = false;
        
         cultM.startingAlignment = EAlignment.Evil;
-        cultM.type = CovType.Follower;
+        cultM.type = ECharacterType.Minion;
         
         cultM.abilityUsage = EAbilityUsage.Once;
         cultM.bluffable = false;
@@ -1929,16 +1942,10 @@ public class Main : MelonMod
         wildling.ifLies = "";
         wildling.notes = "";
         wildling.picking = false;
-        if (configCategory.GetEntry<bool>("AllowCovenant").Value)
-        {
-            wildling.startingAlignment = EAlignment.Evil;
-            wildling.type = CovType.Follower;
-        }
-        else
-        {
+
             wildling.startingAlignment = EAlignment.Evil;
             wildling.type = ECharacterType.Minion;
-        }
+        
         wildling.abilityUsage = EAbilityUsage.Once;
         wildling.bluffable = false;
         wildling.characterId = "Wildling_POW";
@@ -1961,16 +1968,10 @@ public class Main : MelonMod
         conjurer.ifLies = "";
         conjurer.notes = "";
         conjurer.picking = false;
-        if (configCategory.GetEntry<bool>("AllowCovenant").Value)
-        {
-            conjurer.startingAlignment = EAlignment.Evil;
-            conjurer.type = CovType.Follower;
-        }
-        else
-        {
+
             conjurer.startingAlignment = EAlignment.Evil;
             conjurer.type = ECharacterType.Minion;
-        }
+        
         conjurer.abilityUsage = EAbilityUsage.Once;
         conjurer.bluffable = false;
         conjurer.characterId = "Slinger_POW";
@@ -1993,16 +1994,10 @@ public class Main : MelonMod
         pois2.ifLies = "";
         pois2.notes = "";
         pois2.picking = false;
-        if (configCategory.GetEntry<bool>("AllowCovenant").Value)
-        {
-            pois2.startingAlignment = EAlignment.Evil;
-            pois2.type = CovType.Follower;
-        }
-        else
-        {
+
             pois2.startingAlignment = EAlignment.Evil;
             pois2.type = ECharacterType.Minion;
-        }
+        
         pois2.abilityUsage = EAbilityUsage.Once;
         pois2.bluffable = false;
         pois2.characterId = "PowderMaker_POW";
@@ -2012,7 +2007,7 @@ public class Main : MelonMod
         pois2.color = new Color(1.0f, 0.651f, 0.9725f);
         nightPhase.nightCharactersOrder.Add(pois2);
         pois2.additionalFlavorTexts = new Il2CppStringArray(1);
-        pois2.additionalFlavorTexts[0] = conjurer.flavorText;
+        pois2.additionalFlavorTexts[0] = pois2.flavorText;
         pois2.gender = EGender.Female;
 
         Il2Cpp.CharacterData pm = new Il2Cpp.CharacterData();
@@ -2025,16 +2020,10 @@ public class Main : MelonMod
         pm.ifLies = "";
         pm.notes = "";
         pm.picking = false;
-        if (configCategory.GetEntry<bool>("AllowCovenant").Value)
-        {
-            pm.startingAlignment = EAlignment.Evil;
-            pm.type = CovType.Follower;
-        }
-        else
-        {
+
             pm.startingAlignment = EAlignment.Evil;
             pm.type = ECharacterType.Minion;
-        }
+        
         pm.abilityUsage = EAbilityUsage.Once;
         pm.bluffable = false;
         pm.characterId = "Brewer_POW";
@@ -2057,16 +2046,10 @@ public class Main : MelonMod
         voodooMaster.ifLies = "";
         voodooMaster.notes = "";
         voodooMaster.picking = false;
-        if (configCategory.GetEntry<bool>("AllowCovenant").Value)
-        {
-            voodooMaster.startingAlignment = EAlignment.Evil;
-            voodooMaster.type = CovType.Follower;
-        }
-        else
-        {
+
             voodooMaster.startingAlignment = EAlignment.Evil;
         voodooMaster.type = ECharacterType.Minion;
-        }
+        
         
         voodooMaster.abilityUsage = EAbilityUsage.Once;
         voodooMaster.bluffable = false;
@@ -2091,7 +2074,7 @@ public class Main : MelonMod
         arch.notes = "";
         arch.picking = false;
         arch.startingAlignment = EAlignment.Evil;
-        arch.type = CovType.Preacher;
+        arch.type = ECharacterType.Demon;
         arch.abilityUsage = Il2Cpp.EAbilityUsage.Once;
         arch.bluffable = false;
         arch.characterId = "Archmage_POW";
@@ -2114,7 +2097,7 @@ public class Main : MelonMod
         hm.notes = "";
         hm.picking = false;
         hm.startingAlignment = EAlignment.Evil;
-        hm.type = CovType.Preacher;
+        hm.type = ECharacterType.Demon;
         hm.abilityUsage = Il2Cpp.EAbilityUsage.Once;
         hm.bluffable = false;
         hm.characterId = "HexMaster_POW";
@@ -2127,10 +2110,10 @@ public class Main : MelonMod
         hm.additionalFlavorTexts[0] = hm.flavorText;
         hm.gender = EGender.Female;
 
-        /**Il2Cpp.CharacterData god = new Il2Cpp.CharacterData();
+        Il2Cpp.CharacterData god = new Il2Cpp.CharacterData();
         god.role = new God();
-        god.name = "God";
-        god.characterName = "God";
+        god.name = "Fallen Prophet";
+        god.characterName = "Fallen Prophet";
         god.description = "Luck cannot save you. Judgement is here.";
         god.flavorText = "\"Reality of truth, reality...\nAs the universe turned black... \nDid the sun ever defy fate?\"";
         god.hints = "Even Death can't save you now";
@@ -2141,15 +2124,14 @@ public class Main : MelonMod
         god.type = ECharacterType.Demon;
         god.abilityUsage = Il2Cpp.EAbilityUsage.Once;
         god.bluffable = false;
-        god.characterId = "God_POW";
+        god.characterId = "FallenProphet_POW";
         god.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
         god.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
         god.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
         god.color = new Color(1f, 0.3804f, 0.3804f);
-        nightPhase.nightCharactersOrder.Add(god);
         god.additionalFlavorTexts = new Il2CppStringArray(1);
         god.additionalFlavorTexts[0] = god.flavorText;
-        god.gender = EGender.Male;*/
+        god.gender = EGender.Male;
 
         Il2Cpp.CharacterData stormyW = new Il2Cpp.CharacterData();
         stormyW.role = new Stormy();
@@ -2546,7 +2528,23 @@ public class Main : MelonMod
         hexScript.characterCounts = hexCounterList;
         HexScriptData.scriptInfo = hexScript;
 
-       AscensionsData advancedAscension = ProjectContext.Instance.gameData.advancedAscension;
+        CustomScriptData GodScriptData = new CustomScriptData();
+        GodScriptData.name = "FallenProphet_1";
+        ScriptInfo godScript = new ScriptInfo();
+        Il2CppSystem.Collections.Generic.List<CharacterData> godList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        godList.Add(god);
+        godScript.mustInclude = godList;
+        godScript.startingDemons = godList;
+        godScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
+        godScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
+        godScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
+        CharactersCount godCounter1 = setCharacterCount(14, 0, 0, 1);
+        Il2CppSystem.Collections.Generic.List<CharactersCount> godCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
+        godCounterList.Add(godCounter1);
+        godScript.characterCounts = godCounterList;
+        GodScriptData.scriptInfo = godScript;
+
+        AscensionsData advancedAscension = ProjectContext.Instance.gameData.advancedAscension;
        addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
         addDemon(advancedAscension, war, "Baa_Difficult", "War_1", warScriptData, configCategory.GetEntry<int>("War_Weight").Value);
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData, configCategory.GetEntry<int>("Famine_Weight").Value);
@@ -2565,26 +2563,35 @@ public class Main : MelonMod
         {
           addDemon(advancedAscension, arch, "Baa_Difficult", "Archmage_1", ArchScriptData, configCategory.GetEntry<int>("Archmage_Weight").Value);
             addDemon(advancedAscension, hm, "Baa_Difficult", "HexMaster_1", HexScriptData, configCategory.GetEntry<int>("HexMaster_Weight").Value);
-       } 
-          // addDemon(advancedAscension, god, "Baa_Difficult", "God_1", //godScriptData);
+       }
+        addDemon(advancedAscension, god, "Baa_Difficult", "FallenProphet_1", GodScriptData, configCategory.GetEntry<int>("FallenProphet_Weight").Value);
 
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
         {
             ScriptInfo script = scriptData.scriptInfo;
-            addRole(script.startingTownsfolks, official);
-             addRole(script.startingTownsfolks, guard);
+           addRole(script.startingTownsfolks, official);
+            addRole(script.startingTownsfolks, parent);
+            addRole(script.startingTownsfolks, dep);
+            addRole(script.startingTownsfolks, admi);
+            addRole(script.startingTownsfolks, guard);
             addRole(script.startingTownsfolks, sailor);
             addRole(script.startingTownsfolks, scholar);
             addRole(script.startingTownsfolks, choirboy);
             addRole(script.startingTownsfolks, newsman);
-            addRole(script.startingTownsfolks, lookout);
             addRole(script.startingTownsfolks, teaLady);
             addRole(script.startingTownsfolks, washerwoman);
             addRole(script.startingTownsfolks, vigilante);
             addRole(script.startingTownsfolks, knowItAll);
               addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, fisherman);
-             addRole(script.startingTownsfolks, coroner);
+             addRole(script.startingTownsfolks, coroner); 
+            addRole(script.startingTownsfolks, seer);
+            addRole(script.startingTownsfolks, tracker);
+            addRole(script.startingTownsfolks, spy);
+            addRole(script.startingTownsfolks, psy);
+            addRole(script.startingTownsfolks, invest);
+            addRole(script.startingTownsfolks, sher);
+            addRole(script.startingTownsfolks, lookout);
 
             addRole(script.startingOutsiders, veteran);
            addRole(script.startingOutsiders, tav);
@@ -2596,8 +2603,8 @@ public class Main : MelonMod
 
             addRole(script.startingOutsiders, jester);
             addRole(script.startingOutsiders, doom);
-            addRole(script.startingOutsiders, scapegoat);
-            addRole(script.startingOutsiders, apprentice);
+           addRole(script.startingOutsiders, scapegoat);
+           addRole(script.startingOutsiders, apprentice);
             addRole(script.startingOutsiders, pirate);
             addRole(script.startingOutsiders, godfather);
             addRole(script.startingOutsiders, hangman);
@@ -2605,26 +2612,13 @@ public class Main : MelonMod
 
             
             addRole(script.startingMinions, cerenovus);
-            
             addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
             addRole(script.startingMinions, butcher);
             addRole(script.startingMinions, eTwin);
             addRole(script.startingMinions, traveler);
 
-            if (!configCategory.GetEntry<bool>("AllowMafia").Value)
-            {
-                addRole(script.startingMinions, jinx);
-                addRole(script.startingMinions, bootlegger);
-            }
-            if (!configCategory.GetEntry<bool>("AllowCovenant").Value)
-            {
-                addRole(script.startingMinions, conjurer);
-                addRole(script.startingMinions, wildling);
-                addRole(script.startingMinions, voodooMaster);
-                addRole(script.startingMinions, pm);
-
-            }
+    
                 addRole(script.startingMinions, stormyW);
             addRole(script.startingMinions, foggyW);
             addRole(script.startingMinions, sunnyW);
@@ -2638,6 +2632,7 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(mafio);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(arch);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(hm);
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(god);
         Characters.Instance.startGameActOrder = insertAfterAct("Court",vortox);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", apprentice);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", choirboy);
@@ -2645,7 +2640,8 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", stormyW);
         //Characters.Instance.startGameActOrder = insertAfterAct("Vortox", foggyW);
         Characters.Instance.startGameActOrder = insertAfterAct("Vortox", sunnyW);
-        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", audi);
+        
+        Characters.Instance.startGameActOrder = insertAfterAct("Vortox", star);
         Characters.Instance.startGameActOrder = insertAfterAct("Shaman", cerenovus);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pirate);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", spoke);
@@ -2655,11 +2651,12 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", traveler);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", indust);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", voodooMaster);
-        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", scapegoat);
+        
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", jester);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", official);
-        
+        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", amnesiac);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
+        Characters.Instance.startGameActOrder = insertAfterAct("Jailor", audi);
         // Characters.Instance.startGameActOrder = insertAfterAct("Executive", guard);
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
@@ -2668,12 +2665,14 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", eTwin);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", devilsAdvocate);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", teaLady);
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", parent);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", crazed);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", conjurer);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", jinx);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", bootlegger);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", enforcer);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", cons);
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", scapegoat);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(snakeCharmer);
     }
 
@@ -2698,6 +2697,7 @@ public class Main : MelonMod
                 for (int i = 0; i < loadedCharList.Length; i++)
                 {
                     allDatas[i] = loadedCharList[i]!.Cast<CharacterData>();
+                   
                 }
             }
         }
@@ -2722,7 +2722,18 @@ public class Main : MelonMod
     }
     public void OnFirstUpdate()
     {
-        
+        ToolTipPatchClass patcher = new();
+        for (int i = 0; i < allDatas.Count(); i++)
+        {
+            MelonLogger.Msg($"Patching role: {allDatas[i].characterName}");
+            if (allDatas[i].characterId == "Confessor")
+            {
+                allDatas[i].description = $"If I am Evil or Corrupted, I Declare that \"I am dizzy\".\nOtherwise, I Declare that \"I am Good\".\n\nI am always Truthful, even if Disguised.";
+            }
+            allDatas[i].description = patcher.PatchTooltip(allDatas[i].description);
+            allDatas[i].hints = patcher.PatchTooltip(allDatas[i].hints);
+            allDatas[i].ifLies = patcher.PatchTooltip(allDatas[i].ifLies);
+        }
         Transform chars = GameObject.Find("Game/Gameplay/Content/Canvas/Panel/Characters").transform;
         if (chars)
         {
@@ -3027,9 +3038,9 @@ public class Main : MelonMod
         switch (target)
         {
             // Keywords
-            case "Roleblock": return "<color=#56A3FC>Roleblock</color>";
-            case "Roleblocked": return "<color=#56A3FC>Roleblocked</color>";
-            case "Roleblocking": return "<color=#56A3FC>Roleblocking</color>";
+            case "Intoxicate": return "<color=#56A3FC>Intoxicate</color>";
+            case "Intoxicated": return "<color=#56A3FC>Intoxicated</color>";
+            case "Intoxicating": return "<color=#56A3FC>Intoxicating</color>";
             case "Jail": return "<color=#696969>Jail</color>";
             case "Jailed": return "<color=#696969>Jailed</color>";
             case "Jinx": return "<color=#AA41BF>Jinx</color>";
@@ -3090,6 +3101,7 @@ public class Main : MelonMod
 
             case "Alignment": return "<color=#99ff99>A</color><color=#b7f382>l</color><color=#cfe573>i</color><color=#e3d76c>g</color><color=#f2c96d>n</color><color=#fdba73>m</color><color=#ffad7e>e</color><color=#ffa28b>n</color><color=#ff9999>t</color>";
             case "Type": return "<color=#B656DD>T</color><color=#C8A500>y</color><color=#D97400>p</color><color=#FF6161>e</color>";
+            case "Subtype": return "<color=#99ff99>Subtype</color>";
             case "Truthfulness": return "<color=#3a95d6>T</color><color=#0ca3da>r</color><color=#00b1da>u</color><color=#00bdd5>t</color><color=#00c9ce>h</color><color=#25d4c4>f</color><color=#51deb8>u</color><color=#76e7ad>l</color><color=#98efa3>n</color><color=#bbf69b>e</color><color=#ddfb98>s</color><color=#ffff99>s</color>";
             case "Honesty": return "<color=#7ac6ff>H</color><color=#5cd3f2>o</color><color=#5fddd9>n</color><color=#7fe2bc>e</color><color=#aae4a3>s</color><color=#d6e296>t</color><color=#ffdd99>y</color>";
             case "Purity": return "<color=#7afbff>P</color><color=#61ecff>u</color><color=#71daff>r</color><color=#80c8ff>i</color><color=#94b2ff>t</color><color=#b199ff>y</color>";

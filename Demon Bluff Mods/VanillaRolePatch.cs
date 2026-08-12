@@ -18,7 +18,7 @@ using System.Reflection.Metadata.Ecma335;
 public static class VanillaPatch
 {
 
-    [HarmonyPatch(typeof(Bishop), nameof(Bishop.Act))]
+   /* [HarmonyPatch(typeof(Bishop), nameof(Bishop.Act))]
     public static class BishopPatchInfo
     {
         static void Prefix(Bishop __instance,ETriggerPhase trigger, Character charRef)
@@ -139,5 +139,7 @@ public static class VanillaPatch
         }
         else if (amountOfMafia.Count > 0) { return amountOfMafia; }
         else { return amountOfCovenant; }
-    }
+    }*/
+    //TODO: Ask Skill Cycler why we need a PATCH FOR THIS!
+   
 }
