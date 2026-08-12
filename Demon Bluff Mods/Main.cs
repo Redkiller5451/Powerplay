@@ -1923,10 +1923,10 @@ public class Main : MelonMod
         cultM.abilityUsage = EAbilityUsage.Once;
         cultM.bluffable = false;
         cultM.characterId = "CultMember_POW";
-        cultM.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        cultM.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         cultM.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        cultM.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        cultM.color = new Color(1.0f, 0.651f, 0.9725f);
+        cultM.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        cultM.color = new Color(0.455f, 0.129f, 0.541f);
         cultM.additionalFlavorTexts = new Il2CppStringArray(1);
         nightPhase.nightCharactersOrder.Add(cultM);
         cultM.additionalFlavorTexts[0] = cultM.flavorText;
@@ -1949,10 +1949,10 @@ public class Main : MelonMod
         wildling.abilityUsage = EAbilityUsage.Once;
         wildling.bluffable = false;
         wildling.characterId = "Wildling_POW";
-        wildling.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        wildling.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         wildling.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        wildling.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        wildling.color = new Color(1.0f, 0.651f, 0.9725f);
+        wildling.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        wildling.color = new Color(0.455f, 0.129f, 0.541f);
         nightPhase.nightCharactersOrder.Add(wildling);
         wildling.additionalFlavorTexts = new Il2CppStringArray(1);
         wildling.additionalFlavorTexts[0] = wildling.flavorText;
@@ -1975,10 +1975,10 @@ public class Main : MelonMod
         conjurer.abilityUsage = EAbilityUsage.Once;
         conjurer.bluffable = false;
         conjurer.characterId = "Slinger_POW";
-        conjurer.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        conjurer.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         conjurer.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        conjurer.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        conjurer.color = new Color(1.0f, 0.651f, 0.9725f);
+        conjurer.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        conjurer.color = new Color(0.455f, 0.129f, 0.541f);
         nightPhase.nightCharactersOrder.Add(conjurer);
         conjurer.additionalFlavorTexts = new Il2CppStringArray(1);
         conjurer.additionalFlavorTexts[0] = conjurer.flavorText;
@@ -2001,10 +2001,10 @@ public class Main : MelonMod
         pois2.abilityUsage = EAbilityUsage.Once;
         pois2.bluffable = false;
         pois2.characterId = "PowderMaker_POW";
-        pois2.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        pois2.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         pois2.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        pois2.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        pois2.color = new Color(1.0f, 0.651f, 0.9725f);
+        pois2.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        pois2.color = new Color(0.455f, 0.129f, 0.541f);
         nightPhase.nightCharactersOrder.Add(pois2);
         pois2.additionalFlavorTexts = new Il2CppStringArray(1);
         pois2.additionalFlavorTexts[0] = pois2.flavorText;
@@ -2027,10 +2027,10 @@ public class Main : MelonMod
         pm.abilityUsage = EAbilityUsage.Once;
         pm.bluffable = false;
         pm.characterId = "Brewer_POW";
-        pm.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        pm.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         pm.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        pm.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        pm.color = new Color(1.0f, 0.651f, 0.9725f);
+        pm.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        pm.color = new Color(0.455f, 0.129f, 0.541f);
         nightPhase.nightCharactersOrder.Add(pm);
         pm.additionalFlavorTexts = new Il2CppStringArray(1);
         pm.additionalFlavorTexts[0] = pm.flavorText;
@@ -2054,14 +2054,41 @@ public class Main : MelonMod
         voodooMaster.abilityUsage = EAbilityUsage.Once;
         voodooMaster.bluffable = false;
         voodooMaster.characterId = "VoodooMaster_POW";
-        voodooMaster.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        voodooMaster.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         voodooMaster.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        voodooMaster.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        voodooMaster.color = new Color(1.0f, 0.651f, 0.9725f);
+        voodooMaster.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        voodooMaster.color = new Color(0.455f, 0.129f, 0.541f);
         nightPhase.nightCharactersOrder.Add(voodooMaster);
         voodooMaster.additionalFlavorTexts = new Il2CppStringArray(1);
         voodooMaster.additionalFlavorTexts[0] = voodooMaster.flavorText;
         voodooMaster.gender = EGender.Male;
+
+       /* Il2Cpp.CharacterData medu = new Il2Cpp.CharacterData();
+        medu.role = new Medusa();
+        medu.name = "Medusa";
+        medu.characterName = "Medusa";
+        medu.description = $"Executed cards don't show their real identity.\nYou cannot see your health.\nI lie and disguise.";
+        medu.flavorText = "\"Don't you love shaking a sinner's hand?\"";
+        medu.hints = customHint("Alignment Hint", "Covenant Follower");
+        medu.ifLies = "";
+        medu.notes = "";
+        medu.picking = false;
+
+        medu.startingAlignment = EAlignment.Evil;
+        medu.type = ECharacterType.Minion;
+
+
+        medu.abilityUsage = EAbilityUsage.Once;
+        medu.bluffable = false;
+        medu.characterId = "Medusa_POW";
+        medu.artBgColor = new Color(0.541f, 0.224f, 0.659f);
+        medu.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        medu.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        medu.color = new Color(0.455f, 0.129f, 0.541f);
+        nightPhase.nightCharactersOrder.Add(medu);
+        medu.additionalFlavorTexts = new Il2CppStringArray(1);
+        medu.additionalFlavorTexts[0] = medu.flavorText;
+        medu.gender = EGender.Female;*/
 
         Il2Cpp.CharacterData arch = new Il2Cpp.CharacterData();
         arch.role = new Archmage();
@@ -2078,10 +2105,10 @@ public class Main : MelonMod
         arch.abilityUsage = Il2Cpp.EAbilityUsage.Once;
         arch.bluffable = false;
         arch.characterId = "Archmage_POW";
-        arch.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        arch.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         arch.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        arch.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        arch.color = new Color(1.0f, 0.651f, 0.9725f);
+        arch.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        arch.color = new Color(0.455f, 0.129f, 0.541f);
         arch.additionalFlavorTexts = new Il2CppStringArray(1);
         arch.additionalFlavorTexts[0] = death.flavorText;
         arch.gender = EGender.Female;
@@ -2101,10 +2128,10 @@ public class Main : MelonMod
         hm.abilityUsage = Il2Cpp.EAbilityUsage.Once;
         hm.bluffable = false;
         hm.characterId = "HexMaster_POW";
-        hm.artBgColor = new Color(0.9882f, 0.3451f, 0.8235f);
+        hm.artBgColor = new Color(0.541f, 0.224f, 0.659f);
         hm.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        hm.cardBorderColor = new Color(1.0f, 0.4784f, 0.8784f);
-        hm.color = new Color(1.0f, 0.651f, 0.9725f);
+        hm.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        hm.color = new Color(0.455f, 0.129f, 0.541f);
         nightPhase.nightCharactersOrder.Add(hm);
         hm.additionalFlavorTexts = new Il2CppStringArray(1);
         hm.additionalFlavorTexts[0] = hm.flavorText;

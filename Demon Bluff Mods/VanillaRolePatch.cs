@@ -2,144 +2,135 @@
 using HarmonyLib;
 using Il2Cpp;
 using Il2CppSystem;
+using Il2CppTMPro;
 using MelonLoader;
-using System.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
-using System.Reflection.Metadata.Ecma335;
 
 [HarmonyPatch]
 public static class VanillaPatch
 {
 
-   /* [HarmonyPatch(typeof(Bishop), nameof(Bishop.Act))]
-    public static class BishopPatchInfo
+    [HarmonyPatch(typeof(ObjectivesUI), nameof(ObjectivesUI.UpdateObjectives))]
+    [HarmonyPriority(Priority.Last)]
+    public static class ChangeCounter
     {
-        static void Prefix(Bishop __instance,ETriggerPhase trigger, Character charRef)
+        public static void Postfix(ObjectivesUI __instance)
         {
-            if (trigger != ETriggerPhase.Day) return;
-            List<Character> pickedCharacters = new List<Character>();
-
-            Il2CppSystem.Collections.Generic.List<Character> allCharacters = Gameplay.CurrentCharacters;
-            allCharacters = Characters.Instance.FilterCharacterType(allCharacters, ECharacterType.Outcast);
-            if (allCharacters.Count > 0)
-                pickedCharacters.Add(allCharacters[UnityEngine.Random.Range(0, allCharacters.Count)]);
-
-            allCharacters = Gameplay.CurrentCharacters;
-            allCharacters = Characters.Instance.FilterCharacterType(allCharacters, ECharacterType.Villager);
-            if (allCharacters.Count > 0)
-                pickedCharacters.Add(allCharacters[UnityEngine.Random.Range(0, allCharacters.Count)]);
-
-            allCharacters = Gameplay.CurrentCharacters;
-            allCharacters = WhichMinions(allCharacters);
-            if (allCharacters.Count > 0)
-                pickedCharacters.Add(allCharacters[UnityEngine.Random.Range(0, allCharacters.Count)]);
-
-            if (allCharacters.Count == 0)
+            bool Medusa = false;
+            foreach (Character c in Gameplay.CurrentCharacters)
             {
-                allCharacters = Gameplay.CurrentCharacters;
-                allCharacters = Characters.Instance.FilterCharacterType(allCharacters, ECharacterType.Demon);
-                pickedCharacters.Add(allCharacters[UnityEngine.Random.Range(0, allCharacters.Count)]);
+                if (c.dataRef.characterId == "Medusa_POW")
+                {
+                    Medusa = true;
+                }
+            }
+            if (!Medusa) return;
+            int minions = Gameplay.CurrentScript.minion;
+            int demons = Gameplay.CurrentScript.demon;
+            var deadCharacters = Gameplay.DeadCharacters;
+            int EvilsKilled = 0;
+
+            foreach (var deadCharacter in deadCharacters)
+            {
+                if (deadCharacter.alignment == EAlignment.Evil)
+                {
+                    EvilsKilled++;
+                }
+            }
+            if (Medusa)
+            {
+                __instance.evilsKilled.text = string.Format("<color=grey>Evils killed:</color> <color=red>?");
+            }
+            else
+            {
+                __instance.evilsKilled.text = string.Format("<color=grey>Evils killed:</color> <color=red>{0}", EvilsKilled);
             }
 
-            System.Random random = new System.Random();
 
-            pickedCharacters = pickedCharacters
-                .OrderBy(c => c.id)
-                .ThenBy(_ => UnityEngine.Random.value)
-                .ToList();
-
-            List<int> ids = new List<int>();
-            foreach (Character c in pickedCharacters)
-                ids.Add(c.id);
-
-            pickedCharacters = pickedCharacters.OrderBy(x => random.Next()).ToList();
-
-            Il2CppSystem.Collections.Generic.List<Character> translatingPickedCharacters = new();
-            foreach (Character c in pickedCharacters)
+            string minionCountText = "Minions";
+            if (minions == 1)
             {
-                translatingPickedCharacters.Add(c);
+                minionCountText = "Minion";
             }
-            translatingPickedCharacters = ListHelper.ShuffleList(translatingPickedCharacters);
-
-            List<ECharacterType> types = new List<ECharacterType>();
-            foreach (Character c in pickedCharacters)
-                types.Add(c.GetCharacterData().type);
-
-            string info = ConjourInfo(ids, types, charRef);
-            List<Character> chars = new List<Character>(pickedCharacters);
-            Il2CppSystem.Collections.Generic.List<Character> translatingChars = new();
-            foreach (Character c in chars)
+            string demonCountText = "Demons";
+            if (demons == 1)
             {
-                translatingChars.Add(c);
+                demonCountText = "Demon";
             }
-            ActedInfo newInfo = new ActedInfo(info, translatingChars);
-            __instance.onActed?.Invoke(newInfo);
-            return;
+            __instance.objective.text = string.Format("Find and Execute all Evil Characters<br><color=grey><size=18>(<color=orange>{0}+ {2}</color> and <color=red>{1}+ {3} </color>)", minions, demons, minionCountText, demonCountText);
+            if (Medusa)
+            {
+                __instance.objective.text = "Find and Execute all Evil Characters.";
+                var texts = __instance.GetComponentsInChildren<TMP_Text>(true);
+
+                foreach (var text in texts)
+                {
+                    if (text == null)
+                        continue;
+
+                    if (text.text != null && text.text.Contains("Score:"))
+                    {
+                        text.text = "<size=20><color=grey>Score: <color=green><size=24>?";
+                    }
+                }
+            }
+        }
+        public static void DisableRedText()
+        {
+            GameObject[] objects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+            foreach (GameObject obj in objects)
+            {
+                if (obj != null && obj.name == "FloatingScore")
+                {
+                    obj.SetActive(false);
+                }
+            }
+        }
+        [HarmonyPatch(typeof(DisguiseIcon), nameof(DisguiseIcon.OnEnable))]
+        public static class HideDisguiseIconPatch
+        {
+            public static void Postfix(DisguiseIcon __instance)
+            {
+                if (__instance != null && CheckForMedusa())
+                {
+                    __instance.gameObject.SetActive(false);
+                }
+            }
+        }
+        [HarmonyPatch(typeof(HealthView), "RefreshView")]
+        public static class HealthViewPatch
+        {
+            [HarmonyPostfix]
+            public static void Postfix(HealthView __instance)
+            {
+                if (__instance.text != null && CheckForMedusa())
+                {
+                    __instance.text.text = "?";
+                }
+            }
+        }
+        public static bool CheckForMedusa()
+        {
+            if (Gameplay.CurrentCharacters != null)
+                foreach (Character c in Gameplay.CurrentCharacters)
+                {
+                    if (c.dataRef.characterId == "Medusa_POW")
+                    {
+                        return true;
+                    }
+                }
+            return false;
         }
     }
-    public static string ConjourInfo(List<int> ids, List<ECharacterType> characters, Character charRef)
-    {
-        List<string> keywords = new List<string>();
-        foreach (ECharacterType ct in characters)
-            keywords.Add(ct.ToString());
 
-        string info = "Between\n";
-
-        if (ids.Count == 2)
-            info += $"#{ids[0]}, #{ids[1]}";
-        if (ids.Count == 3)
-            info += $"#{ids[0]}, #{ids[1]}, #{ids[2]}";
-        if (ids.Count == 1)
-        {
-            info = $"#{ids[0]} is a {InCaseCustom(characters[0])}";
-            return info;
-        }
-
-        info += "\nthere is:\n";
-
-        if (characters.Count == 2)
-            info += $"{InCaseCustom(characters[0])} and {InCaseCustom(characters[1])}";
-        if (characters.Count == 3)
-            info += $"{InCaseCustom(characters[0])}, {InCaseCustom(characters[1])} and {InCaseCustom(characters[2])}";
-
-        return info;
-    }
-    public static string InCaseCustom(ECharacterType type)
-    {
-     
-            if (type == MafiaType.Member)
-            {
-                return "Mafia Member";
-            }
-            else if(type == CovType.Follower)
-            {
-                return "Coven Follower";
-            }
-        else
-        {
-            return type.ToString();
-        }
-       
-    }
-    public static Il2CppSystem.Collections.Generic.List<Character> WhichMinions(Il2CppSystem.Collections.Generic.List<Character> allCharacters)
-    {
-        Il2CppSystem.Collections.Generic.List<Character> amountOfMinions = Characters.Instance.FilterCharacterType(allCharacters, ECharacterType.Minion);
-        Il2CppSystem.Collections.Generic.List<Character> amountOfMafia = Characters.Instance.FilterCharacterType(allCharacters, MafiaType.Member);
-        Il2CppSystem.Collections.Generic.List<Character> amountOfCovenant = Characters.Instance.FilterCharacterType(allCharacters, CovType.Follower);
-        if (amountOfMinions.Count > 0)
-        {
-            return amountOfMinions;
-        }
-        else if (amountOfMafia.Count > 0) { return amountOfMafia; }
-        else { return amountOfCovenant; }
-    }*/
-    //TODO: Ask Skill Cycler why we need a PATCH FOR THIS!
-   
 }

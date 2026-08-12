@@ -26,7 +26,7 @@ public class Doomsayer : Neutrals
                 MelonLogger.Msg("The Doomsayer is Evil");
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Villager);
-                list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+                list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Good);
                 Il2CppSystem.Collections.Generic.List<Character> list2 = new Il2CppSystem.Collections.Generic.List<Character>();
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                 string line;
@@ -56,9 +56,9 @@ public class Doomsayer : Neutrals
             {
                 MelonLogger.Msg("The Doomsayer is Good");
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
-                list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Villager);
-                list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+                Il2CppSystem.Collections.Generic.List<Character> list3 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Evil);
+                list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Good);
                 Il2CppSystem.Collections.Generic.List<Character> list2 = new Il2CppSystem.Collections.Generic.List<Character>();
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
                 if (list1.Count > 0)
