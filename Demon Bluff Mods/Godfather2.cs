@@ -28,6 +28,11 @@ namespace Demon_Bluff_Mods
         CharacterData pickedCharacterPrevData;
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
+            if (trigger == ETriggerPhase.Init)
+            {
+                DjinnPOW.Jinx("Godfather");
+                
+            }
             if (trigger == ETriggerPhase.Start)
             {
                 SwapToGrunt();

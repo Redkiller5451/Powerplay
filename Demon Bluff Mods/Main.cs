@@ -55,6 +55,7 @@ public class Main : MelonMod
         ClassInjector.RegisterTypeInIl2Cpp<ChoirBoy>();
         ClassInjector.RegisterTypeInIl2Cpp<Scholar>();
         ClassInjector.RegisterTypeInIl2Cpp<Vigilante>();
+        ClassInjector.RegisterTypeInIl2Cpp<Oracle2>();
 
         ClassInjector.RegisterTypeInIl2Cpp<Veteran>();
         ClassInjector.RegisterTypeInIl2Cpp<SnakeCharmer>();
@@ -451,7 +452,7 @@ public class Main : MelonMod
         sher.characterName = "Constable";
         sher.description = "<b>At Night:</b>\n I search a character's house. If they are evil, learn they seem suspicious. If they are good, learn they are innocent.";
         sher.flavorText = "\"Is given higher authority to search for demons. \nMostly searches for drama.\"";
-        sher.hints = "If truthful: \n If I visit and Outcast Killing, Minion Killing, or Demon Killing, I will die.";
+        sher.hints = "If truthful: \nIf I visit an Outcast Killing, Minion Killing, or Demon Killing, I will die.";
         sher.ifLies = "Learn the opposite suspicion.";
         sher.notes = "";
         sher.picking = false;
@@ -583,6 +584,29 @@ public class Main : MelonMod
         teaLady.additionalFlavorTexts = new Il2CppStringArray(1);
         teaLady.additionalFlavorTexts[0] = teaLady.flavorText;
         teaLady.gender = EGender.Female;
+
+        Il2Cpp.CharacterData oracle = new Il2Cpp.CharacterData();
+        oracle.role = new Oracle2();
+        oracle.name = "Herbalist";
+        oracle.characterName = "Herbalist";
+        oracle.description = $"An unrevealed Villager role is immune to Corruption.\nLearn an unrevealed Villager.";
+        oracle.flavorText = "\"People call her treatments fake all the time.\nShe gets used to it.\"";
+        oracle.hints = "";
+        oracle.ifLies = $"Learn a bluff. I don't heal corruption.";
+        oracle.notes = "";
+        oracle.picking = false;
+        oracle.startingAlignment = EAlignment.Good;
+        oracle.type = ECharacterType.Villager;
+        oracle.abilityUsage = EAbilityUsage.Once;
+        oracle.bluffable = true;
+        oracle.characterId = "Herbalist_POW";
+        oracle.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        oracle.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        oracle.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        oracle.color = new Color(1f, 0.935f, 0.7302f);
+        oracle.additionalFlavorTexts = new Il2CppStringArray(1);
+        oracle.additionalFlavorTexts[0] = oracle.flavorText;
+        oracle.gender = EGender.Female;
 
         Il2Cpp.CharacterData dep = new Il2Cpp.CharacterData();
         dep.role = new Deputy();
@@ -843,14 +867,14 @@ public class Main : MelonMod
         rej.characterName = "Outlier";
         rej.description = "I do nothing";
         rej.flavorText = "\"Is banished for unknown reason.\nPossibly their smell.\"";
-        rej.hints = "I am the result of a bad Outcast interaction between a POWERPLAY demon and another mod. I cannot appear otherwise.";
+        rej.hints = "I am the result of a bad Outcast interaction between a POWERPLAY demon and another mod. I can appear naturally. More than One card can be an Outlier.";
         rej.ifLies = "";
         rej.notes = "";
         rej.picking = false;
         rej.startingAlignment = EAlignment.Good;
         rej.type = ECharacterType.Outcast;
         rej.abilityUsage = EAbilityUsage.Once;
-        rej.bluffable = false;
+        rej.bluffable = true;
         rej.characterId = "Outlier_POW";
         rej.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
         rej.cardBgColor = new Color(0.102f, 0.0667f, 0.0392f);
@@ -1003,7 +1027,7 @@ public class Main : MelonMod
         goon.role = new Goon();
         goon.name = "Mobster";
         goon.characterName = "Mobster";
-        goon.description = $"I change {formattedKeyText("Alignment")} based off who picked me";
+        goon.description = $"I change {formattedKeyText("Alignment")} based off who picked me.\nLearn when I swap alignments.";
         goon.flavorText = "\"I work for anyone, anything, anywhere\"";
         goon.hints = "";
         goon.ifLies = "";
@@ -1052,9 +1076,9 @@ public class Main : MelonMod
         pirate.role = new Pirate();
         pirate.name = "Pirate";
         pirate.characterName = "Pirate";
-        pirate.description = $"I duel a card. I die if they are of the same  {formattedKeyText("Alignment")}, they die if they are of a different  {formattedKeyText("Alignment")}";
+        pirate.description = $"I duel a card. I lose if they are of the same  {formattedKeyText("Alignment")}, they die if they are of a different  {formattedKeyText("Alignment")}";
         pirate.flavorText = "\"You've got a fine coin there!\n Mind if I take it?\"";
-        pirate.hints = customHint("Alignment Hint","Neutral");
+        pirate.hints = customHint("Alignment Hint","Neutral") + "\nI disable all Red text from appearing.";
         pirate.ifLies = "";
         pirate.notes = "";
         pirate.picking = false;
@@ -1070,6 +1094,29 @@ public class Main : MelonMod
         pirate.additionalFlavorTexts = new Il2CppStringArray(1);
         pirate.additionalFlavorTexts[0] = pirate.flavorText;
         pirate.gender = EGender.Male;
+
+        Il2Cpp.CharacterData cs = new Il2Cpp.CharacterData();
+        cs.role = new CursedSoul();
+        cs.name = "Actress";
+        cs.characterName = "Actress";
+        cs.description = $"I bluff as in in-play card. If I am good, the other card lies. If I am evil, I lie.";
+        cs.flavorText = "\"Your story is but a script, the world nothing other than a stage.\"";
+        cs.hints = customHint("Alignment Hint", "Neutral");
+        cs.ifLies = "";
+        cs.notes = "";
+        cs.picking = false;
+        cs.startingAlignment = NeutralAlignement.Neutral;
+        cs.type = NeutralType.Neutral;
+        cs.abilityUsage = EAbilityUsage.Once;
+        cs.bluffable = false;
+        cs.characterId = "Actress_POW";
+        cs.artBgColor = new Color(0.3679f, 0.2014f, 0.1541f);
+        cs.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        cs.cardBorderColor = new Color(0.7843f, 0.6471f, 0f);
+        cs.color = new Color(0.8510f, 0.4549f, 0.0f);
+        cs.additionalFlavorTexts = new Il2CppStringArray(1);
+        cs.additionalFlavorTexts[0] = cs.flavorText;
+        cs.gender = EGender.Female;
 
         Il2Cpp.CharacterData apprentice = new Il2Cpp.CharacterData();
         apprentice.role = new Apprentice();
@@ -1904,8 +1951,6 @@ public class Main : MelonMod
         mafio.additionalFlavorTexts[0] = mafio.flavorText;
         mafio.gender = EGender.Male;
 
-
-
         Il2Cpp.CharacterData cultM = new Il2Cpp.CharacterData();
         cultM.role = new CultMember();
         cultM.name = "Cult Member";
@@ -2403,6 +2448,8 @@ public class Main : MelonMod
         warScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
         warScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         warScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
+        JinxCharacter(warList, "Doppleganger_52694042");
+        JinxCharacter(warList, "WING_Dupery_Copycat");
         CharactersCount warCounter1 = setCharacterCount(2, 4, 3, 1);
         CharactersCount warCounter2 = setCharacterCount(2, 3, 3, 1);
         CharactersCount warCounter3 = setCharacterCount(1, 4, 2, 1);
@@ -2464,8 +2511,6 @@ public class Main : MelonMod
         gfScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         gfScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(gfScript.startingMinions, "Swarm_Good_WING");
-        JinxCharacter(gfScript.startingTownsfolks, "Oracle_07039445");
-        JinxCharacter(gfScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount gfCounter1 = setCharacterCount(6, 4, 2, 1);
         CharactersCount gfCounter2 = setCharacterCount(5, 2, 2, 1);
         CharactersCount gfCounter3 = setCharacterCount(5, 1, 2, 1);
@@ -2491,8 +2536,6 @@ public class Main : MelonMod
         mafScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         mafScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(mafScript.startingMinions, "Swarm_Good_WING");
-        JinxCharacter(mafScript.startingTownsfolks, "Oracle_07039445");
-        JinxCharacter(mafScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount mafCounter1 = setCharacterCount(4, 2, 3, 1);
         CharactersCount mafCounter2 = setCharacterCount(5, 3, 2, 1);
         CharactersCount mafCounter3 = setCharacterCount(5, 2, 2, 1);
@@ -2516,8 +2559,6 @@ public class Main : MelonMod
         archScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         archScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(archScript.startingMinions, "Swarm_Good_WING");
-        JinxCharacter(archScript.startingTownsfolks, "Oracle_07039445");
-        JinxCharacter(archScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount archCounter1 = setCharacterCount(6, 3, 2, 1);
         CharactersCount archCounter2 = setCharacterCount(5, 4, 2, 1);
         CharactersCount archCounter3 = setCharacterCount(5, 3, 2, 1);
@@ -2543,8 +2584,6 @@ public class Main : MelonMod
         hexScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         hexScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(hexScript.startingMinions, "Swarm_Good_WING");
-        JinxCharacter(hexScript.startingTownsfolks, "Oracle_07039445");
-        JinxCharacter(hexScript.startingTownsfolks, "Apprentice_POW");
         CharactersCount hexCounter1 = setCharacterCount(2, 3, 3, 1);
         CharactersCount hexCounter2 = setCharacterCount(4, 1, 4, 1);
         CharactersCount hexCounter3 = setCharacterCount(3, 2, 4, 1);
@@ -2572,7 +2611,7 @@ public class Main : MelonMod
         GodScriptData.scriptInfo = godScript;
 
         AscensionsData advancedAscension = ProjectContext.Instance.gameData.advancedAscension;
-       addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
+      addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
         addDemon(advancedAscension, war, "Baa_Difficult", "War_1", warScriptData, configCategory.GetEntry<int>("War_Weight").Value);
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData, configCategory.GetEntry<int>("Famine_Weight").Value);
        addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData, configCategory.GetEntry<int>("Pestilence_Weight").Value);
@@ -2597,8 +2636,17 @@ public class Main : MelonMod
         {
             ScriptInfo script = scriptData.scriptInfo;
            addRole(script.startingTownsfolks, official);
+           int randomAmountOfPilgrim = UnityEngine.Random.Range(1, 5);
+            int count = 0;
+            while (count <= randomAmountOfPilgrim)
+            {
+                addRole(script.startingTownsfolks, pil);
+                count++;
+            }
+            
             addRole(script.startingTownsfolks, parent);
             addRole(script.startingTownsfolks, dep);
+            addRole(script.startingTownsfolks, oracle);
             addRole(script.startingTownsfolks, admi);
             addRole(script.startingTownsfolks, guard);
             addRole(script.startingTownsfolks, sailor);
@@ -2620,6 +2668,14 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, sher);
             addRole(script.startingTownsfolks, lookout);
 
+            int randomAmountOfOutlier = UnityEngine.Random.Range(1, 4);
+            int count2 = 0;
+            while (count2 <= randomAmountOfOutlier)
+            {
+                addRole(script.startingOutsiders, rej);
+                count2++;
+            }
+
             addRole(script.startingOutsiders, veteran);
            addRole(script.startingOutsiders, tav);
            addRole(script.startingOutsiders, vanished);
@@ -2629,12 +2685,13 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, snakeCharmer);
 
             addRole(script.startingOutsiders, jester);
-            addRole(script.startingOutsiders, doom);
-           addRole(script.startingOutsiders, scapegoat);
+            addRole(script.startingOutsiders, cs);
+           addRole(script.startingOutsiders, doom);
+          addRole(script.startingOutsiders, scapegoat);
            addRole(script.startingOutsiders, apprentice);
             addRole(script.startingOutsiders, pirate);
-            addRole(script.startingOutsiders, godfather);
-            addRole(script.startingOutsiders, hangman);
+           addRole(script.startingOutsiders, godfather);
+           addRole(script.startingOutsiders, hangman);
             addRole(script.startingOutsiders, psycho);
 
             
@@ -2676,10 +2733,11 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", forger);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", pm);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", traveler);
-        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", indust);
+        
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", voodooMaster);
         
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", jester);
+        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", doom);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", official);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", amnesiac);
         Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
@@ -2699,8 +2757,11 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", bootlegger);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", enforcer);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", cons);
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", cs);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", scapegoat);
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", indust);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(snakeCharmer);
+       
     }
 
     public void addRole(Il2CppSystem.Collections.Generic.List<CharacterData> list, CharacterData data)

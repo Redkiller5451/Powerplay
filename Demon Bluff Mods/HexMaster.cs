@@ -29,6 +29,12 @@ namespace Demon_Bluff_Mods
         }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
+            if (trigger == ETriggerPhase.Init)
+            {
+                DjinnPOW.Jinx("Hex Master");
+                
+                
+            }
             if (trigger == ETriggerPhase.Start)
             {
                 SwapToCult();
@@ -39,7 +45,7 @@ namespace Demon_Bluff_Mods
             {
                 Il2CppSystem.Collections.Generic.List<Character> viableCharacters = Gameplay.CurrentCharacters;
                 viableCharacters = Characters.Instance.FilterAliveCharacters(viableCharacters);
-                viableCharacters = Characters.Instance.FilterAlignmentCharacters(viableCharacters, EAlignment.Good);
+                viableCharacters = Characters.Instance.FilterRealAlignmentCharacters(viableCharacters, EAlignment.Good);
                 viableCharacters = Characters.Instance.FilterCharacterMissingStatus(viableCharacters, Hexed.Hex);
 
                 if(viableCharacters.Count == 0)
@@ -51,7 +57,7 @@ namespace Demon_Bluff_Mods
                     charRef.RevealAllReal();
                     charRef.ShowActed(new ActedInfo("Oh I have called upon thee! Blast away the knife wielding one.\n<color=#6B275D>HEX BOMB</color>!!!"),ETriggerPhase.Day);
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+                    list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Good);
                     list1 = Characters.Instance.FilterAliveCharacters(list1);
                     foreach (Character character in list1)
                     {

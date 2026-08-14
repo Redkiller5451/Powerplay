@@ -50,6 +50,11 @@ public class War : Demon
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            DjinnPOW.Jinx("War");
+
+        }
         //CODE STEALING: credit to TheCaldo
         if (trigger == ETriggerPhase.Night)
         {

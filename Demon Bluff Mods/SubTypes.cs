@@ -216,7 +216,8 @@ namespace Demon_Bluff_Mods
                list.Add("Knight_47970624"); list.Add("Gambler_WING"); list.Add("Cardshark_WING" );
                 list.Add("Scavenger_WING"); list.Add("Innkeeper_scm" );
                 list.Add("Armorsmith_POW"); list.Add("Guard_POW" );
-                list.Add("Soldier_POW"); return list.Contains(id);
+                list.Add("Soldier_POW"); list.Add("Herbalist_POW");
+            return list.Contains(id);
         }
         private static bool IsTS(CharacterData charRef)
         {

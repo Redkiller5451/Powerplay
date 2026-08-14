@@ -15,6 +15,31 @@ using static UnityEngine.GraphicsBuffer;
 public static class TargetClassExtensions2
 {
     // The 'this' keyword "adds" this method to TargetClass at compile-time
+
+    public static Il2CppSystem.Collections.Generic.List<CharacterData> FilterCharacterType(this Gameplay instance, Il2CppSystem.Collections.Generic.List<CharacterData> allChars, ECharacterType charType)
+    {
+        Il2CppSystem.Collections.Generic.List<CharacterData> filteredList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        // You can now access public members of the instance
+        foreach (CharacterData character in allChars)
+        {
+            if (character.type == charType)
+                filteredList.Add(character);
+        }
+
+        return filteredList;
+    }
+    public static Il2CppSystem.Collections.Generic.List<CharacterData> FilterOutCharacterType(this Gameplay instance, Il2CppSystem.Collections.Generic.List<CharacterData> allChars, ECharacterType charType)
+    {
+        Il2CppSystem.Collections.Generic.List<CharacterData> filteredList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        // You can now access public members of the instance
+        foreach (CharacterData character in allChars)
+        {
+            if (character.type != charType)
+                filteredList.Add(character);
+        }
+
+        return filteredList;
+    }
     public static Il2CppSystem.Collections.Generic.List<Character> FilterOutCharacterType(this Characters instance, Il2CppSystem.Collections.Generic.List<Character> allChars, ECharacterType charType)
     {
         Il2CppSystem.Collections.Generic.List < Character > filteredList = new Il2CppSystem.Collections.Generic.List<Character> ();

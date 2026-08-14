@@ -87,12 +87,14 @@ public static class VanillaPatch
         public static void DisableRedText()
         {
             GameObject[] objects = Resources.FindObjectsOfTypeAll<GameObject>();
-
-            foreach (GameObject obj in objects)
+            if (CheckForPirate() || CheckForMedusa())
             {
-                if (obj != null && obj.name == "FloatingScore")
+                foreach (GameObject obj in objects)
                 {
-                    obj.SetActive(false);
+                    if (obj != null && obj.name == "FloatingScore")
+                    {
+                        obj.SetActive(false);
+                    }
                 }
             }
         }
@@ -125,6 +127,18 @@ public static class VanillaPatch
                 foreach (Character c in Gameplay.CurrentCharacters)
                 {
                     if (c.dataRef.characterId == "Medusa_POW")
+                    {
+                        return true;
+                    }
+                }
+            return false;
+        }
+        public static bool CheckForPirate()
+        {
+            if (Gameplay.CurrentCharacters != null)
+                foreach (Character c in Gameplay.CurrentCharacters)
+                {
+                    if (c.dataRef.characterId == "Pirate_POW")
                     {
                         return true;
                     }

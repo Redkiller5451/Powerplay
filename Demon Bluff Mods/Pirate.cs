@@ -18,7 +18,7 @@ namespace Demon_Bluff_Mods;
 [RegisterTypeInIl2Cpp]
 public class Pirate : Neutrals
 {
-
+    Character dueledCharacter = null;
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
         if (trigger == ETriggerPhase.Start)
@@ -33,8 +33,9 @@ public class Pirate : Neutrals
             do
             {
                 characterId = UnityEngine.Random.Range(0, list1.Count);
-            } while (list1[characterId] != charRef);
+            } while (list1[characterId] == charRef);
 
+            dueledCharacter = list1[characterId];
             list1[characterId].statuses.statuses.Add(Dueled.dueled);
         }
         if (trigger == ETriggerPhase.Day)
@@ -42,15 +43,16 @@ public class Pirate : Neutrals
             Gameplay gameplay = Gameplay.Instance;
             Characters instance = Characters.Instance;
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-            Character character = Characters.Instance.FilterCharacterContainsStatus(list1, Dueled.dueled)[0];
-            if (PickedAlignment(character,charRef))
+            Il2CppSystem.Collections.Generic.List<Character> duelList = new();
+            duelList.Add(dueledCharacter);
+            if (PickedAlignment(dueledCharacter, charRef))
             {
-                charRef.KillByDemon(character);
+                onActed?.Invoke(new ActedInfo($"I have failed to plunder #{dueledCharacter.id}", duelList));
             }
             else
             {
-                character.KillByDemon(charRef);
-                onActed?.Invoke(new ActedInfo($"I have successfully plundered #{character.id}", Characters.Instance.FilterCharacterContainsStatus(list1, Dueled.dueled)));
+                dueledCharacter.KillByDemon(charRef);
+                onActed?.Invoke(new ActedInfo($"I have successfully plundered #{dueledCharacter.id}", duelList));
             }
         }
     }

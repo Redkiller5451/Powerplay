@@ -33,9 +33,14 @@ namespace Demon_Bluff_Mods
         }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
+            if (trigger == ETriggerPhase.Init)
+            {
+                DjinnPOW.Jinx("Mafioso");
+                
+            }
             if (trigger == ETriggerPhase.Start)
             {
-               SwapToGrunt();
+                SwapToGrunt();
                charRef.statuses.AddStatus(ECharacterStatus.UnkillableByDemon, charRef);
             }
             if (charRef.state == ECharacterState.Dead) return;

@@ -30,7 +30,11 @@ public class Goon : Role
             return "This is a cool role!";
         }
     }
-
+    public override ActedInfo GetInfo(Character charRef)
+    {
+        ActedInfo actedInfo = new ActedInfo("I swapped alignments!");
+        return base.GetInfo(charRef);
+    }  
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
@@ -40,6 +44,7 @@ public class Goon : Role
             if (lastPicker != null)
             {
                 charRef.ChangeAlignment(lastPicker.alignment);
+                onActed?.Invoke(GetInfo(charRef));
             }
         }
     }

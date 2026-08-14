@@ -50,7 +50,48 @@ namespace Demon_Bluff_Mods
             sr.Add(new NightModeRule(randoNight));
             return sr;
         }
-
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetAllData()
+        {
+            CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
+            Il2CppSystem.Collections.Generic.List<CharacterData> trueAllDatas = new();
+            var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
+            if (loadedCharList != null)
+            {
+                allDatas = new CharacterData[loadedCharList.Length];
+                for (int j = 0; j < loadedCharList.Length; j++)
+                {
+                    allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
+                }
+            }
+            bool checkForPowerplay = false;
+            bool checkForWing = false;
+            bool checkForRiddler = false;
+            for (int j = 0; j < allDatas.Length; j++)
+            {
+                trueAllDatas.Add(allDatas[j]);
+                
+            }
+           foreach(CharacterData data in trueAllDatas)
+            {
+                if(data.characterId.EndsWith("_POW") && !checkForPowerplay)
+                {
+                    checkForPowerplay = true;
+                    MelonLogger.Msg("Powerplay is accounted for");
+                }
+                if (data.characterId.EndsWith("_scm") && !checkForRiddler)
+                {
+                    checkForRiddler = true;
+                    MelonLogger.Msg("Riddler is accounted for");
+                }
+                if (data.characterId.EndsWith("_WING") && !checkForWing)
+                {
+                    checkForWing = true;
+                    MelonLogger.Msg("Wingidon is accounted for");
+                }
+            }
+            
+            return trueAllDatas;
+        }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
             if (trigger == ETriggerPhase.Start)
@@ -59,24 +100,11 @@ namespace Demon_Bluff_Mods
             int nOfMinions = UnityEngine.Random.Range(0, 6);
             int nOfOutcasts = UnityEngine.Random.Range(0, 6);
             int nOfVillagers = nOfCharacters-nOfMinions-nOfOutcasts-1;
-            CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
-            Il2CppSystem.Collections.Generic.List<CharacterData> possibleMinions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+                Il2CppSystem.Collections.Generic.List<CharacterData> allDatas = GetAllData();
+                Il2CppSystem.Collections.Generic.List<CharacterData> possibleMinions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 Il2CppSystem.Collections.Generic.List<CharacterData> possibleOutcasts = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 Il2CppSystem.Collections.Generic.List<CharacterData> possibleVillagers = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 Il2CppSystem.Collections.Generic.List<CharacterData> possibleDemons = new Il2CppSystem.Collections.Generic.List<CharacterData>();
-            if (allDatas.Length == 0)
-            {
-                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
-                if (loadedCharList != null)
-                {
-                    allDatas = new CharacterData[loadedCharList.Length];
-                    for (int j = 0; j < loadedCharList.Length; j++)
-                    {
-                        
-                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
-                    }
-                }
-            }
                 MelonLogger.Msg("Data Indexes");
                 Il2CppSystem.Collections.Generic.List<string> blacklistMinionIDs = new();
                 blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with. 
@@ -86,10 +114,9 @@ namespace Demon_Bluff_Mods
                 blacklistMinionIDs.Add("Trickster_m_register_scm"); // Just in case.
                 blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
                 blacklistMinionIDs.Add("Trickster_o_scm"); // Should never be added
-                for (int j = 0; j < allDatas.Length; j++)
+                foreach (CharacterData d in allDatas)
             {
-                CharacterData d = allDatas[j];
-                    if ((d.type == ECharacterType.Demon) && (d.role is not Mutant || d.role is not Delusion))
+                    if ((d.type == ECharacterType.Demon) && (d.role is not Mutant || d.role is not Delusion || d.role is not God))
                     {
                         possibleDemons.Add(d);
                     }
@@ -105,14 +132,22 @@ namespace Demon_Bluff_Mods
                 {
                     possibleVillagers.Add(d);
                 }
+                   
             }
-            int count = 0;
+                MelonLogger.Msg($"size of villagers: {possibleVillagers.Count}");
+                MelonLogger.Msg($"size of outcasts: {possibleOutcasts.Count}");
+                MelonLogger.Msg($"size of minions: {possibleMinions.Count}");
+                MelonLogger.Msg($"size of demons: {possibleDemons.Count}");
+
+                int count = 0;
                 Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
                 Il2CppSystem.Collections.Generic.List<Character> list1 = new();
                 foreach (Character c in currentChars)
                 {
                     list1.Add(c);
                 }
+                MelonLogger.Msg("Demon Indexes");
+                charRef.Init(possibleDemons[UnityEngine.Random.Range(0, possibleDemons.Count)]);
                 list1.Remove(charRef);
             do
             {
@@ -142,6 +177,7 @@ namespace Demon_Bluff_Mods
             count = 0;
             do
             {
+                    MelonLogger.Msg($"{count < nOfVillagers}");
                     MelonLogger.Msg("Villager Indexes");
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
@@ -154,8 +190,7 @@ namespace Demon_Bluff_Mods
                     count++;
 
                 } while (count < nOfVillagers);
-                MelonLogger.Msg("Demon Indexes");
-                charRef.Init(possibleDemons[UnityEngine.Random.Range(0, possibleDemons.Count)]);
+                
                 foreach (Character c in currentChars)
                 {
                     list1.Add(c);

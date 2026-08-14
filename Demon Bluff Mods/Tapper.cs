@@ -171,7 +171,7 @@ public class Tapper : Role
         {
             return "is Silenced";
         }
-        if (status == Mad.mad2)
+        if (status == Mad.mad2 || status == Mad.mad)
         {
             return "is Mad";
         }
@@ -239,7 +239,7 @@ public class Tapper : Role
         lyingStatuses.Add(Poisoned.poisoned);
         lyingStatuses.Add(UO.UnknownObstacle);
         lyingStatuses.Add(Rbed.roleblocked);
-        List<bool> modsInstalled = IsAModInstalled();
+        Il2CppSystem.Collections.Generic.List<bool> modsInstalled = IsAModInstalled();
         if (modsInstalled[0])
         {
             lyingStatuses.Add((ECharacterStatus)1615919151); // Poisoned by Snake Charmer
@@ -293,38 +293,32 @@ public class Tapper : Role
 
 
     }
-    private List<bool> IsAModInstalled()
+    private Il2CppSystem.Collections.Generic.List<bool> IsAModInstalled()
     {
         //Code taken from Riddles. Developper code originally
-        List<bool> installedMods = new();
+        Il2CppSystem.Collections.Generic.List<bool> installedMods = new();
         // current list of mods: Riddles, Wingidon's Expansion Pack, Dupery Bluff
         // Requirements: Latest update after June 15th, 2026 & At least 1 modded character
-        CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
-        var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
-        if (loadedCharList != null)
-        {
-            allDatas = new CharacterData[loadedCharList.Length];
-            for (int j = 0; j < loadedCharList.Length; j++)
-            {
-                allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
-            }
-        }
+        Il2CppSystem.Collections.Generic.List<CharacterData> characters = Gameplay.Instance.GetAllAscensionCharacters();
         bool riddles = false;
         bool wingidon = false;
-        foreach (CharacterData characterdata in allDatas)
+        foreach (CharacterData character in characters)
         {
-            
-            if (characterdata.characterId.EndsWith("_scm")) riddles = true;
-            else if (characterdata.characterId.EndsWith("_WING")) wingidon = true;
-
-            if(riddles && wingidon)
             {
-                break;
+
+                if (character.characterId.EndsWith("_scm")) riddles = true;
+                else if (character.characterId.EndsWith("_WING")) wingidon = true;
+
+                if (riddles && wingidon)
+                {
+                    break;
+                }
             }
+            
         }
         installedMods.Add(wingidon);
-        installedMods.Add(riddles);
-        return installedMods;
+            installedMods.Add(riddles);
+            return installedMods;
     }
     private bool isAPingableStatus(ECharacterStatus status)
     {
@@ -335,7 +329,7 @@ public class Tapper : Role
         lyingStatuses.Add(Poisoned.poisoned);
         lyingStatuses.Add(UO.UnknownObstacle);
         lyingStatuses.Add(Rbed.roleblocked);
-        List<bool> modsInstalled = IsAModInstalled();
+        Il2CppSystem.Collections.Generic.List<bool> modsInstalled = IsAModInstalled();
         if (modsInstalled[0])
         {
             lyingStatuses.Add((ECharacterStatus)1615919151); // Poisoned by Snake Charmer

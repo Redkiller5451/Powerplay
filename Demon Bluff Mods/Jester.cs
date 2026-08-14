@@ -38,6 +38,8 @@ namespace Demon_Bluff_Mods
                     Characters instance = Characters.Instance;
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                     list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+                    list1 = Characters.Instance.FilterAliveCharacters(list1);
+                    if (list1.Count == 0) return;
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                     Character random = list1[randomIndex];
                     random.KillByDemon(charRef);

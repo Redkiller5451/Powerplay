@@ -108,11 +108,11 @@ namespace Demon_Bluff_Mods
                 Character random = list1[randomIndex];
                 if (random.GetRegisterAlignment() == EAlignment.Good)
                 {
-                    info.Add($"#{random.id} seems suspicious!");
+                    info.Add($"#{random.id} seems suspicious!\n");
                 }
                 else
                 {
-                    info.Add($"#{random.id} seems innocent!");
+                    info.Add($"#{random.id} seems innocent!\n");
                 }
                 if (charRef.revealed)
                 {

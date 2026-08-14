@@ -18,9 +18,14 @@ public class Doomsayer : Neutrals
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Day)
+        if (trigger == ETriggerPhase.Start)
         {
             changeAlignement(charRef);
+        }
+        
+            if (trigger == ETriggerPhase.Day)
+        {
+            
             if (charRef.alignment == EAlignment.Evil)
             {
                 MelonLogger.Msg("The Doomsayer is Evil");
@@ -29,6 +34,7 @@ public class Doomsayer : Neutrals
                 list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Good);
                 Il2CppSystem.Collections.Generic.List<Character> list2 = new Il2CppSystem.Collections.Generic.List<Character>();
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                list1 = Characters.Instance.FilterAliveCharacters(list1);
                 string line;
 
                 if (list1.Count > 0)
@@ -61,6 +67,8 @@ public class Doomsayer : Neutrals
                 list1 = Characters.Instance.FilterRealAlignmentCharacters(list1, EAlignment.Good);
                 Il2CppSystem.Collections.Generic.List<Character> list2 = new Il2CppSystem.Collections.Generic.List<Character>();
                 list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Villager);
+                list1 = Characters.Instance.FilterAliveCharacters(list1);
+                list3 = Characters.Instance.FilterAliveCharacters(list3);
                 if (list1.Count > 0)
                 {
                     int randomIndex = UnityEngine.Random.Range(0, list1.Count);
