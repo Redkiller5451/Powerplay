@@ -7,6 +7,14 @@ And Credit to Digital Bandido for the roles.
 
 Anyhow: Here are the Characters/Gimmicks
 
+# MASSIVE WARNING:
+It is HIGHLY RECOMMENDED, if you are very new to modding, to one: 
+Start with Wingidon's Expansion Pack or Riddler before this one. This is the HARDEST mod being currently updated. It introduces a LOT of mechanics,
+which can easily overwhelm players if they aren't used to modded Demon Bluff
+If you have already played Wingidon's or Riddler, another thing is to DISABLE Covenant and Mafia from spawning, as well as the Fallen Prophet. To do this,
+go to your files, where your mods are. There should be a file titled "UserData". Open it, click on "PowerplayConfig.cfg" and follow the instructions in the config file.
+Trust me, it's better for you to GRADUALLY introduce the mechanics then to be bombarded with them.
+
 ## Gimmicks
 
 ### Silence
