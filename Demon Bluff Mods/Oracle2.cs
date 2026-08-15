@@ -47,12 +47,15 @@ public class Oracle2 : Role
             {
                 Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
                 unrevealedCharacters = Characters.Instance.FilterBluffingCharacters(unrevealedCharacters);
+                unrevealedCharacters.Remove(charRef);
+                Il2CppSystem.Collections.Generic.List<string> unrevealedRoleNames = new();
                 Il2CppSystem.Collections.Generic.List<string> unrevealedRoles = new();
                 foreach (Character character in unrevealedCharacters)
                 {
                     if (!unrevealedRoles.Contains(character.bluff.characterId))
                     {
                         unrevealedRoles.Add(character.bluff.characterId);
+                        unrevealedRoleNames.Add(character.bluff.name);
                     }
                 }
                 if (unrevealedRoles.Count == 0)
@@ -61,16 +64,10 @@ public class Oracle2 : Role
                 }
                 else
                 {
-                    string protectedRole = unrevealedRoles[UnityEngine.Random.Range(0, unrevealedRoles.Count)];
-                    string protectedRoleName = "";
-                    foreach (Character character in unrevealedRoles)
-                    {
-                        if (character.dataRef.characterId == protectedRole)
-                        {
-                            protectedRoleName = character.dataRef.characterName;
-                            break;
-                        }
-                    }
+                    int index = UnityEngine.Random.Range(0, unrevealedRoles.Count);
+                    string protectedRole = unrevealedRoles[index];
+                    string protectedRoleName = unrevealedRoleNames[index];
+
                     onActed?.Invoke(new ActedInfo($"I protected {protectedRoleName} from Corruption!"));
 
                 }
@@ -79,12 +76,15 @@ public class Oracle2 : Role
             {
                 Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
                 unrevealedCharacters = Characters.Instance.FilterCharacterType(unrevealedCharacters, ECharacterType.Villager);
+                unrevealedCharacters.Remove(charRef);
                 Il2CppSystem.Collections.Generic.List<string> unrevealedRoles = new();
-                foreach(Character character in unrevealedCharacters)
+                Il2CppSystem.Collections.Generic.List<string> unrevealedRoleNames = new();
+                foreach (Character character in unrevealedCharacters)
                 {
                     if (!unrevealedRoles.Contains(character.dataRef.characterId))
                     {
                         unrevealedRoles.Add(character.dataRef.characterId);
+                        unrevealedRoleNames.Add(character.dataRef.name);
                     }
                 }
                 if (unrevealedRoles.Count == 0)
@@ -93,15 +93,15 @@ public class Oracle2 : Role
                 }
                 else
                 {
-                    string protectedRole = unrevealedRoles[UnityEngine.Random.Range(0, unrevealedRoles.Count)];
-                    string protectedRoleName = "";
+                    int index = UnityEngine.Random.Range(0, unrevealedRoles.Count);
+                    string protectedRole = unrevealedRoles[index];
+                    string protectedRoleName = unrevealedRoleNames[index];
                     foreach(Character character in unrevealedCharacters)
                     {
                         if(character.dataRef.characterId == protectedRole)
                         {
                             character.statuses.statuses.Remove(ECharacterStatus.Corrupted);
                             character.statuses.AddResistance(ECharacterStatus.Corrupted, charRef);
-                            protectedRoleName = character.dataRef.characterName;
                         }
                     }
                     onActed?.Invoke(new ActedInfo($"I protected {protectedRoleName} from Corruption!"));
@@ -117,12 +117,15 @@ public class Oracle2 : Role
         {
             Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
             unrevealedCharacters = Characters.Instance.FilterBluffingCharacters(unrevealedCharacters);
+            unrevealedCharacters.Remove(charRef);
+            Il2CppSystem.Collections.Generic.List<string> unrevealedRoleNames = new();
             Il2CppSystem.Collections.Generic.List<string> unrevealedRoles = new();
             foreach (Character character in unrevealedCharacters)
             {
                 if (!unrevealedRoles.Contains(character.bluff.characterId))
                 {
                     unrevealedRoles.Add(character.bluff.characterId);
+                    unrevealedRoleNames.Add(character.bluff.name);
                 }
             }
             if (unrevealedRoles.Count == 0)
@@ -131,16 +134,10 @@ public class Oracle2 : Role
             }
             else
             {
-                string protectedRole = unrevealedRoles[UnityEngine.Random.Range(0, unrevealedRoles.Count)];
-                string protectedRoleName = "";
-                foreach (Character character in unrevealedCharacters)
-                {
-                    if (character.dataRef.characterId == protectedRole)
-                    {
-                        protectedRoleName = character.dataRef.characterName;
-                        break;
-                    }
-                }
+                int index = UnityEngine.Random.Range(0, unrevealedRoles.Count);
+                string protectedRole = unrevealedRoles[index];
+                string protectedRoleName = unrevealedRoleNames[index];
+
                 onActed?.Invoke(new ActedInfo($"I protected {protectedRoleName} from Corruption!"));
 
             }

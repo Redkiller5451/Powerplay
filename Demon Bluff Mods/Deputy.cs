@@ -50,6 +50,8 @@ public class Deputy : Role
                 Gameplay gameplay = Gameplay.Instance;
                 Characters instance = Characters.Instance;
                 Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+                list1 = Characters.Instance.FilterAliveCharacters(list1);
+                list1.Remove(charRef);
                 Il2CppSystem.Collections.Generic.List<Character> list2 = new();
                 string line;
                 if (list1.Count > 0)

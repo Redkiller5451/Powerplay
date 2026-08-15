@@ -33,7 +33,7 @@ public class Goon : Role
     public override ActedInfo GetInfo(Character charRef)
     {
         ActedInfo actedInfo = new ActedInfo("I swapped alignments!");
-        return base.GetInfo(charRef);
+        return actedInfo;
     }  
 
     public override void Act(ETriggerPhase trigger, Character charRef)
@@ -43,7 +43,7 @@ public class Goon : Role
             if (charRef.state == ECharacterState.Dead) return;
             if (lastPicker != null)
             {
-                charRef.ChangeAlignment(lastPicker.alignment);
+                charRef.ChangeAlignment(lastPicker.GetRealAlignment());
                 onActed?.Invoke(GetInfo(charRef));
             }
         }

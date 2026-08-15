@@ -53,8 +53,20 @@ public class Doomsayer : Neutrals
                         list1.Remove(random);
                     }
                 }
-                list2[0].KillByDemon(charRef);
-                list2[1].KillByDemon(charRef);
+                if (list2.Count>0)
+                    list2[0].KillByDemon(charRef);
+                else
+                {
+                    onActed?.Invoke(new ActedInfo("There is noone else to doom!"));
+                    charRef.dataRef.picking = false;
+                }
+                if (list2.Count > 1)
+                    list2[1].KillByDemon(charRef);
+                else
+                {
+                    onActed?.Invoke(new ActedInfo("There is noone else to doom!"));
+                    charRef.dataRef.picking = false;
+                }
                 Health health = PlayerController.PlayerInfo.health;
                 health.Damage(6);
             }
@@ -84,8 +96,20 @@ public class Doomsayer : Neutrals
                     list2.Add(random);
                     list3.Remove(random);
                     }
-                list2[0].KillByDemon(charRef);
-                list2[1].KillByDemon(charRef);
+                if (list2.Count > 0)
+                    list2[0].KillByDemon(charRef);
+                else
+                {
+                    onActed?.Invoke(new ActedInfo("There is noone else to doom!"));
+                    charRef.dataRef.picking = false;
+                }
+                if (list2.Count > 1)
+                    list2[1].KillByDemon(charRef);
+                else
+                {
+                    onActed?.Invoke(new ActedInfo("There is noone else to doom!"));
+                    charRef.dataRef.picking = false;
+                }
                 Health health = PlayerController.PlayerInfo.health;
                 health.Damage(3);
             }

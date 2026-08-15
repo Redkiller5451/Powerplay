@@ -29,8 +29,12 @@ public class Godfather : Neutrals
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                 list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Villager);
                 list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
-                    
-                    Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
+                if (list1.Count == 0)
+                {
+                    charRef.ShowActed(new ActedInfo("No one took my advice!"), ETriggerPhase.Day);
+                    return;
+                }
+                Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                     random.ChangeAlignment(EAlignment.Evil);
                 random.statuses.statuses.Add(ECharacterStatus.Lying);
                 random.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
@@ -44,6 +48,11 @@ public class Godfather : Neutrals
                     Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
                     list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
                 list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+                if (list1.Count ==0)
+                {
+                    charRef.ShowActed(new ActedInfo("No one took my advice!"), ETriggerPhase.Day);
+                    return;
+                }
                 Character random = list1[UnityEngine.Random.Range(0, list1.Count)];
                     random.ChangeAlignment(EAlignment.Good);
                 random.statuses.statuses.Add(ECharacterStatus.HealthyBluff);

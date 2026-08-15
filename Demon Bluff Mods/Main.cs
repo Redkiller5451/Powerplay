@@ -1,8 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Demon_Bluff_Mods;
 using HarmonyLib;
-using UnityEngine;
-using UnityEngine.EventSystems;
 using Il2Cpp;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
@@ -11,7 +9,10 @@ using Il2CppTMPro;
 using MelonLoader;
 using MelonLoader.Utils;
 using Microsoft.Win32.SafeHandles;
-[assembly: MelonInfo(typeof(Demon_Bluff_Mods.Main), "Demon Bluff Mods", "1.9.2", "Redkiller")]
+using UnityEngine;
+using UnityEngine.EventSystems;
+using static VanillaPatch;
+[assembly: MelonInfo(typeof(Demon_Bluff_Mods.Main), "Demon Bluff Mods", "1.10.0", "Redkiller")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
 namespace Demon_Bluff_Mods;
@@ -124,7 +125,7 @@ public class Main : MelonMod
         NightPhase nightPhase = content.GetComponent<NightPhase>(); 
         configCategory = MelonPreferences.CreateCategory("PowerplaySettings");
         MakeTwelve();
-
+        VanillaPatch.DisableRedText();
         configCategory.CreateEntry("DebugMode", false, "Debug Mode", "Whether or not debug mode is enabled. Debug Mode outputs logs to the console about some roles and what they're doing.");
         configCategory.CreateEntry("AllowMafia", true, "Allow Mafia", "Whether or not Mafia can spawn");
         configCategory.CreateEntry("AllowCovenant", true, "Allow Covenant", "Whether or not Covenant can spawn");
@@ -196,12 +197,12 @@ public class Main : MelonMod
         vigilante.role = new Vigilante();
         vigilante.name = "Vigilante";
         vigilante.characterName = "Vigilante";
-        vigilante.description = "On Pick:\n I execute. ";
+        vigilante.description = "<b>When Revealed:</b>\nI choose a target.\nAt night, I kill my target. If they are good, I die as well. ";
         vigilante.flavorText = "\"This Slayer doesn't have restraint.\nIsn't always effective...\"";
         vigilante.hints = "";
         vigilante.ifLies = "My bullet is defective and I cannot shoot.";
         vigilante.notes = "";
-        vigilante.picking = true;
+        vigilante.picking = false;
         vigilante.startingAlignment = EAlignment.Good;
         vigilante.type = ECharacterType.Villager;
         vigilante.abilityUsage = EAbilityUsage.Once;
@@ -212,6 +213,7 @@ public class Main : MelonMod
         vigilante.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
         vigilante.color = new Color(1f, 0.935f, 0.7302f);
         vigilante.additionalFlavorTexts = new Il2CppStringArray(1);
+        nightPhase.nightCharactersOrder.Add(vigilante);
         vigilante.additionalFlavorTexts[0] = vigilante.flavorText;
         vigilante.gender = EGender.Male;
 
@@ -311,7 +313,7 @@ public class Main : MelonMod
         seer.role = new Prognosticator();
         seer.name = "Prognosticator";
         seer.characterName = "Prognosticator";
-        seer.description = "<b>On Pick:</b>\n: Choose a card. Learn how long their chain of same Alignment is.";
+        seer.description = "<b>On Pick:</b>\nChoose a card. Learn how long their chain of same Alignment is.";
         seer.flavorText = "\"Can easily discern friend from foe.\nJust look at who is partying with who!\"";
         seer.hints = "";
         seer.ifLies = "Learn a random number instead.";
@@ -1806,7 +1808,7 @@ public class Main : MelonMod
         gangster.role = new Gangster();
         gangster.name = "Gangster";
         gangster.characterName = "Gangster";
-        gangster.description = $"<b>At Night</b>:\n if I am adjacent to only one {formattedKeyText("Mafia")}, I kill my non-{formattedKeyText("Mafia")} Neighbor, dealing 3 {formattedKeyText("Damage")}.";
+        gangster.description = $"<b>At Night</b>:\n if I am adjacent to only one Evil, I kill my Good Neighbor, dealing 3 {formattedKeyText("Damage")}.";
         gangster.flavorText = "\"I'll take care of it. \n No problem!\"";
         gangster.hints = customHint("Alignment Hint", "Mafia Member"); ;
         gangster.ifLies = "";
@@ -2450,6 +2452,7 @@ public class Main : MelonMod
         warScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         JinxCharacter(warList, "Doppleganger_52694042");
         JinxCharacter(warList, "WING_Dupery_Copycat");
+        JinxCharacter(warList, "WING_Dupery_Bounty Hunter");
         CharactersCount warCounter1 = setCharacterCount(2, 4, 3, 1);
         CharactersCount warCounter2 = setCharacterCount(2, 3, 3, 1);
         CharactersCount warCounter3 = setCharacterCount(1, 4, 2, 1);
@@ -2611,7 +2614,7 @@ public class Main : MelonMod
         GodScriptData.scriptInfo = godScript;
 
         AscensionsData advancedAscension = ProjectContext.Instance.gameData.advancedAscension;
-      addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
+     addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
         addDemon(advancedAscension, war, "Baa_Difficult", "War_1", warScriptData, configCategory.GetEntry<int>("War_Weight").Value);
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData, configCategory.GetEntry<int>("Famine_Weight").Value);
        addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData, configCategory.GetEntry<int>("Pestilence_Weight").Value);
@@ -2647,6 +2650,7 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, parent);
             addRole(script.startingTownsfolks, dep);
             addRole(script.startingTownsfolks, oracle);
+            addRole(script.startingTownsfolks, vigilante);
             addRole(script.startingTownsfolks, admi);
             addRole(script.startingTownsfolks, guard);
             addRole(script.startingTownsfolks, sailor);
@@ -2655,7 +2659,7 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, newsman);
             addRole(script.startingTownsfolks, teaLady);
             addRole(script.startingTownsfolks, washerwoman);
-            addRole(script.startingTownsfolks, vigilante);
+            
             addRole(script.startingTownsfolks, knowItAll);
               addRole(script.startingTownsfolks, marksman);
             addRole(script.startingTownsfolks, fisherman);
@@ -2682,7 +2686,7 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, amnesiac);
             addRole(script.startingOutsiders, indust);
            addRole(script.startingOutsiders, goon); 
-            addRole(script.startingOutsiders, snakeCharmer);
+           addRole(script.startingOutsiders, snakeCharmer);
 
             addRole(script.startingOutsiders, jester);
             addRole(script.startingOutsiders, cs);

@@ -84,6 +84,7 @@ public static class VanillaPatch
                 }
             }
         }
+    }
         public static void DisableRedText()
         {
             GameObject[] objects = Resources.FindObjectsOfTypeAll<GameObject>();
@@ -147,4 +148,3 @@ public static class VanillaPatch
         }
     }
 
-}

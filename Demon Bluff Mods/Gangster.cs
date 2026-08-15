@@ -69,10 +69,10 @@ public class Gangster : MafiaMember
         Il2CppSystem.Collections.Generic.List<Character> neighbors = new Il2CppSystem.Collections.Generic.List<Character>();
         neighbors.Add(myList[0]);
         neighbors.Add(myList[myList.Count - 1]);
-        return ((neighbors[0].GetCharacterType() == MafiaType.Member || neighbors[0].GetCharacterType() == MafiaType.Leader) ||
-             (neighbors[1].GetCharacterType() == MafiaType.Member || neighbors[1].GetCharacterType() == MafiaType.Leader)) &&
-             !((neighbors[0].GetCharacterType() == MafiaType.Member || neighbors[0].GetCharacterType() == MafiaType.Leader) &&
-             (neighbors[1].GetCharacterType() == MafiaType.Member || neighbors[1].GetCharacterType() == MafiaType.Leader));
+        return ((neighbors[0].GetRealAlignment() == EAlignment.Evil) ||
+             (neighbors[1].GetRealAlignment() == EAlignment.Evil)) &&
+             !((neighbors[0].GetRealAlignment() == EAlignment.Evil) &&
+             (neighbors[1].GetRealAlignment() == EAlignment.Evil));
     }
     public Character GetNonMaf(Character charRef)
     {
