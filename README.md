@@ -1,6 +1,6 @@
 # Powerplay, a DB mod inspired by Town of Salem 2
 
-This is a mod for Demon Bluff, inspired by Town Of Salem 2, which introduces many VERY powerful roles and problems for you to face.
+This is a mod for Demon Bluff, inspired by Town Of Salem 2, which introduces up to 90 VERY powerful roles and problems for you to face.
 
 Credit to TheCaldo and Wingidon for helping me learn the basics and certain more complex additions. Credits to WWW for the Character creation tutorial.
 And Credit to Digital Bandido for the roles.
