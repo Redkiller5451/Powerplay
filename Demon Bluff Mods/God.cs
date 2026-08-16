@@ -52,6 +52,7 @@ namespace Demon_Bluff_Mods
         }
         public Il2CppSystem.Collections.Generic.List<CharacterData> GetAllData()
         {
+            MelonLogger.Msg("Getting the Datas");
             CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
             Il2CppSystem.Collections.Generic.List<CharacterData> trueAllDatas = new();
             var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
@@ -63,17 +64,31 @@ namespace Demon_Bluff_Mods
                     allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
                 }
             }
+            MelonLogger.Msg("Transfering the Datas");
             bool checkForPowerplay = false;
             bool checkForWing = false;
             bool checkForRiddler = false;
             for (int j = 0; j < allDatas.Length; j++)
             {
-                trueAllDatas.Add(allDatas[j]);
+                if(allDatas[j] != null)
+                    trueAllDatas.Add(allDatas[j]);
                 
             }
-           foreach(CharacterData data in trueAllDatas)
+            MelonLogger.Msg("Checking for other mods");
+            foreach (CharacterData data in trueAllDatas)
             {
-                if(data.characterId.EndsWith("_POW") && !checkForPowerplay)
+                if (data == null)
+                {
+                    MelonLogger.Warning("GetAllData: Found null CharacterData!");
+                    continue;
+                }
+
+                if (data.characterId == null)
+                {
+                    MelonLogger.Warning("GetAllData: CharacterData has null characterId!");
+                    continue;
+                }
+                if (data.characterId.EndsWith("_POW") && !checkForPowerplay)
                 {
                     checkForPowerplay = true;
                     MelonLogger.Msg("Powerplay is accounted for");
@@ -116,7 +131,7 @@ namespace Demon_Bluff_Mods
                 blacklistMinionIDs.Add("Trickster_o_scm"); // Should never be added
                 foreach (CharacterData d in allDatas)
             {
-                    if ((d.type == ECharacterType.Demon) && (d.role is not Mutant || d.role is not Delusion || d.role is not God))
+                    if ((d.type == ECharacterType.Demon) && (d.role is not Mutant && d.role is not Delusion && d.role is not God))
                     {
                         possibleDemons.Add(d);
                     }
@@ -188,9 +203,10 @@ namespace Demon_Bluff_Mods
                     MelonLogger.Msg($"{possibleVillagers.Count} villagers remaining");
                     list1.Remove(random);
                     count++;
+                    MelonLogger.Msg($"{nOfVillagers-count} villager spots remaining");
 
-                } while (count < nOfVillagers);
-                
+                } while (count < list1.Count);
+                 list1 = new();
                 foreach (Character c in currentChars)
                 {
                     list1.Add(c);

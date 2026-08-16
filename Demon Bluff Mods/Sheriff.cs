@@ -75,11 +75,11 @@ namespace Demon_Bluff_Mods
                 }
                 else if (random.GetRegisterAlignment() == EAlignment.Evil)
                 {
-                    info.Add($"#{random.id} seems suspicious!");
+                    info.Add($"#{random.id} seems suspicious!\n");
                 }
                 else
                 {
-                    info.Add($"#{random.id} seems innocent!");
+                    info.Add($"#{random.id} seems innocent!\n");
                 }
                     if (charRef.revealed)
                     {

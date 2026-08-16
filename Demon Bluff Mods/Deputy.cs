@@ -75,6 +75,7 @@ public class Deputy : Role
                 else
                 {
                     line = $"There are no evils to shoot!";
+                    list2.Add(charRef);
                 }
                 
                 onActed?.Invoke(new ActedInfo(line, list2));
@@ -93,10 +94,19 @@ public class Deputy : Role
             list1 = Characters.Instance.FilterRealCharacterType(list1, ECharacterType.Minion);
             Il2CppSystem.Collections.Generic.List<Character> list2 = new();
             string line;
+            if(list1.Count == 0)
+            {
+                line = $"There are no evils to shoot!";
+                list2.Add(charRef);
+            }
+            else
+            {
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
                  line = $"I shot #{random.id}, but the bullet missed!";
-            list2.Add(random) ;
+                  list2.Add(random) ;
+            }
+                
             onActed?.Invoke(new ActedInfo(line, list2));
 
         }

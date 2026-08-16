@@ -30,29 +30,6 @@ namespace Demon_Bluff_Mods
            
           
         }
-        public override CharacterData GetBluffIfAble(Character charRef)
-        {
-            CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
-            var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
-            if (loadedCharList != null)
-            {
-                allDatas = new CharacterData[loadedCharList.Length];
-                for (int j = 0; j < loadedCharList.Length; j++)
-                {
-                    allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
-                }
-            }
-            int charDataId = 0;
-            for (int j = 0; j < allDatas.Length; j++)
-            {
-                if (allDatas[j].characterId == "Herbalist_POW")
-                {
-                    charDataId = j;
-                    break;
-                }
-            }
-            return allDatas[charDataId];
-        }
     }
 }
 [HarmonyPatch]

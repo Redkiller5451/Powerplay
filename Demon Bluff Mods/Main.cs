@@ -662,7 +662,7 @@ public class Main : MelonMod
         parent.characterName = "Parent";
         parent.description = $"Learn what role my child is. I am unbluffable. I turn Evil if my child is Evil.";
         parent.flavorText = "\"Will do anything to protect their kid. \n Even if it means destroying the world.\"";
-        parent.hints = "";
+        parent.hints = "If I am evil, I might call my child the wrong gender.";
         parent.ifLies = "If I can, learn what bluff my child is.";
         parent.notes = "";
         parent.picking = false;
@@ -983,10 +983,10 @@ public class Main : MelonMod
         vanished.role = new Vanished();
         vanished.name = "Vanished";
         vanished.characterName = "Vanished";
-        vanished.description = $"I cast {formattedKeyText("Unknown Obstacle")} on myself.\n I silence my closest Evil neighbor.";
+        vanished.description = $"I cast {formattedKeyText("Obscure")} on myself.\n I silence my closest Evil neighbor.";
         vanished.flavorText = "\"Out of sight, out of mind is his motto.\"";
         vanished.hints = $"";
-        vanished.ifLies = $"I still cast {formattedKeyText("Unknown Obstacle")}.\n I instead silence my closest Good neighbor.";
+        vanished.ifLies = $"I still cast {formattedKeyText("Obscure")}.\n I instead silence my closest Good neighbor.";
         vanished.notes = "";
         vanished.picking = false;
         vanished.startingAlignment = EAlignment.Good;
@@ -1543,7 +1543,7 @@ public class Main : MelonMod
         star.role = new Starspawn();
         star.name = "Starspawn";
         star.characterName = "Starspawn";
-        star.description = $"3 cards at random have {formattedKeyText("Unknown Obstacle")}. \nI lie and disguise. \n <b>When Executed</b>: \nAll cards with {formattedKeyText("Unknown Obstacle")} become revealable.";
+        star.description = $"3 cards at random have {formattedKeyText("Obscure")}. \nI lie and disguise. \n <b>When Executed</b>: \nAll cards with {formattedKeyText("Obscure")} become revealable.";
         star.flavorText = "\"The being of above calls for endless night.\"";
         star.hints = "";
         star.ifLies = "";
@@ -1759,7 +1759,7 @@ public class Main : MelonMod
         enforcer.role = new Enforcer();
         enforcer.name = "Enforcer";
         enforcer.characterName = "Enforcer";
-        enforcer.description = $"<b>Game Start</b>:\nI cast {formattedKeyText("Unknown Obstacle")} on a random card.";
+        enforcer.description = $"<b>Game Start</b>:\nI cast {formattedKeyText("Obscure")} on a random card.";
         enforcer.flavorText = "\"The Bishop? Ah that guy? \n Don't try it. She won't talk.\"";
         enforcer.hints = customHint("Alignment Hint", "Mafia Member"); ;
         enforcer.ifLies = "";
@@ -2061,7 +2061,7 @@ public class Main : MelonMod
         pm.role = new PotionMaster();
         pm.name = "Brewer";
         pm.characterName = "Brewer";
-        pm.description = $"<b>Game Start</b>:\nOne card has a random status between Corrupted, {formattedKeyText("Unknown Obstacle")} and being {formattedKeyText("Mad")}.\nI lie and disguise.";
+        pm.description = $"<b>Game Start</b>:\nOne card has a random status between Corrupted, {formattedKeyText("Obscured")} and being {formattedKeyText("Mad")}.\nI lie and disguise.";
         pm.flavorText = "\"Like to mix and match ingredients. \n Results tend to favor the explosive kind.\"";
         pm.hints = customHint("Alignment Hint", "Covenant Follower");
         pm.ifLies = "";
@@ -3144,8 +3144,8 @@ public class Main : MelonMod
             case "Hexed": return "<color=#7E3A94>Hexed</color>";
             case "Starve": return "<color=#C20A0A>Starve</color>";
             case "Starved": return "<color=#C20A0A>Starved</color>";
-            case "UO": return "<color=#33327A>UO</color>";
-            case "Unknown Obstacle": return "<color=#33327A>Unknown Obstacle</color>";
+            case "Obscure": return "<color=#33327A>Obscure</color>";
+            case "Obscured": return "<color=#33327A>Obscured</color>";
             //Same as Wingidon
             case "Honest": return "<color=#7AC6FF>Honest</color>";
             case "Pure": return "<color=#7AFBFF>Pure</color>";
