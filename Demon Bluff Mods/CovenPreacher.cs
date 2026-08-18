@@ -132,14 +132,14 @@ public class CovenPreacher : Demon
                 break;
             }
         }
-        /*for (int j = 0; j < allDatas.Length; j++)
+        for (int j = 0; j < allDatas.Length; j++)
         {
             if (allDatas[j].characterId == "Medusa_POW")
             {
                 MafiaData.Add(allDatas[j]);
                 break;
             }
-        }*/
+        }
 
 
         Il2CppSystem.Collections.Generic.List<Character> allCharacters = Gameplay.CurrentCharacters;
@@ -165,10 +165,10 @@ public class CovenPreacher : Demon
             {
                 MafiaData.Remove(character1.dataRef);
             }
-         /*   if (character1.dataRef.characterId == "Medusa_POW")
+            if (character1.dataRef.characterId == "Medusa_POW")
             {
                 MafiaData.Remove(character1.dataRef);
-            }*/
+            }
         }
         if (MafiaData.Count == 0)
         {

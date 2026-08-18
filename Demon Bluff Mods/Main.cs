@@ -129,7 +129,8 @@ public class Main : MelonMod
         configCategory.CreateEntry("DebugMode", false, "Debug Mode", "Whether or not debug mode is enabled. Debug Mode outputs logs to the console about some roles and what they're doing.");
         configCategory.CreateEntry("AllowMafia", true, "Allow Mafia", "Whether or not Mafia can spawn");
         configCategory.CreateEntry("AllowCovenant", true, "Allow Covenant", "Whether or not Covenant can spawn");
-        configCategory.CreateEntry("SeekMisery", true, "Allow A bad bad idea", "Whether or not you can get the All Any scripts. PLS DONT TURN THIS ON.");
+        configCategory.CreateEntry("AllowWeather", true, "Allow Weather", "Whether or not Weather can spawn");
+        configCategory.CreateEntry("AllowNeutral", true, "Allow Neutral", "Whether or not Neutrals can spawn");
         configCategory.CreateEntry("Godfather_Weight", 2, description: "How likely Godfather will be in-play. Only available if Mafia is turned on.");
         configCategory.CreateEntry("Mafioso_Weight", 2, description: "How likely Mafioso will be in-play. Only available if Mafia is turned on.");
         configCategory.CreateEntry("Archmage_Weight", 2, description: "How likely Archmage will be in-play. Only available if Covenant is turned on.");
@@ -2110,12 +2111,12 @@ public class Main : MelonMod
         voodooMaster.additionalFlavorTexts[0] = voodooMaster.flavorText;
         voodooMaster.gender = EGender.Male;
 
-       /* Il2Cpp.CharacterData medu = new Il2Cpp.CharacterData();
+        Il2Cpp.CharacterData medu = new Il2Cpp.CharacterData();
         medu.role = new Medusa();
         medu.name = "Medusa";
         medu.characterName = "Medusa";
-        medu.description = $"Executed cards don't show their real identity.\nYou cannot see your health.\nI lie and disguise.";
-        medu.flavorText = "\"Don't you love shaking a sinner's hand?\"";
+        medu.description = $"3 cards are Muddled and don't show their identity.\nYou cannot see your health.\nI lie and disguise.";
+        medu.flavorText = "\"You look perfect little buddy!\nJust a little to the left!\"";
         medu.hints = customHint("Alignment Hint", "Covenant Follower");
         medu.ifLies = "";
         medu.notes = "";
@@ -2135,7 +2136,7 @@ public class Main : MelonMod
         nightPhase.nightCharactersOrder.Add(medu);
         medu.additionalFlavorTexts = new Il2CppStringArray(1);
         medu.additionalFlavorTexts[0] = medu.flavorText;
-        medu.gender = EGender.Female;*/
+        medu.gender = EGender.Female;
 
         Il2Cpp.CharacterData arch = new Il2Cpp.CharacterData();
         arch.role = new Archmage();
@@ -2638,7 +2639,7 @@ public class Main : MelonMod
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
         {
             ScriptInfo script = scriptData.scriptInfo;
-           addRole(script.startingTownsfolks, official);
+         /*  addRole(script.startingTownsfolks, official);
            int randomAmountOfPilgrim = UnityEngine.Random.Range(1, 5);
             int count = 0;
             while (count <= randomAmountOfPilgrim)
@@ -2667,10 +2668,11 @@ public class Main : MelonMod
             addRole(script.startingTownsfolks, seer);
             addRole(script.startingTownsfolks, tracker);
             addRole(script.startingTownsfolks, spy);
-            addRole(script.startingTownsfolks, psy);
+            
             addRole(script.startingTownsfolks, invest);
             addRole(script.startingTownsfolks, sher);
-            addRole(script.startingTownsfolks, lookout);
+            addRole(script.startingTownsfolks, lookout);*/
+            addRole(script.startingTownsfolks, psy);
 
             int randomAmountOfOutlier = UnityEngine.Random.Range(1, 4);
             int count2 = 0;
@@ -2687,16 +2689,20 @@ public class Main : MelonMod
             addRole(script.startingOutsiders, indust);
            addRole(script.startingOutsiders, goon); 
            addRole(script.startingOutsiders, snakeCharmer);
+            if (configCategory.GetEntry<bool>("AllowNeutral").Value)
+            {
 
-            addRole(script.startingOutsiders, jester);
-            addRole(script.startingOutsiders, cs);
-           addRole(script.startingOutsiders, doom);
-          addRole(script.startingOutsiders, scapegoat);
-           addRole(script.startingOutsiders, apprentice);
-            addRole(script.startingOutsiders, pirate);
-           addRole(script.startingOutsiders, godfather);
-           addRole(script.startingOutsiders, hangman);
-            addRole(script.startingOutsiders, psycho);
+                addRole(script.startingOutsiders, jester);
+                addRole(script.startingOutsiders, cs);
+                addRole(script.startingOutsiders, doom);
+                addRole(script.startingOutsiders, scapegoat);
+                addRole(script.startingOutsiders, apprentice);
+                addRole(script.startingOutsiders, pirate);
+                addRole(script.startingOutsiders, godfather);
+                addRole(script.startingOutsiders, hangman);
+                addRole(script.startingOutsiders, psycho);
+                addRole(script.startingMinions, traveler);
+            }
 
             
             addRole(script.startingMinions, cerenovus);
@@ -2704,13 +2710,15 @@ public class Main : MelonMod
             addRole(script.startingMinions, boomdandy);
             addRole(script.startingMinions, butcher);
             addRole(script.startingMinions, eTwin);
-            addRole(script.startingMinions, traveler);
+            
 
-    
+            if (configCategory.GetEntry<bool>("AllowWeather").Value)
+            {
                 addRole(script.startingMinions, stormyW);
-            addRole(script.startingMinions, foggyW);
-            addRole(script.startingMinions, sunnyW);
-            addRole(script.startingMinions, snowyW);
+                addRole(script.startingMinions, foggyW);
+                addRole(script.startingMinions, sunnyW);
+                addRole(script.startingMinions, snowyW);
+            }
             
 
             }
@@ -2754,6 +2762,7 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", eTwin);
         Characters.Instance.startGameActOrder = insertAfterAct("Godfather", devilsAdvocate);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", teaLady);
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", medu);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", parent);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", crazed);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", conjurer);

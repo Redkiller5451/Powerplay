@@ -54,7 +54,7 @@ namespace Demon_Bluff_Mods
                 onActed?.Invoke(GetInfo(charRef));
 
             }
-            if (trigger == ETriggerPhase.Night && GotRevealed )
+            if (trigger == BluffsActivationAtNight.NightAct && GotRevealed )
             {
                 if (victim != null)
                 {

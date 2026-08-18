@@ -73,6 +73,10 @@ namespace Demon_Bluff_Mods
                 }
                 SitNextToOutsider(charRef);
             }
+            if (trigger == ETriggerPhase.AfterRoundStart)
+            {
+                MuddleTheInfo();
+            }
         }
         private void SitNextToOutsider(Character charRef)
         {

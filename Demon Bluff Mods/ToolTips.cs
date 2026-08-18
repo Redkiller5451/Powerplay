@@ -127,15 +127,15 @@ namespace Demon_Bluff_Mods;
                     if (value.Contains("Obscure"))
                     {
                         value = value.Replace(
-                            "UO",
-                            "<link=\"UO\"><color=#33327A>Obscure</color></link>"
+                            "Obscure",
+                            "<link=\"Obscure\"><color=#33327A>Obscure</color></link>"
                         );
                     }
                     if (value.Contains("Obscured"))
                     {
                         value = value.Replace(
-                            "Unknown Obstacle",
-                            "<link=\"Unknown Obstacle\"><color=#33327A>Obscured</color></link>"
+                            "Obscured",
+                            "<link=\"Obscured\"><color=#33327A>Obscured</color></link>"
                         );
                     }
                     if (value.Contains("Badly Poison"))

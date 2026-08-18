@@ -382,7 +382,7 @@ namespace Demon_Bluff_Mods
                 {
                     if (trigger == ETriggerPhase.Day)
                     {
-                        __instance.ShowActed(new ActedInfo("I have been Intoxicated"),trigger);
+                        __instance.ShowActed(new ActedInfo("I have been Intoxicated"), trigger);
                     }
                     return false;
                 }
@@ -416,5 +416,51 @@ namespace Demon_Bluff_Mods
     public static class Audited
     {
         public static ECharacterStatus audited = (ECharacterStatus)300;
+    }
+    // This is taken straight from Skill Cycler. 
+    public static class Muddling
+    {
+        public static ECharacterStatus hiddenStatus = (ECharacterStatus)271;
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        public static class pvt
+        {
+            public static void Postfix(Character __instance)
+            {
+                if (__instance.statuses.Contains(hiddenStatus))
+                {
+                    if (__instance.bluff) __instance.chName.text = __instance.bluff.name.ToUpper();
+                    else __instance.chName.text = __instance.dataRef.name.ToUpper();
+                    //MelonLogger.Msg($"Muddled: #{__instance.id} is the {__instance.dataRef.characterName}");
+                }
+            }
+        }
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        public static class pvt2
+        {
+            public static bool Prefix(Character __instance)
+            {
+                if (__instance.statuses.Contains(hiddenStatus))
+                {
+                    if (__instance.bluff) __instance.chName.text = __instance.bluff.name.ToUpper();
+                    else __instance.chName.text = __instance.dataRef.name.ToUpper();
+                    return false;
+                }
+                return true;
+            }
+        }
+        [HarmonyPatch(typeof(Character), nameof(Character.ShowDescription))]
+        public static class HideTrueDescription
+        {
+            [HarmonyPriority(Priority.Last)]
+            public static void Postfix(Character __instance)
+            {
+                if (__instance.statuses.Contains(hiddenStatus) && !Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters).Contains(__instance))
+                {
+                    HintInfo info = new HintInfo();
+                    info.text = "True Role's ability text is hidden.";
+                    UIEvents.OnShowHint.Invoke(info, __instance.hintPivot);
+                }
+            }
+        }
     }
 }

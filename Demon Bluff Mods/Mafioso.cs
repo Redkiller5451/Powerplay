@@ -43,7 +43,11 @@ namespace Demon_Bluff_Mods
                 SwapToGrunt();
                charRef.statuses.AddStatus(ECharacterStatus.UnkillableByDemon, charRef);
             }
-            if (charRef.state == ECharacterState.Dead) return;
+            if (trigger == ETriggerPhase.AfterRoundStart)
+            {
+                MuddleTheInfo();
+            }
+                if (charRef.state == ECharacterState.Dead) return;
             if(trigger == ETriggerPhase.Night)
             {
                KillHidden(charRef);

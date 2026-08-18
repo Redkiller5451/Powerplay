@@ -56,7 +56,7 @@ namespace Demon_Bluff_Mods
         }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
-            if (trigger == ETriggerPhase.Night)
+            if (trigger == BluffsActivationAtNight.NightAct)
             {
                 if (charRef.state == ECharacterState.Dead) return;
                 Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);

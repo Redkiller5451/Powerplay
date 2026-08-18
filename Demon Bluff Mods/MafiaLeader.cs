@@ -202,6 +202,14 @@ public class MafiaLeader : Demon
                  MafiaData.RemoveAt(randomIndex);
         }
     }
+    public void MuddleTheInfo()
+    {
+        Il2CppSystem.Collections.Generic.List<Character> allCharacters = Gameplay.CurrentCharacters;
+        foreach (Character character in allCharacters)
+        {
+            character.statuses.AddStatus(Muddling.hiddenStatus, charRef);
+        }
+    }
    
     private bool AlreadyInPlay(CharacterData cd)
     {

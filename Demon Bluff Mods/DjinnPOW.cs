@@ -92,6 +92,7 @@ namespace Demon_Bluff_Mods
                 case "War":
                     invalidMinions.Add("Doppleganger_52694042");
                     invalidMinions.Add("WING_Dupery_Copycat");
+                    invalidMinions.Add("WING_Dupery_Doppelganger");
                     break;
                 case "Archmage":
                     invalidMinions.Add("Swarm_Good_WING");
@@ -101,9 +102,11 @@ namespace Demon_Bluff_Mods
                     break;
                 case "Godfather":
                     invalidMinions.Add("Swarm_Good_WING");
+                    invalidMinions.Add("Muddler_scm");
                     break;
                 case "Mafioso":
                     invalidMinions.Add("Swarm_Good_WING");
+                    invalidMinions.Add("Muddler_scm");
                     break;
             }
             return invalidMinions;

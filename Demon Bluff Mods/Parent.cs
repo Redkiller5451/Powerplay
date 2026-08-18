@@ -106,8 +106,28 @@ public class Parent : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Start)
+        {
+            MelonLogger.Msg("Parent Acted");
+            Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
+            Il2CppSystem.Collections.Generic.List<Character> list1 = new();
+            foreach (Character c in currentChars)
+            {
+                list1.Add(c);
+            }
+            list1.Remove(charRef);
+            isTheChild = list1[UnityEngine.Random.Range(0, list1.Count)];
+            if (isTheChild.alignment == EAlignment.Evil)
+            {
+                charRef.ChangeAlignment(EAlignment.Evil);
+            }
+        }
         if (trigger == ETriggerPhase.Day)
         {
+            if(isTheChild == null)
+            {
+                onActed?.Invoke(new ActedInfo("I can't seem to locate my child!"));
+            }
             if (isTheChild.bluff != null)
             {
                 onActed?.Invoke(GetBluffInfo(charRef));

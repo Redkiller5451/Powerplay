@@ -100,6 +100,7 @@ namespace Demon_Bluff_Mods
             blacklistMinionIDs.Add("Influencer_POW"); // The Covenite should never spawn
             blacklistMinionIDs.Add("VoodooMaster_POW"); // The Covenite should never spawn
             blacklistMinionIDs.Add("Wildling_POW"); // The Covenite should never spawn
+            blacklistMinionIDs.Add("Medusa_POW"); // The Covenite should never spawn
             Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
             list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Minion);
             foreach (Character character in list1)

@@ -26,14 +26,19 @@ public static class VanillaPatch
         public static void Postfix(ObjectivesUI __instance)
         {
             bool Medusa = false;
+            bool Mafia = false;
             foreach (Character c in Gameplay.CurrentCharacters)
             {
                 if (c.dataRef.characterId == "Medusa_POW")
                 {
                     Medusa = true;
                 }
+                if (c.dataRef.characterId == "Godfather2_POW" || c.dataRef.characterId == "Mafioso_POW")
+                {
+                    Mafia = true;
+                }
             }
-            if (!Medusa) return;
+            if (!Medusa && !Mafia) return;
             int minions = Gameplay.CurrentScript.minion;
             int demons = Gameplay.CurrentScript.demon;
             var deadCharacters = Gameplay.DeadCharacters;
@@ -46,7 +51,7 @@ public static class VanillaPatch
                     EvilsKilled++;
                 }
             }
-            if (Medusa)
+            if (Medusa || Mafia)
             {
                 __instance.evilsKilled.text = string.Format("<color=grey>Evils killed:</color> <color=red>?");
             }
@@ -88,7 +93,7 @@ public static class VanillaPatch
         public static void DisableRedText()
         {
             GameObject[] objects = Resources.FindObjectsOfTypeAll<GameObject>();
-            if (CheckForPirate() || CheckForMedusa())
+            if (CheckForPirate() || CheckForMedusa() || CheckForMafia())
             {
                 foreach (GameObject obj in objects)
                 {
@@ -104,7 +109,7 @@ public static class VanillaPatch
         {
             public static void Postfix(DisguiseIcon __instance)
             {
-                if (__instance != null && CheckForMedusa())
+                if (__instance != null && (CheckForMedusa()|| CheckForMafia()))
                 {
                     __instance.gameObject.SetActive(false);
                 }
@@ -116,7 +121,7 @@ public static class VanillaPatch
             [HarmonyPostfix]
             public static void Postfix(HealthView __instance)
             {
-                if (__instance.text != null && CheckForMedusa())
+                if (__instance.text != null && (CheckForMedusa()|| CheckForMafia()))
                 {
                     __instance.text.text = "?";
                 }
@@ -134,7 +139,19 @@ public static class VanillaPatch
                 }
             return false;
         }
-        public static bool CheckForPirate()
+    public static bool CheckForMafia()
+    {
+        if (Gameplay.CurrentCharacters != null)
+            foreach (Character c in Gameplay.CurrentCharacters)
+            {
+                if (c.dataRef.characterId == "Godfather2_POW" || c.dataRef.characterId == "Mafioso_POW")
+                {
+                    return true;
+                }
+            }
+        return false;
+    }
+    public static bool CheckForPirate()
         {
             if (Gameplay.CurrentCharacters != null)
                 foreach (Character c in Gameplay.CurrentCharacters)

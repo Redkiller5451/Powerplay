@@ -51,24 +51,8 @@ namespace Demon_Bluff_Mods
             return infor;
         }
         public override ActedInfo GetInfo(Character charRef)
-        {
-            ActedInfo actedInfo = new ActedInfo(MakeInfo());
-            return actedInfo;
-        }
-
-        public override ActedInfo GetBluffInfo(Character charRef)
-        {
-            ActedInfo actedInfo = new ActedInfo(MakeInfo());
-            return actedInfo;
-        }
-
-        public override void Act(ETriggerPhase trigger, Character charRef)
-        {
-            if (trigger == ETriggerPhase.Night)
-            {
-                nightCount++;
-                if (charRef.state == ECharacterState.Dead) return;
-                Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
+        { 
+            Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
                 Il2CppSystem.Collections.Generic.List<Character> list1 = new();
                 foreach (Character c in currentChars)
                 {
@@ -95,24 +79,12 @@ namespace Demon_Bluff_Mods
                     newInfo = makeInfoEvilVision(evilChar,randoChar,randoChar2);
                     info.Add(newInfo);
                 }
-                if (charRef.revealed)
-                {
-
-                    onActed.Invoke(GetInfo(charRef));
-                }
-            }
-            if (trigger == ETriggerPhase.Day)
-            {
-                charRef.revealed = true;
-                onActed.Invoke(GetInfo(charRef));
-            }
+            ActedInfo actedInfo = new ActedInfo(newInfo);
+            return actedInfo;
         }
-        public override void BluffAct(ETriggerPhase trigger, Character charRef)
-        {
-            if (trigger == BluffsActivationAtNight.NightAct)
-            {
-                nightCount++;
-                if (charRef.state == ECharacterState.Dead) return;
+
+        public override ActedInfo GetBluffInfo(Character charRef)
+        {   
                 Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
                 Il2CppSystem.Collections.Generic.List<Character> list1 = new();
                 foreach (Character c in currentChars)
@@ -140,16 +112,50 @@ namespace Demon_Bluff_Mods
                     newInfo = makeInfoEvilVision(evilChar, randoChar, randoChar2);
                     info.Add(newInfo);
                 }
+            ActedInfo actedInfo = new ActedInfo(newInfo);
+            return actedInfo;
+        }
+
+        public override void Act(ETriggerPhase trigger, Character charRef)
+        {
+            if (charRef.GetState() == ECharacterState.Dead) return;
+                if (trigger == BluffsActivationAtNight.NightAct)
+            {
+                nightCount++;
+               
+                if (charRef.revealed)
+                {
+
+                    onActed.Invoke(GetInfo(charRef));
+                    onActed.Invoke(new ActedInfo(MakeInfo()));
+                }
+            }
+            if (trigger == ETriggerPhase.Day)
+            {
+                charRef.revealed = true;
+                onActed.Invoke(GetInfo(charRef));
+                onActed.Invoke(new ActedInfo(MakeInfo()));
+            }
+        }
+        public override void BluffAct(ETriggerPhase trigger, Character charRef)
+        {
+            if (charRef.state == ECharacterState.Dead) return;
+            if (trigger == BluffsActivationAtNight.NightAct)
+            {
+                nightCount++;
+             
                 if (charRef.revealed)
                 {
 
                     onActed.Invoke(GetBluffInfo(charRef));
+                    onActed.Invoke(new ActedInfo(MakeInfo()));
                 }
             }
             if (trigger == ETriggerPhase.Day)
             {
                 charRef.revealed = true;
                 onActed.Invoke(GetBluffInfo(charRef));
+                onActed.Invoke(new ActedInfo(MakeInfo()));
             }
         }
         public Psychic() : base(ClassInjector.DerivedConstructorPointer<Psychic>())
