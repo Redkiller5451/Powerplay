@@ -243,6 +243,9 @@ I badly poison a card. If that card dies, another Good card is killed.
 ### Slinger (Evil, Covenant)
 Upon starting, I kill a Good card.
 
+### Medusa (Evil, Covenant)
+3 random cards are Muddled, and aren't revealed upon death.
+
 ### Voodoo Master (Evil, Covenant)
 I silence a Good card.
 
