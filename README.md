@@ -47,7 +47,7 @@ Each night, I search a house. Learn if they are Innocent or Suspicious
 Pick 3 cards, I say one in-play Villager between them
 
 ### Deputy (Good, Villager)
-I shoot a card. Learn if I missed. If I hit they die. 
+I shoot a card. Learn if I missed. If I hit they die. I don't care about defense and will pierce evils armor.
 
 ### Fisherman (Good, Villager)
 Learn how far away a specific villager is to their nearest Villager.
@@ -87,6 +87,9 @@ I am unbluffable. Learn a the role of my child. I take on the alignment of my ch
 
 ### Pilgrim (Good, Villager)
 I am a failsafe between another Villager and a Demon from Powerplay. Learn if i'm the Pilgrim.
+
+### Rehabilitator (Good, Villager)
+Each night, learn how many revealed cards are corrupted.
 
 ### Royal Knight (Good, Villager)
 I can only spawn with the Executive. If the Executive has a status or is dead, learn the Demon.
@@ -133,6 +136,9 @@ Pick 4 cards. If all are good, you win.
 ### Amnesiac (Good, Outcast)
 I have 6 random abilities. You dont learn which.
 
+### Demonologist (Good, Outcast)
+I hide a Minion from the Deckview. Learn all in-play Minion subtypes.
+
 ### Flutist (Good, Outcast)
 I swap with an Evil. They say if they have been swapped. I register as Evil, I cannot be Evil.
 
@@ -140,7 +146,7 @@ I swap with an Evil. They say if they have been swapped. I register as Evil, I c
 One character is Mad. Learn a mad card.
 
 ### Mobster (Good, Outcast)
-I turn into the alignement of the card that last picks me. Learn if I swapped alignments.
+I turn into the alignement of the card that last picks me. Learn if I swapped alignments. I randomly choose my alignment on Roundstart.
 
 ### Outlier (Good, Outcast)
 I am a failsafe between another Outcast and a Demon from Powerplay.
