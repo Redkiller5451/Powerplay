@@ -26,8 +26,8 @@ Mad cards register as the wrong thing.
 ### Protection
 Protected cards cannot die.
 
-### Unknown Obstacle
-You cannot click on cards with Unknown Obstacle.
+### Obscure
+You cannot click on cards with Obscure.
 
 ### Intoxicate
 Intoxicated On-Pick cards become useless.
