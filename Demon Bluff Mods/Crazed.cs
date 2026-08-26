@@ -38,7 +38,13 @@ public class Crazed : Demon
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if(trigger == ETriggerPhase.Start)
+        if (trigger == ETriggerPhase.Init)
+        {
+            DjinnPOW.Jinx("Crazed");
+
+
+        }
+        if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<Character> allChars = Gameplay.CurrentCharacters;
             allChars = Characters.Instance.FilterCharacterMissingStatus(allChars,Mad.mad2);

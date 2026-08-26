@@ -68,10 +68,13 @@ namespace Demon_Bluff_Mods
             bool checkForPowerplay = false;
             bool checkForWing = false;
             bool checkForRiddler = false;
+            bool checkForTST = false;
+            bool checkForCircus = false;
             for (int j = 0; j < allDatas.Length; j++)
             {
                 if(allDatas[j] != null)
-                    trueAllDatas.Add(allDatas[j]);
+                    if (allDatas[j].characterId != null)
+                        trueAllDatas.Add(allDatas[j]);
                 
             }
             MelonLogger.Msg("Checking for other mods");
@@ -103,6 +106,16 @@ namespace Demon_Bluff_Mods
                     checkForWing = true;
                     MelonLogger.Msg("Wingidon is accounted for");
                 }
+                if (data.characterId.EndsWith("_LRZH") && !checkForCircus)
+                {
+                    checkForCircus = true;
+                    MelonLogger.Msg("Circus is accounted for");
+                }
+                if (data.characterId.EndsWith("_TST") && !checkForTST)
+                {
+                    checkForTST = true;
+                    MelonLogger.Msg("The Salem Trials is accounted for");
+                }
             }
             
             return trueAllDatas;
@@ -112,9 +125,10 @@ namespace Demon_Bluff_Mods
             if (trigger == ETriggerPhase.Start)
             {
             int nOfCharacters = 15;
+            int nOfDemons = UnityEngine.Random.Range(1, 4);
             int nOfMinions = UnityEngine.Random.Range(0, 6);
             int nOfOutcasts = UnityEngine.Random.Range(0, 6);
-            int nOfVillagers = nOfCharacters-nOfMinions-nOfOutcasts-1;
+            int nOfVillagers = nOfCharacters-nOfMinions-nOfOutcasts-nOfDemons;
                 Il2CppSystem.Collections.Generic.List<CharacterData> allDatas = GetAllData();
                 Il2CppSystem.Collections.Generic.List<CharacterData> possibleMinions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 Il2CppSystem.Collections.Generic.List<CharacterData> possibleOutcasts = new Il2CppSystem.Collections.Generic.List<CharacterData>();
@@ -123,15 +137,28 @@ namespace Demon_Bluff_Mods
                 MelonLogger.Msg("Data Indexes");
                 Il2CppSystem.Collections.Generic.List<string> blacklistMinionIDs = new();
                 blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with. 
+                blacklistMinionIDs.Add("Bounty Hunter_39284184"); // Unused Content
+                blacklistMinionIDs.Add("Delusion_10561407"); // Unused Content
+                blacklistMinionIDs.Add("Mutant_84675843"); // Unused Content
+                blacklistMinionIDs.Add("Saint_61372493"); // Unused Content
+                blacklistMinionIDs.Add("Villager_80343266"); // Unused Content
+                blacklistMinionIDs.Add("Villager_94437181"); // Unused Content
                 blacklistMinionIDs.Add("Wretch_Evil_91222191"); // That's the wrong Wretch.
                 blacklistMinionIDs.Add("WING_Dupery_Fall Guy MinionRegister"); // Should never appear ever
                 blacklistMinionIDs.Add("Trickster_m_scm"); // Just in case.
                 blacklistMinionIDs.Add("Trickster_m_register_scm"); // Just in case.
                 blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
                 blacklistMinionIDs.Add("Trickster_o_scm"); // Should never be added
+                blacklistMinionIDs.Add("Repossessed_POW"); // Only Auditor adds this
+                blacklistMinionIDs.Add("GoodTwin_POW"); // Only Evil Twin adds this
+                blacklistMinionIDs.Add("Juror_POW"); // Only Court adds this
+                blacklistMinionIDs.Add("Acolyte_WING"); // Only Praesect adds this
+                blacklistMinionIDs.Add("Zealot_WING"); // Only Praesect adds this
+                blacklistMinionIDs.Add("Fanatic_WING"); // Only Undying adds this
+                blacklistMinionIDs.Add("Puppet_15989619"); //Only Puppeteer adds this
                 foreach (CharacterData d in allDatas)
             {
-                    if ((d.type == ECharacterType.Demon) && (d.role is not Mutant && d.role is not Delusion && d.role is not God))
+                    if ((d.type == ECharacterType.Demon) && !(blacklistMinionIDs.Contains(d.characterId)))
                     {
                         possibleDemons.Add(d);
                     }
@@ -143,7 +170,7 @@ namespace Demon_Bluff_Mods
                 {
                     possibleOutcasts.Add(d);
                 }
-                if (d.type == ECharacterType.Villager && (d.role is not UselessVillager && d.role is not SaintVillager && d.role is not BountyHunter))
+                if (d.type == ECharacterType.Villager && !(blacklistMinionIDs.Contains(d.characterId)))
                 {
                     possibleVillagers.Add(d);
                 }
@@ -164,7 +191,21 @@ namespace Demon_Bluff_Mods
                 MelonLogger.Msg("Demon Indexes");
                 charRef.Init(possibleDemons[UnityEngine.Random.Range(0, possibleDemons.Count)]);
                 list1.Remove(charRef);
-            do
+                count++;
+                do
+                {
+                    MelonLogger.Msg("Demon Indexes");
+                    int randomIndex = UnityEngine.Random.Range(0, list1.Count);
+                    Character random = list1[randomIndex];
+                    CharacterData minion = possibleDemons[UnityEngine.Random.Range(0, possibleDemons.Count)];
+                    random.Init(minion);
+                    possibleDemons.Remove(minion);
+                    list1.Remove(random);
+                    count++;
+
+                } while (count < nOfDemons);
+                count = 0;
+                do
             {
                     MelonLogger.Msg("Minions Indexes");
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
@@ -206,42 +247,7 @@ namespace Demon_Bluff_Mods
                     MelonLogger.Msg($"{nOfVillagers-count} villager spots remaining");
 
                 } while (count < list1.Count);
-                 list1 = new();
-                foreach (Character c in currentChars)
-                {
-                    list1.Add(c);
-                }
-                list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
-                MelonLogger.Msg("Effects Indexes");
-                foreach (Character character in list1)
-                {
-                    int randomIndex = UnityEngine.Random.Range(0, 4);
-                    if (randomIndex < 3)
-                    {
-                        int randomEffect = UnityEngine.Random.Range(0, 5);
-                        if (randomEffect == 0)
-                        {
-                            character.statuses.statuses.Add(ECharacterStatus.Corrupted);
-                        }
-                        if (randomEffect == 1)
-                        {
-                            character.statuses.statuses.Add(Mad.mad2);
-                        }
-                        if (randomEffect == 2)
-                        {
-                            character.statuses.statuses.Add(ECharacterStatus.Silenced);
-                        }
-                        if (randomEffect == 3)
-                        {
-                            character.statuses.statuses.Add(UO.UnknownObstacle);
-                        }
-                        if (randomEffect == 4)
-                        {
-                            character.statuses.statuses.Add(Rbed.roleblocked);
-                        }
-                        character.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
-                    }
-                }
+                 
             }
             }
                 

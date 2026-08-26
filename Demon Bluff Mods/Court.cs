@@ -38,6 +38,11 @@ public class Court : Demon
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            DjinnPOW.Jinx("Court");
+
+        }
         if (trigger == ETriggerPhase.Start)
         {
         Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
@@ -99,9 +104,18 @@ public class Court : Demon
                     }
                 }
             }
-        
+        if (trigger == ETriggerPhase.AfterRoundStart)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
+            foreach (Character c in list1)
+            {
+                c.statuses.statuses.RemoveRange(0, c.statuses.statuses.Count);
+                c.statuses.statuses.Remove(Protected.protect);
+            }
+            }
 
-    }
+
+        }
     public override CharacterData GetBluffIfAble(Character charRef)
     {
         CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();

@@ -94,7 +94,7 @@ public class Monarch : Role
                 }
                  else
                  {
-                line = $"\nAnd there are no more Villagers alive";
+                line += $"\nAnd there are no more Villagers alive";
                 }
             }
             else
@@ -104,8 +104,76 @@ public class Monarch : Role
             
             onActed?.Invoke(new ActedInfo(line,null));
         }
-       
-      }
+        if (CheckTriggerPhases().Contains(trigger))
+        {
+            SaintCureStatuses(charRef);
+            charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
+            if (charRef.alignment == EAlignment.Evil)
+            {
+                charRef.ChangeAlignment(EAlignment.Good);
+                if (charRef.dataRef.characterId != "Monarch_POW")
+                {
+                    SharedMethods sharedScripts = new SharedMethods();
+                    CharacterData saintRef = sharedScripts.GetCharDataViaID("Monarch_POW");
+                    charRef.Init(saintRef);
+                }
+            }
+        }
+    }
+
+    public override void BluffAct(ETriggerPhase trigger, Character charRef)
+    {
+        if (trigger == ETriggerPhase.Day)
+        {
+            this.onActed.Invoke(this.GetBluffInfo(charRef));
+
+        }
+    }
+
+    public Il2CppSystem.Collections.Generic.List<ETriggerPhase> CheckTriggerPhases()
+    {
+        Il2CppSystem.Collections.Generic.List<ETriggerPhase> returnList = new Il2CppSystem.Collections.Generic.List<ETriggerPhase>();
+        returnList.Add(ETriggerPhase.Start);
+        returnList.Add(ETriggerPhase.AfterRoundStart);
+        returnList.Add(ETriggerPhase.Day);
+        returnList.Add(ETriggerPhase.Night);
+        returnList.Add(ETriggerPhase.OnReveal);
+        returnList.Add(ETriggerPhase.OnExecuted);
+        returnList.Add(ETriggerPhase.OnPicked);
+        returnList.Add(ETriggerPhase.OnDied);
+        return returnList;
+    }
+    public void SaintCureStatuses(Character charRef)
+    {
+        if (charRef.statuses.Contains((ECharacterStatus)968))
+        {
+            charRef.statuses.statuses.Remove((ECharacterStatus)968);
+        }
+        if (charRef.statuses.Contains((ECharacterStatus)1615919000))
+        {
+            charRef.statuses.statuses.Remove((ECharacterStatus)1615919000);
+        }
+        if (charRef.statuses.Contains((ECharacterStatus)907))
+        {
+            charRef.statuses.statuses.Remove((ECharacterStatus)907);
+        }
+        if (charRef.statuses.Contains((ECharacterStatus)918919))
+        {
+            charRef.statuses.statuses.Remove((ECharacterStatus)918919);
+        }
+        if (charRef.statuses.Contains((ECharacterStatus)880)) // Evil-turned (Skill Cycler's Riddles)
+        {
+            charRef.statuses.statuses.Remove((ECharacterStatus)880);
+        }
+        if (charRef.statuses.Contains(ECharacterStatus.AppearLying))
+        {
+            charRef.statuses.statuses.Remove(ECharacterStatus.AppearLying);
+        }
+        if (charRef.statuses.Contains(Swapped.swapped))
+        {
+            charRef.statuses.statuses.Remove(Swapped.swapped);
+        }
+    }
     public override bool CheckIfCanBeKilled(Character charRef)
     {
         //if (charRef.statuses.statuses.Contains(ECharacterStatus.BrokenAbility))
@@ -116,14 +184,6 @@ public class Monarch : Role
             return true;
         else
             return false;
-    }
-    public override void BluffAct(ETriggerPhase trigger, Character charRef)
-    {
-        if (trigger == ETriggerPhase.Day)
-        {
-            this.onActed.Invoke(this.GetBluffInfo(charRef));
-
-        }
     }
     public override CharacterData? GetBluffIfAble(Character charRef)
     {

@@ -117,13 +117,13 @@ namespace Demon_Bluff_Mods
                 if (charRef.revealed)
                 {
 
-                    onActed.Invoke(GetInfo(charRef));
+                    onActed.Invoke(GetBluffInfo(charRef));
                 }
             }
             if (trigger == ETriggerPhase.Day)
             {
                 charRef.revealed = true;
-                onActed.Invoke(GetInfo(charRef));
+                onActed.Invoke(GetBluffInfo(charRef));
             }
         }
         public override CharacterData? GetBluffIfAble(Character charRef)

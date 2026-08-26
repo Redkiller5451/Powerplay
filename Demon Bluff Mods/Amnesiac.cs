@@ -41,6 +41,9 @@ public class Amnesiac : Role
             possibleTPOWs.Add(new Amnesiac4Pick()); // Fourth Amne
             possibleTPOWs.Add(new Amnesiac5Pick()); // Fifth Amne
             possibleTPOWs.Add(new Amnesiac6Pick()); // Sixth Amne
+            possibleTPOWs.Add(new Amnesiac7Pick()); // Seventh Amne
+            possibleTPOWs.Add(new Amnesiac8Pick()); // Eighth Amne
+            possibleTPOWs.Add(new Amnesiac9Pick()); // Ninth Amne
             int randomize = UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count);
             Role chosenTPOW = possibleTPOWs[randomize];
 
@@ -65,7 +68,10 @@ public class Amnesiac : Role
             possibleTPOWs.Add(new Amnesiac3Pick()); // Third Amne
             possibleTPOWs.Add(new Amnesiac4Pick()); // Fourth Amne
             possibleTPOWs.Add(new Amnesiac5Pick()); // Fifth Amne
-            possibleTPOWs.Add(new Amnesiac6Pick()); // Sixth Amne
+            possibleTPOWs.Add(new Amnesiac6Pick()); // Sixth Amne*/
+            possibleTPOWs.Add(new Amnesiac7Pick()); // Seventh Amne
+            possibleTPOWs.Add(new Amnesiac8Pick()); // Eighth Amne
+            possibleTPOWs.Add(new Amnesiac9Pick()); // Ninth Amne
             int randomize = UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count);
             Role chosenTPOW = possibleTPOWs[randomize];
 

@@ -124,18 +124,18 @@ namespace Demon_Bluff_Mods;
                             "<link=\"Starved\"><color=#C20A0A>Starved</color></link>"
                         );
                     }
-                    if (value.Contains("Obscure"))
+                    if (value.Contains("Block"))
                     {
                         value = value.Replace(
-                            "Obscure",
-                            "<link=\"Obscure\"><color=#33327A>Obscure</color></link>"
+                            "Block",
+                            "<link=\"Block\"><color=#33327A>Obscure</color></link>"
                         );
                     }
-                    if (value.Contains("Obscured"))
+                    if (value.Contains("Blocked"))
                     {
                         value = value.Replace(
-                            "Obscured",
-                            "<link=\"Obscured\"><color=#33327A>Obscured</color></link>"
+                            "Blocked",
+                            "<link=\"Blocked\"><color=#33327A>Blocked</color></link>"
                         );
                     }
                     if (value.Contains("Badly Poison"))
@@ -262,11 +262,11 @@ namespace Demon_Bluff_Mods;
                         new Color32(194, 10, 10, 255)
                     );
                 }
-                if (linkID == "Obscure" || linkID == "Obscured")
+                if (linkID == "Block" || linkID == "Blocked")
                 {
                     __result = new TooltipInfo(
-                        "Obscure prevents interacting with a card.",
-                        "Obscured",
+                        "Block prevents interacting with a card.",
+                        "Block",
                         new Color32(51, 50, 122, 255)
                     );
                 }

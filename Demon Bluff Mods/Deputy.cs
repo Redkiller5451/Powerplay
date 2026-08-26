@@ -62,7 +62,26 @@ public class Deputy : Role
                     {
                      random.Kill();
 
-                    line = $"I killed #{random.id}";
+                    line = $"I killed #{random.id}.";
+                        if (DjinnPOW.GetCharactersThatCannotDie().Contains(random.dataRef.characterId))
+                        {
+                            if (random.dataRef.characterId == "Vizier_LRZH")
+                            {
+                                line = $"#{random.id}, you are a poor excuse of a Vizier.";
+                            }
+                            else if (random.dataRef.characterId == "WING_Dupery_Scoundrel")
+                            {
+                                line = $"#{random.id}, a little Scoundrel like yourself should go back and cry to the Syndicate.";
+                            }
+                            else if (random.dataRef.characterId == "Squire_scm")
+                            {
+                                line = $"#{random.id}, to give up on the crown is to give up on life, Squire.";
+                            }
+                            else
+                            {
+                                line = $"#{random.id},Undying? We will see about that.";
+                            }
+                        }
                         random.RevealReal();
                     }
                     else

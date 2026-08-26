@@ -28,6 +28,7 @@ public static class TargetClassExtensions2
 
         return filteredList;
     }
+
     public static Il2CppSystem.Collections.Generic.List<CharacterData> FilterOutCharacterType(this Gameplay instance, Il2CppSystem.Collections.Generic.List<CharacterData> allChars, ECharacterType charType)
     {
         Il2CppSystem.Collections.Generic.List<CharacterData> filteredList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
@@ -50,6 +51,19 @@ public static class TargetClassExtensions2
                 filteredList.Add (character);
         }
         
+        return filteredList;
+    }
+    public static Il2CppSystem.Collections.Generic.List<Character> FilterUnrevealedCharacters(this Characters instance, Il2CppSystem.Collections.Generic.List<Character> allChars)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> filteredList = new Il2CppSystem.Collections.Generic.List<Character>();
+        Il2CppSystem.Collections.Generic.List<Character> revealedCards = Characters.Instance.FilterRevealedCharacters(Gameplay.CurrentCharacters);
+        // You can now access public members of the instance
+        foreach (Character character in allChars)
+        {
+            if (!revealedCards.Contains(character))
+                filteredList.Add(character);
+        }
+
         return filteredList;
     }
     public static Il2CppSystem.Collections.Generic.List<Character> FilterByRole(this Characters instance, Il2CppSystem.Collections.Generic.List<Character> allChars, string id)
@@ -116,6 +130,18 @@ public static class TargetClassExtensions2
         foreach (Character character in allChars)
         {
             if (character.state == ECharacterState.Dead)
+                filteredList.Add(character);
+        }
+
+        return filteredList;
+    }
+    public static Il2CppSystem.Collections.Generic.List<Character> FilterOnPick(this Characters instance, Il2CppSystem.Collections.Generic.List<Character> allChars)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> filteredList = new Il2CppSystem.Collections.Generic.List<Character>();
+        // You can now access public members of the instance
+        foreach (Character character in allChars)
+        {
+            if (character.dataRef.picking)
                 filteredList.Add(character);
         }
 

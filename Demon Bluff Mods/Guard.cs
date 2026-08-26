@@ -33,6 +33,7 @@ namespace Demon_Bluff_Mods
         }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
+
             Character random = null;
             if (trigger == ETriggerPhase.AfterRoundStart)
             {

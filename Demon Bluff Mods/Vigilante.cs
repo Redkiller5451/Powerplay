@@ -1,6 +1,7 @@
 ﻿using Il2Cpp;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
+using Il2CppSystem.Collections.Generic;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
@@ -40,13 +41,35 @@ namespace Demon_Bluff_Mods
             ActedInfo actedInfo = new ActedInfo("My bullet is defective!", null);
             return actedInfo;
         }
+        public Il2CppSystem.Collections.Generic.List<string> ValidShots()
+        {
+            Il2CppSystem.Collections.Generic.List<string> list = new();
+            list.Add("Trickster_scm");
+            list.Add("Trickster_v_scm");
+            list.Add("Trickster_o_scm");
+            list.Add("Trickster_m_scm"); list.Add("Saint_WING");
+            list.Add("Jailor_POW"); list.Add("Pacifist_POW");
+            list.Add("Executive_POW"); list.Add("Mayor_POW");
+            list.Add("Monarch_POW"); list.Add("Marshal_POW");
+            list.Add("Prosecutor_POW"); list.Add("Bombardier_79093372");
+            return list;
+        }
         public override void Act(ETriggerPhase trigger, Character charRef)
         {
             if (trigger == ETriggerPhase.Day)
             {
                 Il2CppSystem.Collections.Generic.List<Character> possibleCharacters = new();
                 possibleCharacters = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
+                foreach (string id in ValidShots
+                  ())
+                {
+                    possibleCharacters = Characters.Instance.FilterOutRole(possibleCharacters, id);
+                }
                 possibleCharacters.Remove(charRef);
+                if(possibleCharacters.Count == 0)
+                {
+                    onActed?.Invoke(new ActedInfo("I can't seem to get a good shot off"));
+                }
                 int randomIndex = UnityEngine.Random.Range(0, possibleCharacters.Count);
                 Character random = possibleCharacters[randomIndex];
                 victim = random;
@@ -70,7 +93,7 @@ namespace Demon_Bluff_Mods
                         }
                         else
                         {
-                            victim.Kill();
+                            victim.KillByDemon(charRef);
                             if (victim.GetRealAlignment() == EAlignment.Good)
                             {
                                 charRef.KillByDemon(charRef);

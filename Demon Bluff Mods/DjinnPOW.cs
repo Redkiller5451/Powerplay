@@ -89,10 +89,42 @@ namespace Demon_Bluff_Mods
             List<string> invalidMinions = new List<string>();
             switch (demon)
             {
+                case "Court":
+                    invalidMinions.Add("Supporter_POW");
+                    break;
+                case "Crazed":
+                    invalidMinions.Add("Empress_13782227");
+                    invalidMinions.Add("Bishop_58855542");
+                    invalidMinions.Add("Oracle_07039445");
+                    invalidMinions.Add("WiseElder_POW");
+                    break;
                 case "War":
                     invalidMinions.Add("Doppleganger_52694042");
                     invalidMinions.Add("WING_Dupery_Copycat");
                     invalidMinions.Add("WING_Dupery_Doppelganger");
+                    invalidMinions.Add("Bishop_58855542");
+                    invalidMinions.Add("Empress_13782227");
+
+                    invalidMinions.Add("Confectioner_scm");
+                    invalidMinions.Add("Captivator_scm");
+                    invalidMinions.Add("Hypnotist_scm");
+                    invalidMinions.Add("Chatterbox_WING");
+                    invalidMinions.Add("Marionette_WING");
+                    invalidMinions.Add("Mutant_WING");
+                    invalidMinions.Add("Renegade_WING");
+                    invalidMinions.Add("Switchblade_WING");
+                    invalidMinions.Add("Tergiversator_WING");
+                    invalidMinions.Add("Wretch_80988916");
+
+                    invalidMinions.Add("Baron_04539999");
+                    invalidMinions.Add("Mezepheles_09511163");
+                    invalidMinions.Add("Cryptid_WING");
+                    invalidMinions.Add("Ritualist_WING");
+                    invalidMinions.Add("Saboteur_WING");
+                    invalidMinions.Add("Snake Charmer_WING");
+                    invalidMinions.Add("Swarm_Good_WING");
+                    invalidMinions.Add("Undying_WING");
+
                     break;
                 case "Archmage":
                     invalidMinions.Add("Swarm_Good_WING");

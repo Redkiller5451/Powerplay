@@ -38,14 +38,35 @@ public class Goon : Role
 
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.OnPicked)
+        if (trigger == ETriggerPhase.Start)
+        {
+            changeAlignement(charRef);
+        }
+            if (trigger == ETriggerPhase.OnPicked)
         {
             if (charRef.state == ECharacterState.Dead) return;
             if (lastPicker != null)
             {
+                EAlignment alignment = charRef.GetRealAlignment();
                 charRef.ChangeAlignment(lastPicker.GetRealAlignment());
-                onActed?.Invoke(GetInfo(charRef));
+                if (charRef.GetRealAlignment() != alignment)
+                {
+                    onActed?.Invoke(GetInfo(charRef));
+                }
             }
+        }
+    }
+    public void changeAlignement(Character __instance)
+    {
+        MelonLogger.Msg($"#{__instance.id} is swapping alignements");
+        int randoChance = UnityEngine.Random.Range(0, 99);
+        if (randoChance > 49)
+        {
+            __instance.ChangeAlignment(EAlignment.Evil);
+        }
+        else
+        {
+            __instance.ChangeAlignment(EAlignment.Good);
         }
     }
     public static void SetLastPicker(Character picker)

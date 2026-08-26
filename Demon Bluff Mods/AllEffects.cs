@@ -369,6 +369,7 @@ namespace Demon_Bluff_Mods
     {
         public static ECharacterStatus roleblocked = (ECharacterStatus)291;
         public static ECharacterStatus silentRB = (ECharacterStatus)292;
+        public static ECharacterStatus stupidFix = (ECharacterStatus)1101010203;
         [HarmonyPatch(typeof(Character), nameof(Character.RoleAct))]
         public static class BecomeRbd
         {
@@ -390,6 +391,10 @@ namespace Demon_Bluff_Mods
                 if (__instance.statuses.Contains(silentRB) && (trigger == ETriggerPhase.AfterRoundStart || trigger == ETriggerPhase.Start))
                 {
 
+                    return false;
+                }
+                if (__instance.statuses.Contains(stupidFix) && (trigger == ETriggerPhase.AfterRoundStart || trigger == ETriggerPhase.Start))
+                {
                     return false;
                 }
                 return true;
@@ -416,6 +421,12 @@ namespace Demon_Bluff_Mods
     public static class Audited
     {
         public static ECharacterStatus audited = (ECharacterStatus)300;
+    }
+
+    public static class Obscured
+    {
+        public static ECharacterStatus Obscure = (ECharacterStatus)350;
+
     }
     // This is taken straight from Skill Cycler. 
     public static class Muddling

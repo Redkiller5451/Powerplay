@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Demon_Bluff_Mods
 {
     [RegisterTypeInIl2Cpp]
-    public class Official: Role
+    public class Official : Role
     {
         public Official() : base(ClassInjector.DerivedConstructorPointer<Official>())
         {
@@ -25,7 +25,7 @@ namespace Demon_Bluff_Mods
         {
             if (trigger == ETriggerPhase.Start)
             {
-  //NOT MY OWN CODE
+                //NOT MY OWN CODE
                 Il2CppSystem.Collections.Generic.List<CharacterData> possibleTPOWs = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 Il2CppSystem.Collections.Generic.List<string> possibleTPOWIDs = new Il2CppSystem.Collections.Generic.List<string>();
                 // Possible TPOWs: 
@@ -56,7 +56,7 @@ namespace Demon_Bluff_Mods
                         possibleTPOWs.Add(allDatas[j]);
                     }
                 }
-               
+
                 CharacterData chosenTPOW = possibleTPOWs[UnityEngine.Random.RandomRangeInt(0, possibleTPOWs.Count)];
                 /*if (chosenTPOW.role is Jailor)
                 {
@@ -67,20 +67,75 @@ namespace Demon_Bluff_Mods
                     Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Villager, chosenTPOW);
                 }*/
                 charRef.Init(chosenTPOW);
+                if (CheckTriggerPhases().Contains(trigger))
+                {
+                    SaintCureStatuses(charRef);
+                    charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
+                    if (charRef.alignment == EAlignment.Evil)
+                    {
+                        charRef.ChangeAlignment(EAlignment.Good);
+                        if (charRef.dataRef.characterId != "Executive_POW")
+                        {
+                            SharedMethods sharedScripts = new SharedMethods();
+                            CharacterData saintRef = sharedScripts.GetCharDataViaID("Executive_POW");
+                            charRef.Init(saintRef);
+                        }
+                    }
+                }
             }
         }
-        public override void BluffAct(ETriggerPhase trigger, Character charRef)
+
+
+    public override void BluffAct(ETriggerPhase trigger, Character charRef)
         {
-            if (trigger == ETriggerPhase.Start)
+            if (trigger == ETriggerPhase.Day)
             {
                 this.onActed.Invoke(this.GetBluffInfo(charRef));
 
             }
         }
-        public override ActedInfo GetBluffInfo(Character charRef)
+
+        public Il2CppSystem.Collections.Generic.List<ETriggerPhase> CheckTriggerPhases()
         {
-            ActedInfo actedInfo = new ActedInfo("I am corrupted", null);
-            return actedInfo;
+            Il2CppSystem.Collections.Generic.List<ETriggerPhase> returnList = new Il2CppSystem.Collections.Generic.List<ETriggerPhase>();
+            returnList.Add(ETriggerPhase.Start);
+            returnList.Add(ETriggerPhase.AfterRoundStart);
+            returnList.Add(ETriggerPhase.Day);
+            returnList.Add(ETriggerPhase.Night);
+            returnList.Add(ETriggerPhase.OnReveal);
+            returnList.Add(ETriggerPhase.OnExecuted);
+            returnList.Add(ETriggerPhase.OnPicked);
+            returnList.Add(ETriggerPhase.OnDied);
+            return returnList;
         }
+        public void SaintCureStatuses(Character charRef)
+        {
+            if (charRef.statuses.Contains((ECharacterStatus)968))
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)968);
+            }
+            if (charRef.statuses.Contains((ECharacterStatus)907))
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)907);
+            }
+            if (charRef.statuses.Contains((ECharacterStatus)918919))
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)918919);
+            }
+            if (charRef.statuses.Contains((ECharacterStatus)880)) // Evil-turned (Skill Cycler's Riddles)
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)880);
+            }
+            if (charRef.statuses.Contains(ECharacterStatus.AppearLying))
+            {
+                charRef.statuses.statuses.Remove(ECharacterStatus.AppearLying);
+            }
+            if (charRef.statuses.Contains(Swapped.swapped))
+            {
+                charRef.statuses.statuses.Remove(Swapped.swapped);
+            }
+        }
+
+
     }
 }

@@ -51,12 +51,74 @@ namespace Demon_Bluff_Mods
              
                 revealDisguises(charRef);
             }
+            if (CheckTriggerPhases().Contains(trigger))
+            {
+                SaintCureStatuses(charRef);
+                charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
+                if (charRef.alignment == EAlignment.Evil)
+                {
+                    charRef.ChangeAlignment(EAlignment.Good);
+                    if (charRef.dataRef.characterId != "Mayor_POW")
+                    {
+                        SharedMethods sharedScripts = new SharedMethods();
+                        CharacterData saintRef = sharedScripts.GetCharDataViaID("Mayor_POW");
+                        charRef.Init(saintRef);
+                    }
+                }
+            }
         }
+
         public override void BluffAct(ETriggerPhase trigger, Character charRef)
         {
             if (trigger == ETriggerPhase.Day)
             {
-                this.onActed.Invoke(new ActedInfo("I am Corrupted", null));
+                this.onActed.Invoke(this.GetBluffInfo(charRef));
+
+            }
+        }
+
+        public Il2CppSystem.Collections.Generic.List<ETriggerPhase> CheckTriggerPhases()
+        {
+            Il2CppSystem.Collections.Generic.List<ETriggerPhase> returnList = new Il2CppSystem.Collections.Generic.List<ETriggerPhase>();
+            returnList.Add(ETriggerPhase.Start);
+            returnList.Add(ETriggerPhase.AfterRoundStart);
+            returnList.Add(ETriggerPhase.Day);
+            returnList.Add(ETriggerPhase.Night);
+            returnList.Add(ETriggerPhase.OnReveal);
+            returnList.Add(ETriggerPhase.OnExecuted);
+            returnList.Add(ETriggerPhase.OnPicked);
+            returnList.Add(ETriggerPhase.OnDied);
+            return returnList;
+        }
+        public void SaintCureStatuses(Character charRef)
+        {
+            if (charRef.statuses.Contains((ECharacterStatus)968))
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)968);
+            }
+            if (charRef.statuses.Contains((ECharacterStatus)1615919000))
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)1615919000);
+            }
+            if (charRef.statuses.Contains((ECharacterStatus)907))
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)907);
+            }
+            if (charRef.statuses.Contains((ECharacterStatus)918919))
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)918919);
+            }
+            if (charRef.statuses.Contains((ECharacterStatus)880)) // Evil-turned (Skill Cycler's Riddles)
+            {
+                charRef.statuses.statuses.Remove((ECharacterStatus)880);
+            }
+            if (charRef.statuses.Contains(ECharacterStatus.AppearLying))
+            {
+                charRef.statuses.statuses.Remove(ECharacterStatus.AppearLying);
+            }
+            if (charRef.statuses.Contains(Swapped.swapped))
+            {
+                charRef.statuses.statuses.Remove(Swapped.swapped);
             }
         }
         // These methods are a fork of the Alchemists method, except with Disguises instead of Corruption
@@ -67,6 +129,11 @@ namespace Demon_Bluff_Mods
             foreach (Character ch in disguisedCharacters)
             {
                 ch.RevealAllReal();
+                if (ch.bluff.picking)
+                {
+                    ch.bluff.picking = false;
+                }
+
 
             }
             string line = ConjourInfo(disguisedCharacters);

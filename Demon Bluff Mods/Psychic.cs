@@ -14,7 +14,9 @@ namespace Demon_Bluff_Mods
     public class Psychic : Role
     {
         public List<string> info = new List<string>();
+        public List<ActedInfo> backupInfo = new List<ActedInfo>();
         int nightCount = 0;
+        public List<Character> usedUpCharacters = new List<Character>();
         public override string Description
         {
             get
@@ -59,25 +61,63 @@ namespace Demon_Bluff_Mods
                     list1.Add(c);
                 }
                 Il2CppSystem.Collections.Generic.List<Character> good = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
+            
                 Il2CppSystem.Collections.Generic.List<Character> evil = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
+            foreach (Character c in usedUpCharacters)
+            {
+                good.Remove(c);
+                evil.Remove(c);
+            }
                 string newInfo = "";
                 if (nightCount % 2 == 1)
                 {
-                    Character goodChar = good[UnityEngine.Random.Range(0, good.Count)];
+                Character goodChar;
+                Character randoChar;
+                if (good.Count == 0)
+                {
+                    goodChar = null;
+                }
+                else
+                {
+                    goodChar = good[UnityEngine.Random.Range(0, good.Count)];
                     list1.Remove(goodChar);
-                    Character randoChar = list1[UnityEngine.Random.Range(0, list1.Count)];
-                    newInfo = makeInfoGoodVision(goodChar, randoChar);
-                    info.Add(newInfo);
+                }
+                if (list1.Count == 0)
+                {
+                    randoChar = null;
+                }
+                else
+                {
+                    randoChar = list1[UnityEngine.Random.Range(0, list1.Count)];
+                }
+                newInfo = makeInfoGoodVision(goodChar, randoChar);
+                if (goodChar != null)
+                {
+                    usedUpCharacters.Add(goodChar);
+                }
+                info.Add(newInfo);
                 }
                 if (nightCount % 2 == 0)
                 {
-                    Character evilChar = evil[UnityEngine.Random.Range(0, evil.Count)];
+                Character evilChar;
+                if (evil.Count == 0)
+                {
+                    evilChar = null;
+                }
+                else
+                {
+                    evilChar = evil[UnityEngine.Random.Range(0, evil.Count)];
                     list1.Remove(evilChar);
-                    Character randoChar = list1[UnityEngine.Random.Range(0, list1.Count)];
+                }
+                Character randoChar = list1[UnityEngine.Random.Range(0, list1.Count)];
                     list1.Remove(randoChar);
                     Character randoChar2 = list1[UnityEngine.Random.Range(0, list1.Count)];
                     newInfo = makeInfoEvilVision(evilChar,randoChar,randoChar2);
-                    info.Add(newInfo);
+                if (evilChar != null)
+                {
+                    usedUpCharacters.Add(evilChar);
+                }
+                info.Add(newInfo);
                 }
             ActedInfo actedInfo = new ActedInfo(newInfo);
             return actedInfo;
@@ -96,19 +136,61 @@ namespace Demon_Bluff_Mods
                 string newInfo = "";
                 if (nightCount % 2 == 1)
                 {
-                    Character goodChar = evil[UnityEngine.Random.Range(0, evil.Count)];
+                Character goodChar;
+                Character randoChar;
+                if (evil.Count == 0)
+                {
+                    goodChar = null;
+                }
+                else
+                {
+                    goodChar = evil[UnityEngine.Random.Range(0, evil.Count)];
                     evil.Remove(goodChar);
-                    Character randoChar = evil[UnityEngine.Random.Range(0, evil.Count)];
+                }
+                if (evil.Count == 0)
+                {
+                    randoChar = null;
+                }
+                else
+                {
+                    randoChar = evil[UnityEngine.Random.Range(0, evil.Count)];
+                }
+                    
                     newInfo = makeInfoGoodVision(goodChar, randoChar);
                     info.Add(newInfo);
                 }
-                if (nightCount % 2 == 0)
+            if (nightCount % 2 == 0)
+            {
+                Character evilChar;
+                Character randoChar;
+                Character randoChar2;
+                if (good.Count == 0)
                 {
-                    Character evilChar = good[UnityEngine.Random.Range(0, good.Count)];
+                    evilChar = null;
+                }
+                else
+                {
+                    evilChar = good[UnityEngine.Random.Range(0, good.Count)];
                     good.Remove(evilChar);
-                    Character randoChar = good[UnityEngine.Random.Range(0, good.Count)];
+                }
+                     if (good.Count == 0)
+                         {
+                          randoChar = null;
+                          }   
+                    else
+                    { 
+                    randoChar = good[UnityEngine.Random.Range(0, good.Count)];
                     good.Remove(randoChar);
-                    Character randoChar2 = good[UnityEngine.Random.Range(0, good.Count)];
+                    }
+                if (good.Count == 0)
+                {
+                    randoChar2 = null;
+                }
+                else
+                {
+                    randoChar2 = good[UnityEngine.Random.Range(0, good.Count)];
+                }
+                    
                     newInfo = makeInfoEvilVision(evilChar, randoChar, randoChar2);
                     info.Add(newInfo);
                 }
@@ -122,18 +204,25 @@ namespace Demon_Bluff_Mods
                 if (trigger == BluffsActivationAtNight.NightAct)
             {
                 nightCount++;
-               
+
                 if (charRef.revealed)
                 {
 
                     onActed.Invoke(GetInfo(charRef));
                     onActed.Invoke(new ActedInfo(MakeInfo()));
                 }
+                else
+                {
+                    backupInfo.Add(GetInfo(charRef));
+                }
             }
             if (trigger == ETriggerPhase.Day)
             {
                 charRef.revealed = true;
-                onActed.Invoke(GetInfo(charRef));
+                foreach (ActedInfo actedInfo in backupInfo)
+                {
+                    onActed.Invoke(actedInfo);
+                }
                 onActed.Invoke(new ActedInfo(MakeInfo()));
             }
         }
@@ -150,10 +239,18 @@ namespace Demon_Bluff_Mods
                     onActed.Invoke(GetBluffInfo(charRef));
                     onActed.Invoke(new ActedInfo(MakeInfo()));
                 }
+                else
+                {
+                    backupInfo.Add(GetBluffInfo(charRef));
+                }
             }
             if (trigger == ETriggerPhase.Day)
             {
                 charRef.revealed = true;
+                foreach (ActedInfo actedInfo in backupInfo)
+                {
+                    onActed.Invoke(actedInfo);
+                }
                 onActed.Invoke(GetBluffInfo(charRef));
                 onActed.Invoke(new ActedInfo(MakeInfo()));
             }

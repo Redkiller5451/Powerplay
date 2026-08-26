@@ -207,6 +207,11 @@ namespace Demon_Bluff_Mods
             list.Add("Marksman_POW"); list.Add("Newsman_POW");
             list.Add("Prognosticator_POW"); list.Add("WiseElder_POW");
             list.Add("Constable_POW"); list.Add("Huntress_POW");
+            list.Add("Mason_LRZH"); list.Add("Surveyor_LRZH");
+            list.Add("Watchman_LRZH"); list.Add("Town Crier_LRZH");
+            list.Add("Sheriff_TST"); list.Add("Detective_TST");
+            list.Add("Seer_TST"); list.Add("Psychic_TST");
+            list.Add("Sibyl_TST");
             return list.Contains(id);
                  }
         private static bool IsTP(CharacterData charRef)
@@ -217,6 +222,7 @@ namespace Demon_Bluff_Mods
                 list.Add("Scavenger_WING"); list.Add("Innkeeper_scm" );
                 list.Add("Armorsmith_POW"); list.Add("Guard_POW" );
                 list.Add("Soldier_POW"); list.Add("Herbalist_POW");
+            list.Add("Cleric_TST");
             return list.Contains(id);
         }
         private static bool IsTS(CharacterData charRef)
@@ -244,7 +250,8 @@ namespace Demon_Bluff_Mods
                 list.Add("Parent_POW"); list.Add("Pilgrim_POW" );
                 list.Add("RoyalKnight_POW"); list.Add("Scholar_POW");
             list.Add("Lovestruck_POW"); list.Add("Operative_POW");
-            list.Add("Tapper_POW");
+            list.Add("Tapper_POW"); list.Add("Watchman_LRZH");
+            list.Add("Admirer_TST"); list.Add("Trapper_TST");
             return list.Contains(id);
         }
         private static bool IsTK(CharacterData charRef)
@@ -292,6 +299,9 @@ namespace Demon_Bluff_Mods
             list.Add("Amnesiac_POW"); list.Add("Flutist_POW");
             list.Add("Industrialist_POW"); list.Add("Outlier_POW");
             list.Add("Vanished_POW"); list.Add("Winemaker_POW");
+            list.Add("Abomination_LRZH"); list.Add("Snitch_LRZH");
+            list.Add("Sweetheart_LRZH"); list.Add("Joker_TST");
+            list.Add("Plaguebearer_TST");
             return list.Contains(id);
         }
         private static bool IsOK(CharacterData charRef)
@@ -300,7 +310,7 @@ namespace Demon_Bluff_Mods
             string id = charRef.characterId;
                list.Add("Revolutionary_WING"); list.Add("Switchblade_WING");
             list.Add("Hitman_scm"); list.Add("WING_Dupery_Surgeon");
-            list.Add("Veteran_POW");
+            list.Add("Veteran_POW"); list.Add("Moonchild_LRZH");
             return list.Contains(id);
         }
         private static bool IsOH(CharacterData charRef)
@@ -313,6 +323,7 @@ namespace Demon_Bluff_Mods
             list.Add("Anchor_scm"); list.Add("Prankster_scm");
             list.Add("MadScientist_scm"); list.Add("Mobster_POW");
             list.Add("Repossessed_POW"); list.Add("SnowedIn_POW");
+            list.Add("Ogre_LRZH"); list.Add("Inquisitor_TST");
             return list.Contains(id);
         }
         //Minions
@@ -333,13 +344,15 @@ namespace Demon_Bluff_Mods
             list.Add("Enigma_scm"); list.Add("Hypnotist_scm");
             list.Add("Mastermind_scm"); list.Add("Slanderer_scm");
             list.Add("Covenite_POW"); list.Add("Manipulator_POW");
-            list.Add("Bootlegger_POW");
+            list.Add("Bootlegger_POW"); 
             list.Add("Brewer_POW");
             list.Add("CultMember_POW");
             list.Add("Forger_POW");
             list.Add("Grunt_POW");
             list.Add("Influencer_POW");
-            list.Add("VoodooMaster_POW");
+            list.Add("VoodooMaster_POW"); list.Add("Clown_LRZH");
+            list.Add("Wraith_LRZH"); list.Add("Illusionist_TST");
+            list.Add("Shroud_TST");
             return list.Contains(id);
         }
         private static bool IsMU(CharacterData charRef)
@@ -369,7 +382,7 @@ namespace Demon_Bluff_Mods
             list.Add("Snake Charmer_WING"); list.Add("WING_Dupery_Serial Killer");
             list.Add("Balancer_POW"); list.Add("Grenadier_POW"); list.Add("Ambusher_POW");
             list.Add("Gangster_POW"); list.Add("PowderMaker_POW"); list.Add("Slinger_POW");
-            list.Add("Spokesperson_POW");
+            list.Add("Spokesperson_POW"); list.Add("Vizier_LRZH");
             return list.Contains(id);
         }
         //Demons
@@ -387,6 +400,7 @@ namespace Demon_Bluff_Mods
             list.Add("Kingmaker_scm"); list.Add("Mystifier_scm");
             list.Add("Veil_scm"); list.Add("Auditor_POW");
             list.Add("Crazed_POW"); list.Add("Starspawn_POW");
+            list.Add("Lleech_LRZH");
             return list.Contains(id);
         }
         private static bool IsDK(CharacterData charRef)
@@ -396,7 +410,8 @@ namespace Demon_Bluff_Mods
              list.Add("Lillith_90453844"); list.Add("Caedoccidere_WING");
             list.Add("Carnicarius_WING"); list.Add("Follower_scm");
             list.Add("WING_Dupery_Hitman"); list.Add("Infestation_scm");
-            list.Add("Mafioso_POW");
+            list.Add("Mafioso_POW"); list.Add("Mahr_LRZH");
+            list.Add("Po_LRZH");
             return list.Contains(id);
         }
         private static bool IsDPow(CharacterData charRef)
@@ -412,7 +427,8 @@ namespace Demon_Bluff_Mods
             list.Add("Famine_POW"); list.Add("Pestilence_POW");
             list.Add("Vortox_POW"); list.Add("War_POW");
             list.Add("Archmage_POW"); list.Add("Godfather2_POW");
-            list.Add("HexMaster_POW");
+            list.Add("HexMaster_POW"); list.Add("Dominion_LRZH");
+            list.Add("Ringleader_LRZH");
             return list.Contains(id);
         }
     }
