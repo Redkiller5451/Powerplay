@@ -26,8 +26,8 @@ Mad cards register as the wrong thing.
 ### Protection
 Protected cards cannot die.
 
-### Obscure
-You cannot click on cards with Obscure.
+### Block
+You cannot click on cards with Block.
 
 ### Intoxicate
 Intoxicated On-Pick cards become useless.
