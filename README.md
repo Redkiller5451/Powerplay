@@ -158,7 +158,7 @@ I only spawn with the Auditor. Learn 3 cards, one is the Auditor.
 I am a good card turned into the Snowed in.
 
 ### Vanished (Good, Outcast)
-I cast Unknown Obstacle on myself. I silence my closest evil.
+I cast Block on myself. I silence my closest evil.
 
 ### Veteran (Good, Outcast)
 If a Good card picks me, I kill them, deal 2 damage and undisguise. I disguise.
@@ -219,7 +219,7 @@ I turn every Good card into the Juror and every Evil into the Court. I lie and d
 All Good cards are Mad. 
 
 ### Starspawn (Evil, Demon)
-3 cards have Unknown Obstacle.
+3 cards have Block.
 
 ### Vortox (Evil, Demon)
 A random Weather card is summoned.
@@ -241,7 +241,7 @@ I Hex a Good card every night. If every Good card is hexed, you lose.
 ## COVENANT MINIONS
 
 ### Brewer (Evil, Covenant)
-One card randomly has one of three affects: Mad, Corrupted or Unknown Obstacle.
+One card randomly has one of three affects: Mad, Corrupted or Block.
 
 ### Cult Member (Evil, Covenant)
 I do nothing.
@@ -281,7 +281,7 @@ One card dies upon being revealed.
 2 cards are Intoxicated. I prioritize affecting On-Pick cards.
 
 ### Enforcer (Evil, Mafia)
-One card has Unknown Obstacle on them.
+One card has Block on them.
 
 ### Forger (Evil, Mafia)
 A Good and Evil card swap registered cards.
