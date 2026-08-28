@@ -171,6 +171,9 @@ I intoxicate a random card. Learn an intoxicated card.
 ### Balancer (Evil, Minion)
 Each time you kill a card, I kill a good card and deal 1 damage to you. I don't deal damage if I am killed.
 
+### Counterfeiter (Evil, Minion)
+I register as my disguise. I am truthful. My disguise is flawed.
+
 ### Covenite (Evil, Minion)
 I am a failsafe between another Minion and a Demon from Powerplay.
 
