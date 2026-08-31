@@ -246,6 +246,9 @@ One card randomly has one of three affects: Mad, Corrupted or Block.
 ### Cult Member (Evil, Covenant)
 I do nothing.
 
+### Dreamweaver (Evil, Covenant)
+One card is Dreamweaved. When killed, they appear as if they had a status. They dont have one.
+
 ### Powder Maker (Evil, Covenant)
 I badly poison a card. If that card dies, another Good card is killed.
 
