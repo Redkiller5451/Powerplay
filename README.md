@@ -26,8 +26,8 @@ Mad cards register as the wrong thing.
 ### Protection
 Protected cards cannot die.
 
-### Obscure
-You cannot click on cards with Obscure.
+### Block
+You cannot click on cards with Block.
 
 ### Intoxicate
 Intoxicated On-Pick cards become useless.
@@ -158,7 +158,7 @@ I only spawn with the Auditor. Learn 3 cards, one is the Auditor.
 I am a good card turned into the Snowed in.
 
 ### Vanished (Good, Outcast)
-I cast Unknown Obstacle on myself. I silence my closest evil.
+I cast Block on myself. I silence my closest evil.
 
 ### Veteran (Good, Outcast)
 If a Good card picks me, I kill them, deal 2 damage and undisguise. I disguise.
@@ -170,6 +170,9 @@ I intoxicate a random card. Learn an intoxicated card.
 
 ### Balancer (Evil, Minion)
 Each time you kill a card, I kill a good card and deal 1 damage to you. I don't deal damage if I am killed.
+
+### Counterfeiter (Evil, Minion)
+I register as my disguise. I am truthful. My disguise is flawed.
 
 ### Covenite (Evil, Minion)
 I am a failsafe between another Minion and a Demon from Powerplay.
@@ -216,7 +219,7 @@ I turn every Good card into the Juror and every Evil into the Court. I lie and d
 All Good cards are Mad. 
 
 ### Starspawn (Evil, Demon)
-3 cards have Unknown Obstacle.
+3 cards have Block.
 
 ### Vortox (Evil, Demon)
 A random Weather card is summoned.
@@ -238,10 +241,13 @@ I Hex a Good card every night. If every Good card is hexed, you lose.
 ## COVENANT MINIONS
 
 ### Brewer (Evil, Covenant)
-One card randomly has one of three affects: Mad, Corrupted or Unknown Obstacle.
+One card randomly has one of three affects: Mad, Corrupted or Block.
 
 ### Cult Member (Evil, Covenant)
 I do nothing.
+
+### Dreamweaver (Evil, Covenant)
+One card is Dreamweaved. When killed, they appear as if they had a status. They dont have one.
 
 ### Powder Maker (Evil, Covenant)
 I badly poison a card. If that card dies, another Good card is killed.
@@ -278,7 +284,7 @@ One card dies upon being revealed.
 2 cards are Intoxicated. I prioritize affecting On-Pick cards.
 
 ### Enforcer (Evil, Mafia)
-One card has Unknown Obstacle on them.
+One card has Block on them.
 
 ### Forger (Evil, Mafia)
 A Good and Evil card swap registered cards.
