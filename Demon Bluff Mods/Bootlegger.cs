@@ -24,9 +24,11 @@ public class Bootlegger : MafiaMember
             list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Good);
             Character char1 = PrioritizeOnPick(list1);
             char1.statuses.AddStatus(Rbed.roleblocked, charRef);
+            char1.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
             list1.Remove(char1);
             char1 = PrioritizeOnPick(list1);
             char1.statuses.AddStatus(Rbed.roleblocked, charRef);
+            char1.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
         }
     }
     private Character PrioritizeOnPick(Il2CppSystem.Collections.Generic.List<Character> list1)

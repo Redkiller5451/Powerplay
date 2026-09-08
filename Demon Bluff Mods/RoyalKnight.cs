@@ -108,35 +108,13 @@ using UnityEngine;
     public bool DoTheyHaveAStatus(Character picked)
     {
         if (picked.statuses.statuses.Count == 0) return false;
+        SharedMethods sharedMethods = new SharedMethods();
         Il2CppSystem.Collections.Generic.List<ECharacterStatus> statuses = new Il2CppSystem.Collections.Generic.List<ECharacterStatus>();
         foreach (ECharacterStatus c in picked.statuses.statuses)
         {
-            if (isNotStatus(c)) statuses.Add(c);
+            if (sharedMethods.isNotStatus(c)) statuses.Add(c);
         }
         return statuses.Count > 0;
-    }
-    private bool isNotStatus(ECharacterStatus status)
-    {
-        Il2CppSystem.Collections.Generic.List<ECharacterStatus> invalidStatuses = new Il2CppSystem.Collections.Generic.List<ECharacterStatus>();
-
-        return status.Equals((ECharacterStatus)901) || status.Equals((ECharacterStatus)902) ||
-            status.Equals((ECharacterStatus)903) || status.Equals((ECharacterStatus)904) ||
-            status.Equals((ECharacterStatus)918918) || status.Equals((ECharacterStatus)82113114) ||
-            status.Equals((ECharacterStatus)1618119) || status.Equals((ECharacterStatus)2051879715) ||
-            status.Equals((ECharacterStatus)2051879522) || status.Equals((ECharacterStatus)2114495619) ||
-            status.Equals((ECharacterStatus)2114495161) || status.Equals((ECharacterStatus)2114495239) ||
-            status.Equals((ECharacterStatus)1201) || status.Equals((ECharacterStatus)1202) ||
-            status.Equals((ECharacterStatus)1203) || status.Equals((ECharacterStatus)1204) ||
-            status.Equals((ECharacterStatus)874) || status.Equals((ECharacterStatus)876) ||
-            status.Equals((ECharacterStatus)879) || status.Equals((ECharacterStatus)882) ||
-            status.Equals((ECharacterStatus)197) ||
-            status.Equals((ECharacterStatus)318251620) || status.Equals(SailorPing.sailorPing) ||
-            status.Equals((ECharacterStatus.HealthyBluff)) || status.Equals((ECharacterStatus.AppearDisguised)) ||
-            status.Equals((ECharacterStatus.AppearHonest)) || status.Equals((ECharacterStatus.AppearLying)) ||
-            status.Equals((ECharacterStatus.AppearTruthfull)) || status.Equals((ECharacterStatus.BrokenAbility)) ||
-            status.Equals((ECharacterStatus.HealthyBluff)) || status.Equals((ECharacterStatus.UnkillableByDemon)) ||
-            status.Equals((ECharacterStatus.WorkingAbility)) || status.Equals((ECharacterStatus.NoDamage)) ||
-            status.Equals((ECharacterStatus.Lying)) || status.Equals((MadVictim.madVictim));
     }
     public override ActedInfo GetBluffInfo(Character charRef)
         {

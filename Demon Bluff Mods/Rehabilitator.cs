@@ -106,6 +106,11 @@ namespace Demon_Bluff_Mods
             if (charRef.GetState() == ECharacterState.Dead) return;
             if (trigger == BluffsActivationAtNight.NightAct)
             {
+                if (nightCount == 0)
+                {
+                    nightCount++;
+                    return;
+                }
                 nightCount++;
 
                 if (charRef.revealed)
@@ -150,7 +155,10 @@ namespace Demon_Bluff_Mods
             if (trigger == ETriggerPhase.Day)
             {
                 charRef.revealed = true;
-                onActed.Invoke(GetBluffInfo(charRef));
+                foreach (ActedInfo actedInfo in backupInfo)
+                {
+                    onActed.Invoke(actedInfo);
+                }
                 onActed.Invoke(new ActedInfo(MakeInfo()));
             }
         }

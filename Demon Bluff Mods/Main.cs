@@ -9,6 +9,7 @@ using Il2CppTMPro;
 using MelonLoader;
 using MelonLoader.Utils;
 using Microsoft.Win32.SafeHandles;
+using System.Reflection.Metadata;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static VanillaPatch;
@@ -595,6 +596,29 @@ public class Main : MelonMod
         fisherman.additionalFlavorTexts[0] = fisherman.flavorText;
         fisherman.gender = EGender.Male;
 
+        Il2Cpp.CharacterData alice = new Il2Cpp.CharacterData();
+        alice.role = new Noblewoman();
+        alice.name = "Noblewoman";
+        alice.characterName = "Noblewoman";
+        alice.description = "Learn if Evils, Outcasts or Villagers are asymmetrical";
+        alice.flavorText = "\"Hates asymmetry with a burning passion.\nWill evict people for perfect balance.\"";
+        alice.hints = "";
+        alice.ifLies = "Learn the opposite symmetry.";
+        alice.notes = "This character is based off a ZZZ character? Can you guess which?";
+        alice.picking = false;
+        alice.startingAlignment = EAlignment.Good;
+        alice.type = ECharacterType.Villager;
+        alice.abilityUsage = EAbilityUsage.Once;
+        alice.bluffable = true;
+        alice.characterId = "Noblewoman_POW";
+        alice.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        alice.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        alice.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        alice.color = new Color(1f, 0.935f, 0.7302f);
+        alice.additionalFlavorTexts = new Il2CppStringArray(1);
+        alice.additionalFlavorTexts[0] = alice.flavorText;
+        alice.gender = EGender.Female;
+
         Il2Cpp.CharacterData sailor = new Il2Cpp.CharacterData();
         sailor.role = new Sailor();
         sailor.name = "Armorsmith";
@@ -640,6 +664,29 @@ public class Main : MelonMod
         teaLady.additionalFlavorTexts = new Il2CppStringArray(1);
         teaLady.additionalFlavorTexts[0] = teaLady.flavorText;
         teaLady.gender = EGender.Female;
+
+        Il2Cpp.CharacterData crus = new Il2Cpp.CharacterData();
+        crus.role = new Crusader();
+        crus.name = "Crusader";
+        crus.characterName = "Crusader";
+        crus.description = $"One villager is {formattedKeyText("Protected")} and Fortified.\nI kill all their {formattedKeyText("Visitor")}s";
+        crus.flavorText = "\"Is somehow better at ambushing then the Ambusher!\"";
+        crus.hints = "";
+        crus.ifLies = $"I don't fortify anyone.";
+        crus.notes = "";
+        crus.picking = false;
+        crus.startingAlignment = EAlignment.Good;
+        crus.type = ECharacterType.Villager;
+        crus.abilityUsage = EAbilityUsage.Once;
+        crus.bluffable = true;
+        crus.characterId = "Crusader_POW";
+        crus.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        crus.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
+        crus.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
+        crus.color = new Color(1f, 0.935f, 0.7302f);
+        crus.additionalFlavorTexts = new Il2CppStringArray(1);
+        crus.additionalFlavorTexts[0] = crus.flavorText;
+        crus.gender = EGender.Male;
 
         Il2Cpp.CharacterData oracle = new Il2Cpp.CharacterData();
         oracle.role = new Oracle2();
@@ -851,7 +898,7 @@ public class Main : MelonMod
         pacifist.role = new Pacifist();
         pacifist.name = "Pacifist";
         pacifist.characterName = "Pacifist";
-        pacifist.description = "On pick: Choose 4 cards. \n If they are all Good, you win!";
+        pacifist.description = "<b>On pick:</b>\nChoose 4 cards. \nIf they are all Good, you win!";
         pacifist.flavorText = "\"Organizes peaceful protests against the Demons\nThey don't end well.\"";
         pacifist.hints = "I cannot be Evil";
         pacifist.ifLies = "Says 'I am corrupted' ";
@@ -876,12 +923,12 @@ public class Main : MelonMod
         jailor.role = new Jailor();
         jailor.name = "Jailor";
         jailor.characterName = "Jailor";
-        jailor.description = $"The Demon is {formattedKeyText("Jailed")} and cannot act.";
-        jailor.flavorText = "\"The Demon shall not act whilst she's around.\"";
+        jailor.description = $"<b>On pick:</b>\nChoose 1 card. I kill any evils between them and their neighbours.";
+        jailor.flavorText = "\"When evil arrives, her sword stops the acts dead in their tracks\"";
         jailor.hints = "I cannot be Evil";
         jailor.ifLies = "Says 'I am corrupted' ";
         jailor.notes = "";
-        jailor.picking = false;
+        jailor.picking = true;
         jailor.startingAlignment = EAlignment.Good;
         jailor.type = ECharacterType.Villager;
         jailor.abilityUsage = EAbilityUsage.Once;
@@ -939,6 +986,9 @@ public class Main : MelonMod
         internalVillager.color = new Color(1f, 0.935f, 0.7302f);
         internalVillager.additionalFlavorTexts = new Il2CppStringArray(1);
         internalVillager.additionalFlavorTexts[0] = official.flavorText;
+
+   
+
 
 
         Il2Cpp.CharacterData rej = new Il2Cpp.CharacterData();
@@ -1059,7 +1109,7 @@ public class Main : MelonMod
         veteran.additionalFlavorTexts[0] = veteran.flavorText;
         veteran.gender = EGender.Male;
 
-        Il2Cpp.CharacterData jinx2 = new Il2Cpp.CharacterData();
+       Il2Cpp.CharacterData jinx2 = new Il2Cpp.CharacterData();
         jinx2.role = new Jinx();
         jinx2.name = "Jinx";
         jinx2.characterName = "Jinx";
@@ -1479,6 +1529,29 @@ public class Main : MelonMod
         boomdandy.additionalFlavorTexts[0] = boomdandy.flavorText;
         boomdandy.gender = EGender.Male;
 
+        Il2Cpp.CharacterData counterfeiter = new Il2Cpp.CharacterData();
+        counterfeiter.role = new Counterfeiter();
+        counterfeiter.name = "Counterfeiter";
+        counterfeiter.characterName = "Counterfeiter";
+        counterfeiter.description = $"I register as my bluff and I am truthful. My disguise is {formattedKeyText("Flawed")}.";
+        counterfeiter.flavorText = "\"His disguise was AI-Generated.\nHe is too lazy to fix the mistakes.\"";
+        counterfeiter.hints = $"If I am Obscured:\nI register as the Counterfeiter and I lie.";
+        counterfeiter.ifLies = "";
+        counterfeiter.notes = "";
+        counterfeiter.picking = false;
+        counterfeiter.startingAlignment = EAlignment.Evil;
+        counterfeiter.type = ECharacterType.Minion;
+        counterfeiter.abilityUsage = EAbilityUsage.Once;
+        counterfeiter.bluffable = false;
+        counterfeiter.characterId = "Counterfeiter_POW";
+        counterfeiter.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
+        counterfeiter.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        counterfeiter.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
+        counterfeiter.color = new Color(0.8510f, 0.4549f, 0.0f);
+        counterfeiter.additionalFlavorTexts = new Il2CppStringArray(1);
+        counterfeiter.additionalFlavorTexts[0] = counterfeiter.flavorText;
+        counterfeiter.gender = EGender.Male;
+
         Il2Cpp.CharacterData cerenovus = new Il2Cpp.CharacterData();
         cerenovus.role = new Cerenovus();
         cerenovus.name = "Manipulator";
@@ -1525,7 +1598,9 @@ public class Main : MelonMod
         butcher.additionalFlavorTexts[0] = butcher.flavorText;
         butcher.gender = EGender.Male;
 
-        Il2Cpp.CharacterData specter = new Il2Cpp.CharacterData();
+
+
+       Il2Cpp.CharacterData specter = new Il2Cpp.CharacterData();
         specter.role = new Spectre();
         specter.name = "Spectre";
         specter.characterName = "Spectre";
@@ -2132,6 +2207,32 @@ public class Main : MelonMod
         cultM.additionalFlavorTexts[0] = cultM.flavorText;
         cultM.gender = EGender.Male;
 
+        Il2Cpp.CharacterData dW = new Il2Cpp.CharacterData();
+        dW.role = new Dreamweaver();
+        dW.name = "Dreamweaver";
+        dW.characterName = "Dreamweaver";
+        dW.description = $"<b>Game Start</b>:\nI dreamweave a good card, making them APPEAR to have a random status, between {formattedKeyText("Mad")}, {formattedKeyText("Intoxicated")} or Corruption. They don't have that status\nI lie and disguise.";
+        dW.flavorText = "\"This happened to you! The dreams say all!\"";
+        dW.hints = customHint("Alignment Hint", "Covenant Follower") +"\nIf Riddler is installed, I can pretend someone is accused or confused.";
+        dW.ifLies = "";
+        dW.notes = "";
+        dW.picking = false;
+
+        dW.startingAlignment = EAlignment.Evil;
+        dW.type = ECharacterType.Minion;
+
+        dW.abilityUsage = EAbilityUsage.Once;
+        dW.bluffable = false;
+        dW.characterId = "Dreamweaver_POW";
+        dW.artBgColor = new Color(0.541f, 0.224f, 0.659f);
+        dW.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
+        dW.cardBorderColor = new Color(0.51f, 0.173f, 0.612f);
+        dW.color = new Color(0.455f, 0.129f, 0.541f);
+        dW.additionalFlavorTexts = new Il2CppStringArray(1);
+        nightPhase.nightCharactersOrder.Add(dW);
+        dW.additionalFlavorTexts[0] = dW.flavorText;
+        dW.gender = EGender.Female;
+
         Il2Cpp.CharacterData wildling = new Il2Cpp.CharacterData();
         wildling.role = new Wildling();
         wildling.name = "Wildling";
@@ -2564,7 +2665,7 @@ public class Main : MelonMod
         CharactersCount starCounter1 = setCharacterCount(7, 1, 2, 1);
         CharactersCount starCounter2 = setCharacterCount(6, 2, 1, 1);
         CharactersCount starCounter3 = setCharacterCount(6, 1, 1, 1);
-        CharactersCount starCounter4 = setCharacterCount(5, 1, 0, 1);
+        CharactersCount starCounter4 = setCharacterCount(5, 1, 1, 1);
         Il2CppSystem.Collections.Generic.List<CharactersCount> starCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
         starCounterList.Add(starCounter1);
         starCounterList.Add(starCounter2);
@@ -2768,7 +2869,8 @@ public class Main : MelonMod
         GodScriptData.scriptInfo = godScript;
 
         AscensionsData advancedAscension = ProjectContext.Instance.gameData.advancedAscension;
-     addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
+        
+        addDemon(advancedAscension, death, "Baa_Difficult", "Death_1", deathScriptData, configCategory.GetEntry<int>("Death_Weight").Value);
         addDemon(advancedAscension, war, "Baa_Difficult", "War_1", warScriptData, configCategory.GetEntry<int>("War_Weight").Value);
         addDemon(advancedAscension, famine, "Baa_Difficult", "Famine_1", famineScriptData, configCategory.GetEntry<int>("Famine_Weight").Value);
        addDemon(advancedAscension, pestilence, "Baa_Difficult", "Pest_1", pestScriptData, configCategory.GetEntry<int>("Pestilence_Weight").Value);
@@ -2800,35 +2902,36 @@ public class Main : MelonMod
                 addRole(script.startingTownsfolks, pil);
                 count++;
             }
-            
-            addRole(script.startingTownsfolks, parent);
-            addRole(script.startingTownsfolks, dep);
-            addRole(script.startingTownsfolks, oracle);
-            addRole(script.startingTownsfolks, vigilante);
-            addRole(script.startingTownsfolks, admi);
-            addRole(script.startingTownsfolks, guard);
-            addRole(script.startingTownsfolks, sailor);
-            addRole(script.startingTownsfolks, scholar);
-            addRole(script.startingTownsfolks, choirboy);
-            addRole(script.startingTownsfolks, newsman);
-            addRole(script.startingTownsfolks, teaLady);
-            addRole(script.startingTownsfolks, washerwoman);
-            
-            addRole(script.startingTownsfolks, knowItAll);
-              addRole(script.startingTownsfolks, marksman);
-            addRole(script.startingTownsfolks, fisherman);
-             addRole(script.startingTownsfolks, coroner); 
-            addRole(script.startingTownsfolks, seer);
-            addRole(script.startingTownsfolks, tracker);
-            addRole(script.startingTownsfolks, spy);
-            
-            addRole(script.startingTownsfolks, invest);
-            addRole(script.startingTownsfolks, sher);
-            addRole(script.startingTownsfolks, lookout);
-            addRole(script.startingTownsfolks, psy);
-            addRole(script.startingTownsfolks, rehab);
+             addRole(script.startingTownsfolks, parent);
+              addRole(script.startingTownsfolks, dep);
+              addRole(script.startingTownsfolks, oracle);
+              addRole(script.startingTownsfolks, vigilante);
+              addRole(script.startingTownsfolks, admi);
+              addRole(script.startingTownsfolks, guard);
+              addRole(script.startingTownsfolks, sailor);
+              addRole(script.startingTownsfolks, scholar);
+              addRole(script.startingTownsfolks, choirboy);
+              addRole(script.startingTownsfolks, newsman);
+              addRole(script.startingTownsfolks, teaLady);
+              addRole(script.startingTownsfolks, washerwoman);
+             addRole(script.startingTownsfolks, alice);
 
-            int randomAmountOfOutlier = UnityEngine.Random.Range(1, 4);
+             addRole(script.startingTownsfolks, knowItAll);
+                addRole(script.startingTownsfolks, marksman);
+              addRole(script.startingTownsfolks, fisherman);
+               addRole(script.startingTownsfolks, coroner); 
+              addRole(script.startingTownsfolks, seer);
+              addRole(script.startingTownsfolks, tracker);
+              addRole(script.startingTownsfolks, spy);
+
+              addRole(script.startingTownsfolks, invest);
+              addRole(script.startingTownsfolks, sher);
+              addRole(script.startingTownsfolks, lookout);
+              addRole(script.startingTownsfolks, psy);
+             addRole(script.startingTownsfolks, crus);
+             addRole(script.startingTownsfolks, rehab);
+
+            int randomAmountOfOutlier = UnityEngine.Random.Range(1,4);
             int count2 = 0;
             while (count2 <= randomAmountOfOutlier)
             {
@@ -2859,7 +2962,8 @@ public class Main : MelonMod
                 addRole(script.startingOutsiders, psycho);
                 addRole(script.startingMinions, traveler);
             }
-            addRole(script.startingMinions, specter);
+            addRole(script.startingMinions, counterfeiter);
+           addRole(script.startingMinions, specter);
             addRole(script.startingMinions, cerenovus);
             addRole(script.startingMinions, devilsAdvocate);
             addRole(script.startingMinions, boomdandy);
@@ -2907,9 +3011,8 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", doom);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", official);
         Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", amnesiac);
-        
-        Characters.Instance.startGameActOrder = insertAfterAct("Executive", jailor);
-        Characters.Instance.startGameActOrder = insertAfterAct("Jailor", audi);
+        Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", crus);
+        Characters.Instance.startGameActOrder = insertAfterAct("Executive", audi);
         // Characters.Instance.startGameActOrder = insertAfterAct("Executive", guard);
         Characters.Instance.startGameActOrder = insertAfterAct("Pirate", hangman);
         Characters.Instance.startGameActOrder = insertAfterAct("Hangman", psycho);
@@ -2930,9 +3033,16 @@ public class Main : MelonMod
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", scapegoat);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", indust);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", goon);
+        Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", dW);
         Characters.Instance.startGameActOrder = insertAfterAct("Alchemist", specter);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(snakeCharmer);
-       
+
+
+
+
+
+
+
     }
 
     public void addRole(Il2CppSystem.Collections.Generic.List<CharacterData> list, CharacterData data)
@@ -2981,6 +3091,7 @@ public class Main : MelonMod
     }
     public void OnFirstUpdate()
     {
+        PatchVanillaCharacterDescriptions();
         ToolTipPatchClass patcher = new();
         for (int i = 0; i < allDatas.Count(); i++)
         {
@@ -3351,6 +3462,9 @@ public class Main : MelonMod
             case "Unmask": return "<color=#B5E9FF>Unmask</color>";
             case "Declare": return "<color=#FFFF00>Declare</color>";
             case "Necronomicon": return "<color=#DD02E0>Necronomicon</color>";
+            case "Flawed": return "<color=#9E9882>Flawed</color>";
+            case "Visitor": return "<color=#9AC45A>Visitor</color>";
+            case "Non-Visitor": return "<color=#C46C5A>Non-Visitor</color>";
 
             case "Cycle": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e</color>";
             case "Cycle 1": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 1</color>";
@@ -3479,7 +3593,11 @@ public class Main : MelonMod
             {
                 hint = $"<b>Bluff</b>:\nCharacters think I have the attribute that I am {formattedKeyText("Bluffing")}.";
             }
-         }
+            if (parameter == "Visitor")
+            {
+                hint = $"\nI am a {formattedKeyText("Visitor")}.";
+            }
+        }
         return hint;
     }
     string roleColour(string type)
@@ -3503,6 +3621,97 @@ public class Main : MelonMod
             case "Mafia": return formattedKeyText("MafiaColour");
         }
         return formattedKeyText("");
+    }
+    public void PatchVanillaCharacterDescriptions()
+    {
+        Il2CppSystem.Collections.Generic.List<string> maleCharacters = new Il2CppSystem.Collections.Generic.List<string>();
+        Il2CppSystem.Collections.Generic.List<string> femaleCharacters = new Il2CppSystem.Collections.Generic.List<string>();
+        Il2CppSystem.Collections.Generic.List<string> enbyCharacters = new Il2CppSystem.Collections.Generic.List<string>();
+
+        // Most vanilla roles don't have .gender defined, so I'm just gonna correct them here briefly.
+        // Genders sourced from http://docs.google.com/document/d/1p36GvJFJBMuST9mfEBzVH1L6V9zcPLe5oESwLZ1hruw/edit?pli=1&tab=t.0
+        // Funnily enough, this patch is more important for Powerplay than Wingidon's expansion, since Parent is the only role that interacts with Gender.
+        maleCharacters.Add("Alchemist");
+        maleCharacters.Add("Architect");
+        enbyCharacters.Add("Baker"); // Original Baker is she/her, but other Bakers are they/them.
+        femaleCharacters.Add("Bard");
+        femaleCharacters.Add("Bishop");
+        femaleCharacters.Add("Confessor");
+        femaleCharacters.Add("Dreamer");
+        femaleCharacters.Add("Druid");
+        femaleCharacters.Add("Empress");
+        femaleCharacters.Add("Enlightened");
+        femaleCharacters.Add("Fortune Teller");
+        femaleCharacters.Add("Gemcrafter");
+        maleCharacters.Add("Hunter");
+        maleCharacters.Add("Investigator");
+        maleCharacters.Add("Jester");
+        maleCharacters.Add("Judge");
+        maleCharacters.Add("Knight");
+        femaleCharacters.Add("Knitter");
+        femaleCharacters.Add("Lover");
+        femaleCharacters.Add("Medium");
+        femaleCharacters.Add("Oracle");
+        femaleCharacters.Add("Poet");
+        maleCharacters.Add("Scout");
+        maleCharacters.Add("Slayer");
+        maleCharacters.Add("Witness");
+
+        maleCharacters.Add("Bombardier");
+        enbyCharacters.Add("Doppelganger");
+        maleCharacters.Add("Drunk");
+        maleCharacters.Add("Lycanthrope");
+        maleCharacters.Add("Plague Doctor");
+        maleCharacters.Add("Rambler");
+        enbyCharacters.Add("Wretch");
+
+        maleCharacters.Add("Chancellor");
+        maleCharacters.Add("Minion");
+        maleCharacters.Add("Poisoner");
+        maleCharacters.Add("Puppeteer");
+        enbyCharacters.Add("Puppet");
+        femaleCharacters.Add("Shaman");
+        femaleCharacters.Add("Twin Minion");
+        maleCharacters.Add("Werewolf");
+        femaleCharacters.Add("Witch");
+
+        maleCharacters.Add("Baa");
+        femaleCharacters.Add("Lilis");
+        femaleCharacters.Add("Pooka");
+        for (int i = 0; i < allDatas.Count(); i++)
+        {
+            MelonLogger.Msg($"Description Patcher: Found {allDatas[i].name.ToString()}");
+            if (allDatas[i].characterName == "Witness")
+            {
+                allDatas[i].hints = "<size=10>" + allDatas[i].hints + "</size>";
+                allDatas[i].hints += "<size=10>\n- Audited by Auditor" +
+                                     "\n- Corrupted by any evil" +
+                                     "\n- Silenced by the Voodoo Master" +
+                                     "\n- Blocked by the Brewer, Starspawn or Enforcer" +
+                                     "\n- Turned by the Evil Twin" +
+                                     "\n- Swapped by the Advisor" +
+                                     "\n- Made Mad by the Manipulator, Brewer or Crazed" +
+                                     "\n- Turned into Outcast by the Spokesperson" +
+                                     "\n- Turned Truthful by the Wildling" +
+                                     "\n- Muddled by the Medusa" +
+                                     "\n- Dreamwoven by the Dreamweaver" +
+                                     "\n- Intoxicated by the Bootlegger" +
+                                     "\n- Starved by Famine" +
+                                     "\n- Jinxed by the Ambusher" +
+                                     "\n- Turned Neutral by the Traveler" +
+                                     "\n- Turned Weather by the Vortox" +
+                                     "\n- Turned into Covenant by the Archmage" +
+                                     "\n- Turned into Mafia by the Godfather</size>";
+                MelonLogger.Msg($"Patched Witness. New description: {allDatas[i].hints}");
+            }
+            if (allDatas[i].picking || allDatas[i].characterName == "Amnesiac")
+            {
+                allDatas[i].hints =  allDatas[i].hints + customHint("Keyword", "Visitor");
+            }
+            if (maleCharacters.Contains(allDatas[i].characterName)) allDatas[i].gender = EGender.Male;
+            if (femaleCharacters.Contains(allDatas[i].characterName)) allDatas[i].gender = EGender.Female;
+            if (enbyCharacters.Contains(allDatas[i].characterName)) allDatas[i].gender = EGender.They;
+        }
     }
     public static class Statics
     {

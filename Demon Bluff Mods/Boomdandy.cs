@@ -80,7 +80,7 @@ namespace Demon_Bluff_Mods
             }
             return false;
         }
-        
+
     }
 }
 

@@ -69,7 +69,7 @@ namespace Demon_Bluff_Mods
                 evil.Remove(c);
             }
                 string newInfo = "";
-                if (nightCount % 2 == 1)
+                if (nightCount % 2 == 0)
                 {
                 Character goodChar;
                 Character randoChar;
@@ -97,7 +97,7 @@ namespace Demon_Bluff_Mods
                 }
                 info.Add(newInfo);
                 }
-                if (nightCount % 2 == 0)
+                if (nightCount % 2 == 1)
                 {
                 Character evilChar;
                 if (evil.Count == 0)
@@ -203,6 +203,11 @@ namespace Demon_Bluff_Mods
             if (charRef.GetState() == ECharacterState.Dead) return;
                 if (trigger == BluffsActivationAtNight.NightAct)
             {
+                if (nightCount == 0)
+                {
+                    nightCount++;
+                    return;
+                }
                 nightCount++;
 
                 if (charRef.revealed)
@@ -231,6 +236,7 @@ namespace Demon_Bluff_Mods
             if (charRef.state == ECharacterState.Dead) return;
             if (trigger == BluffsActivationAtNight.NightAct)
             {
+
                 nightCount++;
              
                 if (charRef.revealed)
@@ -251,7 +257,6 @@ namespace Demon_Bluff_Mods
                 {
                     onActed.Invoke(actedInfo);
                 }
-                onActed.Invoke(GetBluffInfo(charRef));
                 onActed.Invoke(new ActedInfo(MakeInfo()));
             }
         }

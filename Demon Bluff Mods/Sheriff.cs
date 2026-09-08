@@ -14,6 +14,8 @@ namespace Demon_Bluff_Mods
     public class Sheriff : Role
     {
         public List<string> info = new List<string>();
+        int nightCount = 0;
+        Il2CppSystem.Collections.Generic.List<Character> searchedChars = new();
         public override Il2CppSystem.Collections.Generic.List<SpecialRule> GetRules()
         {
             Il2CppSystem.Collections.Generic.List<SpecialRule> sr = new Il2CppSystem.Collections.Generic.List<SpecialRule>();
@@ -58,15 +60,23 @@ namespace Demon_Bluff_Mods
         {
             if (trigger == BluffsActivationAtNight.NightAct)
             {
+                MelonLogger.Msg($"The {charRef.dataRef.name} triggered Constable");
+                if (nightCount == 0) {
+                    nightCount++;
+                    return;
+                        }
                 if (charRef.state == ECharacterState.Dead) return;
                 Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
                 Il2CppSystem.Collections.Generic.List<Character> list1 = new();
                 foreach (Character c in currentChars)
                 {
-                    list1.Add(c);
+                    if(!searchedChars.Contains(c))
+                        list1.Add(c);
                 }
+                list1.Remove(charRef);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
+                searchedChars.Add(random);
                 if (SubTypes.GetESubType(random.dataRef) == ESubType.Minion_Killing || SubTypes.GetESubType(random.dataRef) == ESubType.Demon_Killing || SubTypes.GetESubType(random.dataRef) == ESubType.Outcast_Killing)
                 {
                     info.Add("Wait no AAAAAAA");
@@ -97,15 +107,24 @@ namespace Demon_Bluff_Mods
         {
             if (trigger == BluffsActivationAtNight.NightAct)
             {
+                MelonLogger.Msg($"The {charRef.dataRef.name} triggered Fake Constable");
+                if (nightCount == 0 && charRef.alignment == EAlignment.Good)
+                {
+                    nightCount++;
+                    return;
+                }
                 if (charRef.state == ECharacterState.Dead) return;
                 Il2CppSystem.Collections.Generic.List<Character> currentChars = (Gameplay.CurrentCharacters);
                 Il2CppSystem.Collections.Generic.List<Character> list1 = new();
                 foreach (Character c in currentChars)
                 {
-                    list1.Add(c);
+                    if (!searchedChars.Contains(c))
+                        list1.Add(c);
                 }
+                list1.Remove(charRef);
                 int randomIndex = UnityEngine.Random.Range(0, list1.Count);
                 Character random = list1[randomIndex];
+                searchedChars.Add(random);
                 if (random.GetRegisterAlignment() == EAlignment.Good)
                 {
                     info.Add($"#{random.id} seems suspicious!\n");

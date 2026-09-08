@@ -293,6 +293,7 @@ namespace Demon_Bluff_Mods
             list.Add("WING_Dupery_Copycat"); list.Add("WING_Dupery_Bounty Hunter");
             list.Add("WING_Dupery_Drunkard"); list.Add("WING_Dupery_Fall Guy");
             list.Add("WING_Dupery_Wannabe"); list.Add("Gambler_scm");
+            list.Add("WING_Dupery_Jinx");
             list.Add("Reflector_scm"); list.Add("Captivator_scm");
             list.Add("Confectioner_scm"); list.Add("Ghost_scm");
             list.Add("Muddler_scm"); list.Add("Architect_39883285");
@@ -339,17 +340,18 @@ namespace Demon_Bluff_Mods
             list.Add("Swarm_Good_WING"); list.Add("Turncoat_WING");
             list.Add("Underling_M_WING");
             list.Add("Zealot_WING"); list.Add("WING_Dupery_Mobster");
+            list.Add("WING_Dupery_Spectre");
             list.Add("WING_Dupery_Poisoner"); list.Add("Accuser_scm");
             list.Add("BabyMinion_scm"); list.Add("Baffler_scm");
             list.Add("Enigma_scm"); list.Add("Hypnotist_scm");
             list.Add("Mastermind_scm"); list.Add("Slanderer_scm");
             list.Add("Covenite_POW"); list.Add("Manipulator_POW");
-            list.Add("Bootlegger_POW"); 
+            list.Add("Bootlegger_POW"); list.Add("Dreamweaver_POW");
             list.Add("Brewer_POW");
             list.Add("CultMember_POW");
             list.Add("Forger_POW");
             list.Add("Grunt_POW");
-            list.Add("Influencer_POW");
+            list.Add("Influencer_POW"); list.Add("Counterfeiter_POW");
             list.Add("VoodooMaster_POW"); list.Add("Clown_LRZH");
             list.Add("Wraith_LRZH"); list.Add("Illusionist_TST");
             list.Add("Shroud_TST");

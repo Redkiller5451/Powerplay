@@ -128,7 +128,7 @@ namespace Demon_Bluff_Mods;
                     {
                         value = value.Replace(
                             "Block",
-                            "<link=\"Block\"><color=#33327A>Obscure</color></link>"
+                            "<link=\"Block\"><color=#33327A>Block</color></link>"
                         );
                     }
                     if (value.Contains("Blocked"))
@@ -159,7 +159,28 @@ namespace Demon_Bluff_Mods;
                             "<link=\"Necronomicon\"><color=#DD02E0>Necronomicon</color></link>"
                         );
                     }
-                    if (value.Contains("Weather"))
+            if (value.Contains("Visitor"))
+            {
+                value = value.Replace(
+                    "Visitor",
+                    "<link=\"Visitor\"><color=#9AC45A>Visitor</color></link>"
+                );
+            }
+            if (value.Contains("Non-Visitor"))
+            {
+                value = value.Replace(
+                    "Non-Visitor",
+                    "<link=\"Non-Visitor\"><color=#C46C5A>Non-Visitor</color></link>"
+                );
+            }
+            if (value.Contains("Flawed"))
+                    {
+                value = value.Replace(
+                    "Flawed",
+                    "<link=\"Flawed\"><color=#9E9882>Flawed</color></link>"
+                     );
+                 }
+            if (value.Contains("Weather"))
                     {
                         value = value.Replace(
                             "Weather",
@@ -286,7 +307,31 @@ namespace Demon_Bluff_Mods;
                         new Color32(221, 2, 224, 255)
                     );
                 }
-                if (linkID =="Weather")
+                 if (linkID == "Flawed")
+                {
+                    __result = new TooltipInfo(
+                     "Flawed disguises have something wrong with the card. For example: an incorrect name or card art.",
+                    "Flawed",
+                new Color32(221, 2, 224, 255)
+                    );
+                }
+        if (linkID == "Visitor")
+        {
+            __result = new TooltipInfo(
+             "Visitors are on-pick cards. They are affected by On-Visit abilities.",
+            "Visitor",
+        new Color32(221, 2, 224, 255)
+            );
+        }
+        if (linkID == "Non-Visitor")
+        {
+            __result = new TooltipInfo(
+             "Non-Visitors are unaffected by On-Visit abilities.",
+            "Non-Visitor",
+        new Color32(221, 2, 224, 255)
+            );
+        }
+        if (linkID =="Weather")
                 {
                     __result = new TooltipInfo(
                         "Weather have global effects. They turn into a Minion afterwards.",

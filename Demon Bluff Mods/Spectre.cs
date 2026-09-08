@@ -99,65 +99,52 @@ namespace Demon_Bluff_Mods
         }
         public void testMethod()
         {
-  
-                CharacterData resetData;
-                SharedMethods shared = new SharedMethods();
-                if (alteredChar.alignment == EAlignment.Evil)
-                {
-                    if (alteredChar.bluff != null)
-                    {
-                         resetData = alteredChar.bluff;
-                    }
-                    else
-                    {
-                        resetData = alteredChar.dataRef;
-                    }
 
+            CharacterData resetData;
+            SharedMethods shared = new SharedMethods();
+            if (alteredChar.alignment == EAlignment.Evil)
+            {
+                if (alteredChar.bluff != null)
+                {
+                    resetData = alteredChar.bluff;
                 }
                 else
                 {
                     resetData = alteredChar.dataRef;
                 }
-                CharacterData masterCd = shared.GetCharDataViaID("WING_Dupery_VillagerSpectre");
 
-                if (masterCd == null)
-                {
-                    MelonLogger.Error("Failed to fetch VillagerSpectre_POW data reference!");
-                    return;
-                }
-
-                // CRITICAL FIX: Clone the object via Unity's Instantiate so you don't corrupt the global game data pool
-                CharacterData cd = masterCd.MemberwiseClone().Cast<CharacterData>();
-
-                // Copy over the roles and states cleanly to the runtime clone
-                cd.role = resetData.role;
-                if (resetData.picking)
-                {
-                    cd.picking = true;
-                }
-
-                // Mutate the clone's text properties securely
-                cd.name = obscureWords(resetData.name);
-                cd.startingAlignment = resetData.startingAlignment;
-                cd.type = resetData.type;
-                // Re-initialize the active entity with your safe runtime clone data
-                if (alteredChar.alignment == EAlignment.Evil)
-                {
-                    alteredChar.GiveBluff(cd);
-                    alteredChar.RevealBluff();
-                     alteredChar.RefreshCharacter();
             }
-                else
-                {
-                    alteredChar.Init(cd);
-                }
-           
-        }
-        public static List<string> FilteredRoles()
-        {
-            List<string> roles = new List<string>();
-            roles.Add("0");
-            return roles;
+            else
+            {
+                resetData = alteredChar.dataRef;
+            }
+            CharacterData masterCd = shared.GetCharDataViaID("WING_Dupery_VillagerSpectre");
+
+            if (masterCd == null)
+            {
+                MelonLogger.Error("Failed to fetch VillagerSpectre_POW data reference!");
+                return;
+            }
+
+            // CRITICAL FIX: Clone the object via Unity's Instantiate so you don't corrupt the global game data pool
+            CharacterData cd = masterCd.MemberwiseClone().Cast<CharacterData>();
+
+            // Copy over the roles and states cleanly to the runtime clone
+            cd.role = resetData.role;
+            if (resetData.picking)
+            {
+                cd.picking = true;
+            }
+
+            // Mutate the clone's text properties securely
+            cd.name = obscureWords(resetData.name);
+            cd.startingAlignment = resetData.startingAlignment;
+            cd.type = resetData.type;
+            // Re-initialize the active entity with your safe runtime clone data
+            alteredChar.GiveBluff(cd);
+            alteredChar.RevealBluff();
+            alteredChar.RefreshCharacter();
+
         }
     }
 }

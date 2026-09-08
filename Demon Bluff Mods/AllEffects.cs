@@ -428,6 +428,39 @@ namespace Demon_Bluff_Mods
         public static ECharacterStatus Obscure = (ECharacterStatus)350;
 
     }
+    public static class Dreamweaved
+    {
+        public static ECharacterStatus Dreamweave = (ECharacterStatus)351;
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        public static class pvt
+        {
+            public static void Postfix(Character __instance)
+            {
+                if (__instance.statuses.Contains(Dreamweave))
+                {
+                    Il2CppSystem.Collections.Generic.List<string> possibleEffects = new();
+                    SharedMethods shared = new SharedMethods(); 
+                    possibleEffects.Add(__instance.dataRef.name.ToUpper() + "<color=#673232><size=18>\n<Corrupted></color></size>");
+                    possibleEffects.Add(__instance.dataRef.name.ToUpper() + "<color=#FF8000><size=18>\n<Mad></color></size>");
+                    possibleEffects.Add( __instance.dataRef.name.ToUpper() + "<color=#56A3FC><size=15>\nIntoxicated</color></size>");
+                    Il2CppSystem.Collections.Generic.List<bool> allMods = shared.IsAModInstalled();
+                    if (allMods[1])
+                    {
+                        possibleEffects.Add(__instance.dataRef.name.ToUpper() + "<color=#FF8000><size=18>\n<Accused></color></size>");
+                        possibleEffects.Add(__instance.dataRef.name.ToUpper() + "<color=#DDDD00><size=18>\n<Confused></color></size>");
+                    }
+                    int possibleEffectsIndex = UnityEngine.Random.Range(0, possibleEffects.Count);
+                    __instance.chName.text = possibleEffects[possibleEffectsIndex];
+                }
+            }
+        }
+       
+    } 
+    public static class Fortified
+        {
+            public static ECharacterStatus Fortify = (ECharacterStatus)352;
+
+        }
     // This is taken straight from Skill Cycler. 
     public static class Muddling
     {

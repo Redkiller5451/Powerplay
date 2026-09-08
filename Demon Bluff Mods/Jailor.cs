@@ -22,78 +22,111 @@ public class Jailor : Role
     public Jailor() : base(ClassInjector.DerivedConstructorPointer<Jailor>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
+        action1 = new System.Action(CharacterPicked);
+        action2 = new System.Action(StopPick);
     }
-    public Jailor(IntPtr ptr) : base(ptr)
+    public Jailor(System.IntPtr ptr) : base(ptr)
     {
-
-    }
-    public override string Description
-    {
-        get
-        {
-            return "This is a cool role!";
-        }
+        action1 = new System.Action(CharacterPicked);
+        action2 = new System.Action(StopPick);
     }
     public override ActedInfo GetInfo(Character charRef)
     {
-        ActedInfo actedInfo = new ActedInfo("I have declared a Tribunal!", null);
-        return actedInfo;
+        return new ActedInfo("");
     }
     public override ActedInfo GetBluffInfo(Character charRef)
     {
-        ActedInfo actedInfo = new ActedInfo("I am corrupted", null);
-        return actedInfo;
+        return new ActedInfo("");
     }
+    private Il2CppSystem.Action action1;
+    private Il2CppSystem.Action action2;
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Start)
-        {
-            Gameplay gameplay = Gameplay.Instance;
-            Characters instance = Characters.Instance;
-            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-            list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Demon);
-            foreach (Character character in list1)
-            {
-                character.statuses.statuses.Add(Jailed.jailed);
-            }
-        }
-        if(trigger == ETriggerPhase.Day)
-        {
-            Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-            list1 = Characters.Instance.FilterCharacterType(list1, ECharacterType.Demon);
-            string info = "they are the: ";
-            foreach (Character character in list1)
-            {
-                info += character.dataRef.characterName + " ";
-            }
-            onActed?.Invoke(new ActedInfo($"I've jailed the Demon, {info}"));
-        }
-        if (CheckTriggerPhases().Contains(trigger))
-        {
-            SaintCureStatuses(charRef);
-            charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
-            if (charRef.alignment == EAlignment.Evil)
-            {
-                charRef.ChangeAlignment(EAlignment.Good);
-                if (charRef.dataRef.characterId != "Jailor_POW")
-                {
-                    SharedMethods sharedScripts = new SharedMethods();
-                    CharacterData saintRef = sharedScripts.GetCharDataViaID("Jailor_POW");
-                    charRef.Init(saintRef);
-                }
-            }
-        }
+        if (trigger != ETriggerPhase.Day) return;
+        CharacterPicker.Instance.StartPickCharacters(1, charRef);
+        CharacterPicker.OnCharactersPicked += action1;
+        CharacterPicker.OnStopPick += action2;
     }
-   
+    private void StopPick()
+    {
+        CharacterPicker.OnCharactersPicked -= action1;
+        CharacterPicker.OnStopPick -= action2;
+
+    }
+
+    private void CharacterPicked()
+    {
+        CharacterPicker.OnCharactersPicked -= action1;
+        CharacterPicker.OnStopPick -= action2;
+        Il2CppSystem.Collections.Generic.List<Character> outsiders = new Il2CppSystem.Collections.Generic.List<Character>();
+        Il2CppSystem.Collections.Generic.List<int> ids = new Il2CppSystem.Collections.Generic.List<int>();
+        foreach (Character c in CharacterPicker.PickedCharacters)
+        {
+            ids.Add(c.id);
+            outsiders.Add(c);
+        }
+        Il2CppSystem.Collections.Generic.List<Character> neighborsOfPicked = GetNeighbors(outsiders[0]);
+        Il2CppSystem.Collections.Generic.List<Character> evils = WhoIsEvil(outsiders[0], neighborsOfPicked);
+        foreach (Character c in evils)
+        {
+            c.Kill();
+        }
+        onActed?.Invoke(new ActedInfo(info(outsiders[0], neighborsOfPicked, evils)));
+    }
+
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Day)
+        if (trigger != ETriggerPhase.Day) return;
+        this.onActed.Invoke(this.GetBluffInfo(charRef));
+    }
+    public Il2CppSystem.Collections.Generic.List<Character> GetNeighbors(Character charRef)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> myList = CharactersHelper.GetSortedListWithCharacterFirst(Gameplay.CurrentCharacters, charRef);
+        myList.RemoveAt(0);
+        Il2CppSystem.Collections.Generic.List<Character> neighbors = new Il2CppSystem.Collections.Generic.List<Character>();
+        neighbors.Add(myList[0]);
+        neighbors.Add(myList[myList.Count - 1]);
+        return neighbors;
+    }
+    public Il2CppSystem.Collections.Generic.List<Character> WhoIsEvil(Character charRef, Il2CppSystem.Collections.Generic.List<Character> neighborsOfPicked)
+    {
+        Il2CppSystem.Collections.Generic.List<Character> characters = new();
+        Il2CppSystem.Collections.Generic.List<Character> evils = new();
+        characters.Add(charRef);
+        characters.Add(neighborsOfPicked[0]);
+        characters.Add(neighborsOfPicked[1]);
+        foreach (Character character in characters)
         {
-            this.onActed.Invoke(this.GetBluffInfo(charRef));
-
+            if(character.GetRealAlignment() == EAlignment.Evil)
+            {
+                evils.Add(character);
+            }
+        }
+        return evils;
+    }
+    private string info(Character picked, Il2CppSystem.Collections.Generic.List<Character> characters, Il2CppSystem.Collections.Generic.List<Character> evils)
+    {
+        if (evils.Count == 0)
+        {
+            return $"Between {picked.id} and their neighbors, I couldn't find any Evils.";
+        }
+        if (evils.Count == 1)
+        {
+            return $"Between {picked.id} and their neighbors, I executed one Evil.";
+        }
+        if (evils.Count == 2)
+        {
+            return $"Between {picked.id} and their neighbors, I executed two Evils.";
+        }
+        if (evils.Count == 3)
+        {
+            return $"Between {picked.id} and their neighbors, I executed three Evils.";
+        }
+        else
+        {
+            return "ERROR";
         }
     }
-
     public Il2CppSystem.Collections.Generic.List<ETriggerPhase> CheckTriggerPhases()
     {
         Il2CppSystem.Collections.Generic.List<ETriggerPhase> returnList = new Il2CppSystem.Collections.Generic.List<ETriggerPhase>();

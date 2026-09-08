@@ -50,6 +50,7 @@ namespace Demon_Bluff_Mods
                 alteredChar = changed;
                 testMethod(alteredChar);
                 alteredChar.statuses.AddStatus(Obscured.Obscure, charRef);
+                alteredChar.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
             }
         }
         public static void testMethod(Character __instance)

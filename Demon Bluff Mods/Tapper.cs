@@ -211,6 +211,10 @@ public class Tapper : Role
         {
             return "is Erased";
         }
+        if (status == (ECharacterStatus)314)
+        {
+            return "is Haunted";
+        }
         return "has an Unknown Status";
         
     }
@@ -252,7 +256,11 @@ public class Tapper : Role
             lyingStatuses.Add((ECharacterStatus)911); //Erased
             lyingStatuses.Add((ECharacterStatus)878); //Guarded
         }
-        if(statuses.Count > 0)
+        else if (modsInstalled[2])
+        {
+            lyingStatuses.Add((ECharacterStatus)314);//Haunted
+        }
+        if (statuses.Count > 0)
             lyingStatuses.Remove(statuses[UnityEngine.Random.Range(0, statuses.Count)]);
         int nOfLiesStatus = UnityEngine.Random.Range(0, 4);
         if(statuses.Count == 0 && nOfLiesStatus == 0)
@@ -302,14 +310,15 @@ public class Tapper : Role
         Il2CppSystem.Collections.Generic.List<CharacterData> characters = Gameplay.Instance.GetAllAscensionCharacters();
         bool riddles = false;
         bool wingidon = false;
+        bool circus = false;
         foreach (CharacterData character in characters)
         {
             {
 
                 if (character.characterId.EndsWith("_scm")) riddles = true;
                 else if (character.characterId.EndsWith("_WING")) wingidon = true;
-
-                if (riddles && wingidon)
+                else if (character.characterId.EndsWith("_LRZH")) circus = true;
+                if (riddles && wingidon && circus)
                 {
                     break;
                 }
@@ -318,7 +327,8 @@ public class Tapper : Role
         }
         installedMods.Add(wingidon);
             installedMods.Add(riddles);
-            return installedMods;
+        installedMods.Add(circus);
+        return installedMods;
     }
     private bool isAPingableStatus(ECharacterStatus status)
     {
@@ -342,6 +352,10 @@ public class Tapper : Role
             lyingStatuses.Add((ECharacterStatus)911); //Erased
             lyingStatuses.Add((ECharacterStatus)878); //Guarded
         }
-        return lyingStatuses.Contains(status);
+        else if (modsInstalled[2])
+        {
+            lyingStatuses.Add((ECharacterStatus)314);//Haunted
+        }
+            return lyingStatuses.Contains(status);
     }
 }

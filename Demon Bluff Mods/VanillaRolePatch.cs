@@ -2,8 +2,11 @@
 using HarmonyLib;
 using Il2Cpp;
 using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
+using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppSystem;
 using Il2CppTMPro;
+using JetBrains.Annotations;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
@@ -178,34 +181,46 @@ public static class VanillaPatch
         return false;
     }
 }
-    [HarmonyPatch(typeof(Character), nameof(Character.Act))]
+
+
+   [HarmonyPatch(typeof(Character), nameof(Character.Act))]
 public static class InfoViewPatch
 {
+    private static readonly Dictionary<Character, Il2CppSystem.Action<ActedInfo, ETriggerPhase>>
+    _hooks = new();
+
     [HarmonyPostfix]
     public static void Postfix(Character __instance, ETriggerPhase trigger)
     {
+        if (_hooks.ContainsKey(__instance))
+            return;
+        if (__instance == null)
+            return;
         //This used ChatGPT unfortunately. I didnt know how to access ActedInfo from here.
         if (__instance.statuses.statuses.Contains(Obscured.Obscure))
-              {
+        {
 
-                var original = __instance.onAboutToAct;
+            var original = __instance.onAboutToAct;
 
-                System.Action<ActedInfo, ETriggerPhase> callback = (info, phase) =>
+            System.Action<ActedInfo, ETriggerPhase> callback = (info, phase) =>
+            {
+                ActedInfo aboutToActInfo = info;
+                if (aboutToActInfo != null)
                 {
-                    ActedInfo aboutToActInfo = info;
-                    if (aboutToActInfo != null)
-                    {
-                        info.desc = obscureWords(info.desc);
-                    }
-                    original?.Invoke(info, phase);
-                };
+                    info.desc = obscureWords(info.desc);
+                }
+                original?.Invoke(info, phase);
+            };
 
-                __instance.onAboutToAct =
-                    DelegateSupport.ConvertDelegate<Il2CppSystem.Action<ActedInfo, ETriggerPhase>>(
-                        callback
-                    );
+            var converted = DelegateSupport.ConvertDelegate<Il2CppSystem.Action<ActedInfo, ETriggerPhase>
+   >(callback);
 
-            }    
+            _hooks[__instance] = converted;
+            __instance.onAboutToAct = converted;
+
+         
+
+        }
 
     }
     public static string obscureWords(string desc)
@@ -274,5 +289,6 @@ public static class w_AnyRevealPatch
         return true;
     }
 }
+
 
 

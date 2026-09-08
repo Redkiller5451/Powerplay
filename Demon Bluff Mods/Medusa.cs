@@ -63,6 +63,7 @@ namespace Demon_Bluff_Mods
                 foreach(Character character in list2)
                 {
                     character.statuses.AddStatus(Muddling.hiddenStatus, charRef);
+                    character.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
                 }
             
                 

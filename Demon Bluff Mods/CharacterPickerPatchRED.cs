@@ -16,17 +16,27 @@ public class CharacterPickerPatch
 {
     static void Prefix(int howMany, Character picker)
     {
+        
         if (picker != null)
         {
             Veteran.SetLastPicker(picker);
             Goon.SetLastPicker(picker);
-
-            if (picker.statuses.statuses.Contains(Jinxed.jinxed))
-            {
-                picker.KillByDemon(picker);
-                picker.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, picker);
-            }
+            Crusader.SetLastPicker(picker);
         }
 
     }
+}
+[HarmonyLib.HarmonyPatch(typeof(CharacterPicker), nameof(CharacterPicker.ClickedCharacter))]
+public class CharacterPickerPatch2
+{
+    static void Prefix(Character ch)
+    {
+                if (ch.statuses.statuses.Contains(Fortified.Fortify))
+                {
+                Crusader.lastPicker.KillByDemon(ch);
+                Crusader.lastPicker.statuses.statuses.Add(ECharacterStatus.KilledByEvil);
+                    PlayerController.PlayerInfo.health.Damage(1);
+                }
+            }
+        
 }

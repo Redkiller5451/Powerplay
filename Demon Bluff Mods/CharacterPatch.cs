@@ -46,7 +46,7 @@ public static class Patch
                 MelonLogger.Msg("UO on them");
                 return false;
             }
-            if (__instance.statuses.Contains(Protected.protect) && Gameplay.GameplayState.Equals(EGameplayState.Killing))
+            if (__instance.statuses.Contains(Protected.protect) && Gameplay.GameplayState.Equals(EGameplayState.Killing) && !__instance.statuses.Contains((ECharacterStatus)314))// Status 314 check for Circus
             {
                 Gameplay.ChangeGameplayState(EGameplayState.Day);
                 MelonLogger.Msg("Protected the Kill!");

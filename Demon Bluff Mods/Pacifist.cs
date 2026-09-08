@@ -4,6 +4,7 @@ using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
+using Il2CppTMPro;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
@@ -63,14 +64,20 @@ namespace Demon_Bluff_Mods
                 if (charRef.alignment == EAlignment.Evil)
                 {
                     charRef.ChangeAlignment(EAlignment.Good);
-                    if (charRef.dataRef.characterId != "Saint_WING")
+                    if (charRef.dataRef.characterId != "Pacifist_POW")
                     {
                         SharedMethods sharedScripts = new SharedMethods();
-                        CharacterData saintRef = sharedScripts.GetCharDataViaID("Jailor_POW");
+                        CharacterData saintRef = sharedScripts.GetCharDataViaID("Pacifist_POW");
                         charRef.Init(saintRef);
                     }
                 }
             }
+        }
+        public static void ShowGameMessage(string message, Character ch)
+        {
+            HintInfo info = new HintInfo();
+            info.text = message;
+            UIEvents.OnShowHint.Invoke(info, ch.hintPivot);
         }
 
         public override void BluffAct(ETriggerPhase trigger, Character charRef)
@@ -157,15 +164,12 @@ namespace Demon_Bluff_Mods
                 MelonLogger.Msg($"Checked Protest");
                 if (protestOccured)
                 {
-                    Il2CppSystem.Collections.Generic.List<Character> list1 = (Gameplay.CurrentCharacters);
-                    list1 = Characters.Instance.FilterAlignmentCharacters(list1, EAlignment.Evil);
-                    Health health = PlayerController.PlayerInfo.health;
-                    health.Heal(10);
-                    foreach (Character character in list1)
-                    {
-                        character.Kill();
-                    }
-                
+                    ShowGameMessage("<color=green>The Village is Safe!!</color>\n\nThe Cult Leader and its Neighbours were Good.", charRef);
+
+                    GameObject winCon = GameObject.Find("Game/Gameplay/Content/WinConditions");
+                    WinConditions winConditions = winCon.GetComponent<WinConditions>();
+                    winConditions.Win();
+
                 }
 
             }

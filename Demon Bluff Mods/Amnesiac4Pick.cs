@@ -93,41 +93,14 @@ public class Amnesiac4Pick : Role
     }
     public bool DoTheyHaveAStatus(Character picked)
     {
+        SharedMethods sharedMethods = new SharedMethods();
         if(picked.statuses.statuses.Count == 0) return false;
         List<ECharacterStatus> statuses = new List<ECharacterStatus>();
         foreach (ECharacterStatus c in picked.statuses.statuses)
         {
-            if(isNotStatus(c)) statuses.Add(c);
+            if(sharedMethods.isNotStatus(c)) statuses.Add(c);
         }
         return statuses.Count > 0;
-    }
-    private bool isNotStatus(ECharacterStatus status)
-    {
-        List<ECharacterStatus> invalidStatuses = new List<ECharacterStatus>();
-
-            invalidStatuses.Add((ECharacterStatus)901) ; invalidStatuses.Add((ECharacterStatus)902) ;
-            invalidStatuses.Add((ECharacterStatus)903) ; invalidStatuses.Add((ECharacterStatus)904) ;
-            invalidStatuses.Add((ECharacterStatus)918918) ; invalidStatuses.Add((ECharacterStatus)82113114) ;
-            invalidStatuses.Add((ECharacterStatus)1618119) ; invalidStatuses.Add((ECharacterStatus)2051879715) ;
-            invalidStatuses.Add((ECharacterStatus)2051879522) ; invalidStatuses.Add((ECharacterStatus)2114495619) ;
-            invalidStatuses.Add((ECharacterStatus)2114495161) ; invalidStatuses.Add((ECharacterStatus)2114495239) ;
-            invalidStatuses.Add((ECharacterStatus)1201) ; invalidStatuses.Add((ECharacterStatus)1202) ;
-            invalidStatuses.Add((ECharacterStatus)1203) ; invalidStatuses.Add((ECharacterStatus)1204) ;
-            invalidStatuses.Add((ECharacterStatus)874) ; invalidStatuses.Add((ECharacterStatus)876) ;
-            invalidStatuses.Add((ECharacterStatus)879) ; invalidStatuses.Add((ECharacterStatus)882) ;
-        invalidStatuses.Add((ECharacterStatus)543);
-        invalidStatuses.Add((ECharacterStatus)197) ; invalidStatuses.Add(Audited.audited);
-        invalidStatuses.Add(HangTarget.hangtarget); invalidStatuses.Add(Sacrifice.sacrifice);
-        invalidStatuses.Add(NecroWielder.Necronomicon); invalidStatuses.Add(StarspawnCheck.starspawnCheck);
-        invalidStatuses.Add(Dueled.dueled);
-        invalidStatuses.Add((ECharacterStatus)318251620) ; invalidStatuses.Add(SailorPing.sailorPing) ;
-            invalidStatuses.Add((ECharacterStatus.HealthyBluff)) ; invalidStatuses.Add((ECharacterStatus.AppearDisguised)) ;
-            invalidStatuses.Add((ECharacterStatus.AppearHonest)) ; invalidStatuses.Add((ECharacterStatus.AppearLying)) ;
-            invalidStatuses.Add((ECharacterStatus.AppearTruthfull)) ; invalidStatuses.Add((ECharacterStatus.BrokenAbility)) ;
-            invalidStatuses.Add((ECharacterStatus.HealthyBluff)) ; invalidStatuses.Add((ECharacterStatus.UnkillableByDemon)) ;
-            invalidStatuses.Add((ECharacterStatus.WorkingAbility)) ; invalidStatuses.Add((ECharacterStatus.NoDamage)) ;
-            invalidStatuses.Add((ECharacterStatus.Lying)) ; invalidStatuses.Add((MadVictim.madVictim));
-        return invalidStatuses.Contains(status);
     }
     public string ConjourInfo(bool status, Character picked)
     {
