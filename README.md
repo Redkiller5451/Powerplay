@@ -126,7 +126,7 @@ I kill a Minion when revealed.
 I point to 3 Cards, they are Villagers.
 
 ### Jailor (Good, Villager) _POWER ROLE_
-The Demon cannot act.
+Pick 1 card, I kill them if they are evil, and kill any evil neighbours.
 
 ### Pacifist (Good, Villager) _POWER ROLE_
 Pick 4 cards. If all are good, you win.
